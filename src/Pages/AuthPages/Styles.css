@@ -1,0 +1,77 @@
+.parent-cont {
+    height: 100vh;
+}
+
+.banner {
+    width: 100%;
+    padding: 10px 10px 10px 20px;
+    /* border: 1px solid black; */
+}
+
+.body {
+    /* border: 1px solid black; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-title {
+    /* font-family: 'DM Sans'; */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 46px;
+    text-align: center;
+    color: #333333;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.form-cont {
+    padding: 20px;
+    width: 584px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    /* border: 1px solid red; */
+}
+
+.location-cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.tc-cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    color: rgba(113, 172, 133, 1);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.tc-checkbox {
+    border: 1px solid rgba(113, 172, 133, 1);
+    color: rgba(113, 172, 133, 1);
+}
+
+@media screen and (max-width: 800px) {
+   .form-cont  {
+     width: 100%
+   } 
+
+   .location-cont {
+     flex-direction: column;
+   }
+}
