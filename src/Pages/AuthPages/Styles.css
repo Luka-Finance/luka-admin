@@ -1,5 +1,11 @@
 .parent-cont {
+    /* height: 100vh; */
+    background-color: rgba(235, 241, 237, 1);
+}
+
+.parent-cont-2 {
     height: 100vh;
+    background-color: rgba(235, 241, 237, 1);
 }
 
 .banner {
@@ -34,18 +40,67 @@
     margin-bottom: 30px;
 }
 
+.form-title-1 {
+    /* font-family: 'DM Sans'; */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 46px;
+    text-align: center;
+    color: #333333;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-text {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: center;
+    color: #333333;
+    width: 500px;
+    /* border: 1px solid red; */
+}
+
 .form-cont {
     padding: 20px;
     width: 584px;
     background: #FFFFFF;
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     /* border: 1px solid red; */
+}
+
+.input-holder {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.input-holder-1 {
+    width: 450px;
+    margin-bottom: 20px;
 }
 
 .location-cont {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.location-cont-child {
+    margin-bottom: 25px;
+}
+
+.location-cont-child:nth-child(1) {
+   margin-right: 15px;
 }
 
 .tc-cont {
@@ -66,12 +121,142 @@
     color: rgba(113, 172, 133, 1);
 }
 
-@media screen and (max-width: 800px) {
+.check-cont {
+    width: 215px;
+    height: 215px;
+    mix-blend-mode: darken;
+    background-color: rgba(3, 166, 60, 0.5);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success-title {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 46px;
+    text-align: center;
+    color: #333333;
+    margin-top: 45px;
+}
+
+.success-text {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: center;
+    color: #333333;
+}
+
+.enter-otp-link {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    text-decoration-line: underline;
+    color: #03A63C;
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.resent-otp-link {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    text-decoration-line: underline;
+    color: #333333;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.otp-input-cont {
+    width: 450px;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.otp-input {
+    width: 63px;
+    height: 55px;
+    background: #F7F7F7;
+    border: 1px solid #C0C0C0;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.otp-aux-link {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    color: #333333;
+    cursor: pointer;
+}
+
+.otp-aux-link:nth-child(1) {
+    text-decoration: underline;
+}
+
+
+@media screen and (max-width: 769px) {
+   .banner {
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+
    .form-cont  {
-     width: 100%
-   } 
+     width: 100%;
+     margin: 0px auto;
+   }
+   
 
    .location-cont {
      flex-direction: column;
+     width: 100%;
+     /* border: 1px solid red; */
    }
+
+   .location-cont-child {
+    width: 100%;
+   }
+
+   .location-cont-child:nth-child(1) {
+     margin-right: 0px;
+    }
+
+}
+
+@media screen and (max-width: 769px) {
+    .form-text {
+        width: 100%;
+        padding: 0px 10px;
+    }
+
+    .otp-input-cont {
+        width: 100%;
+    }
+    
+    .otp-input {
+        width: 40px;
+        height: 40px;
+    }
+
+    .input-holder-1 {
+        width: 100%;
+    }
 }

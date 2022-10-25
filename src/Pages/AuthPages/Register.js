@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'react-bootstrap/Image';
 import Input from '../../Components/Common/Input/Input';
 import { AiFillEyeInvisible } from 'react-icons/ai';
+import CustomButton from '../../Components/Common/CustomButton/Index';
 
 import './Styles.css';
 
@@ -13,12 +14,12 @@ function Register() {
         </div>
         
         <div className='body'>
-            <div className='form-title '>
+            <div className='form-title'>
                 Register
             </div>
         
             <div className='form-cont'>
-                <div style={{marginBottom: 25}}>
+                <div className='input-holder'>
                     <Input  
                         label={'Company\'s Name'}
                         type={'text'}
@@ -27,7 +28,7 @@ function Register() {
                     />
                 </div>
 
-                <div style={{marginBottom: 25}}>
+                <div className='input-holder'>
                     <Input  
                         label={'Company\'s Email'}
                         type={'email'}
@@ -37,7 +38,7 @@ function Register() {
                 </div>
 
                 <div className='location-cont'>
-                    <div style={{marginBottom: 25, marginRight: 15}}>
+                    <div className='location-cont-child'>
                         <Input  
                             label={'Country'}
                             type={'text'}
@@ -46,7 +47,7 @@ function Register() {
                         />
                     </div>
 
-                    <div style={{marginBottom: 25}}>
+                    <div className='location-cont-child'>
                         <Input  
                             label={'City'}
                             type={'text'}
@@ -56,7 +57,7 @@ function Register() {
                     </div>
                 </div>
 
-                <div style={{marginBottom: 25}}>
+                <div className='input-holder'>
                     <Input  
                         label={'Company\'s Phone number'}
                         type={'tel'}
@@ -65,7 +66,7 @@ function Register() {
                     />
                 </div>
 
-                <div style={{marginBottom: 25}}>
+                <div className='input-holder'>
                     <Input  
                         label={'Create Password'}
                         type={'password'}
@@ -75,7 +76,7 @@ function Register() {
                     />
                 </div>
 
-                <div style={{marginBottom: 25}}>
+                <div className='input-holder'>
                     <Input  
                         label={'Confirm Password'}
                         type={'password'}
@@ -91,6 +92,24 @@ function Register() {
                         By activating your account, you agree to our Terms and Conditions.  
                     </p>
                 </div>
+
+                <div className='input-holder'>
+                    <CustomButton 
+                        title={'Register'}
+                        textColor={'#fff'}
+                        bgColor={'#03A63C'}
+                        disabledColor={'rgba(3, 166, 60, 0.5)'}
+                        disabled={true}
+                    />
+                </div>
+
+                <p className='otp-aux-link'>
+                    Click here to  
+                    <span className='otp-aux-link'>
+                        sign in
+                    </span>
+                    if registered
+                </p>
             </div>
         </div>
     </div>
