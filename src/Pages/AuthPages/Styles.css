@@ -212,6 +212,11 @@
 
 
 @media screen and (max-width: 769px) {
+    .parent-cont,
+    .parent-cont-2 {
+        padding: 0px 15px;
+    }
+
    .banner {
     padding: 0px;
     display: flex;
