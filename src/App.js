@@ -6,16 +6,19 @@ import SignIn from './Pages/AuthPages/SignIn';
 import ForgotPassword from './Pages/AuthPages/ForgotPassword';
 import SetNewPassword from './Pages/AuthPages/SetNewPassword';
 
+import Dashboard from './Pages/UserPages/Dashboard';
+
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/set-new-password' element={<SetNewPassword />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/otp-entry' element={<OtpPage />} />
         <Route path='/success-registration' element={<SuccessReg />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" exact element={<Register />} />
       </Routes>
     </Router>
   );
