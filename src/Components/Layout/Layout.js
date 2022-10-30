@@ -172,7 +172,7 @@ function Layout({
                                     key={index} 
                                     className='mobile-nav-link'
                                     style={{
-                                        color: currentPage.toLowerCase() === link.toLowerCase() ? 'rgba(3, 166, 60, 1)' : '#fff;',
+                                        color: currentPage.toLowerCase() === link.toLowerCase() ? 'rgba(3, 166, 60, 1)' : '#fff',
                                     }}
                                     to={`/${link.toLowerCase()}`}
                                 >

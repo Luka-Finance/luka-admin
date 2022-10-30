@@ -14,7 +14,7 @@ function Index({
   return (
     <div 
         className='btn-wrapper'
-        onClick={!disabled && onClick}
+        onClick={onClick}
         style={{
             background: !disabled ? bgColor : disabledColor
         }}

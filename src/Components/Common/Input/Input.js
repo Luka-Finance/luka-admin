@@ -13,7 +13,7 @@ function Input({
 }) {
   return (
     <div className='input-cont'>
-      {label && (<label for="label" className='input-label'>{label}</label>)}
+      {label && (<label htmlFor="label" className='input-label'>{label}</label>)}
 
       <div className='input-wrapper'>
         {icon && (<div onClick={iconClick}>{icon}</div>)}
