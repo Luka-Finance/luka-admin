@@ -1,14 +1,15 @@
 import React from 'react';
 import CustomButton from '../Common/CustomButton/Index';
-import {FaRegPlusSquare} from 'react-icons/fa';
+import {BsChevronDown} from 'react-icons/bs';
 
 import './Styles.css'
 
 function AuxPageHead({
     auxHeadTitle,
     auxHeadFilter,
-    auxHeadBtnClick
-    
+    auxHeadBtnClick,
+    auxBtnTitle,
+    auxBtnIcon,
 }) {
   return (
     <div className='aux-head-cont'>
@@ -18,28 +19,28 @@ function AuxPageHead({
                     {auxHeadTitle}
                 </p>
             ) : (
-                <div>
-                    filter
+                <div className='filter-btn-cont'>
+                    <p className='filter-btn-text'>Filter</p>
+
+                    <div className='filter-btn-aux-cont'>
+                        <p>Search Employer Name</p>
+                        <span style={{marginBottom: 13}}>
+                            <BsChevronDown />
+                        </span>
+                    </div>
                 </div>
             )
         }
 
         <div className='aux-head-btn-cont'>
             <CustomButton
+                btnHeight={44}
                 onClick={auxHeadBtnClick} 
-                title={'Add new employee'}
+                title={auxBtnTitle}
                 textColor={'#fff'}
                 bgColor={'rgba(3, 166, 60, 1)'}
                 disabled={false}
-                icon={
-                    <FaRegPlusSquare 
-                        style={{
-                            marginLeft: 5, 
-                            color: '#fff',
-                            marginTop: 6, 
-                        }} 
-                    />
-                }
+                icon={auxBtnIcon}
             />
         </div>
     </div>

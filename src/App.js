@@ -6,12 +6,16 @@ import SignIn from './Pages/AuthPages/SignIn';
 import ForgotPassword from './Pages/AuthPages/ForgotPassword';
 import SetNewPassword from './Pages/AuthPages/SetNewPassword';
 
-import Dashboard from './Pages/UserPages/Dashboard';
+import Dashboard from './Pages/UserPages/Dashboard/Dashboard';
+import Accounts from './Pages/UserPages/Accounts/Accounts';
+import Payments from './Pages/UserPages/Payments/Payments';
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/payments" element={<Payments />} />
+        <Route path='/accounts' element={<Accounts />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/set-new-password' element={<SetNewPassword />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />

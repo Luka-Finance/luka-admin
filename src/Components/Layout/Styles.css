@@ -120,7 +120,7 @@
     letter-spacing: 0.2px;
     color: #252733;
     margin: auto;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     width: 65px;
 }
 

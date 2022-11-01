@@ -10,13 +10,15 @@ function Index({
     disabled,
     onClick,
     icon,
+    btnHeight
 }) {
   return (
     <div 
         className='btn-wrapper'
         onClick={onClick}
         style={{
-            background: !disabled ? bgColor : disabledColor
+            background: !disabled ? bgColor : disabledColor,
+            height: !btnHeight ? 66 : btnHeight, 
         }}
     >
         <p

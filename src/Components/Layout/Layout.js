@@ -32,11 +32,11 @@ function Layout({
 
     const navList =[
         'Dashboard',
-        'Transactions',
+        // 'Transactions',
         'Accounts',
-        'Payment',
+        'Payments',
         'Settings'
-    ]
+    ];
   return (
     <div className='layout-cont'>
         <div className='side-nav'>
@@ -70,7 +70,7 @@ function Layout({
                                 link.toLowerCase() === 'accounts' ? (
                                     <TbCapture style={{marginRight: 10, fontSize: 20}} /> 
                                 ) :
-                                link.toLowerCase() === 'payment' ? (
+                                link.toLowerCase() === 'payments' ? (
                                     <RiHandCoinLine style={{marginRight: 10, fontSize: 20}} />
                                 ) : 
                                 link.toLowerCase() === 'settings' ? (

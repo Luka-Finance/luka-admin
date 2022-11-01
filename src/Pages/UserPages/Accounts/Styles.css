@@ -1,0 +1,17 @@
+.transaction-dashboard {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px 10px;
+}
+
+.empty-state-text {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    color: #000000;
+    width: 100%;
+    text-align: center;
+}
