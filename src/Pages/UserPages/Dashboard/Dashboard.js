@@ -25,6 +25,7 @@ function Dashboard() {
           auxHeadFilter={false}
           auxHeadBtnClick={handleShow}
           auxBtnTitle={'Add new employee'}
+          auxBtnAppear={true}
           auxBtnIcon={
             <FaRegPlusSquare 
               style={{

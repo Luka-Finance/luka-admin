@@ -10,6 +10,7 @@ function AuxPageHead({
     auxHeadBtnClick,
     auxBtnTitle,
     auxBtnIcon,
+    auxBtnAppear,
 }) {
   return (
     <div className='aux-head-cont'>
@@ -32,17 +33,21 @@ function AuxPageHead({
             )
         }
 
-        <div className='aux-head-btn-cont'>
-            <CustomButton
-                btnHeight={44}
-                onClick={auxHeadBtnClick} 
-                title={auxBtnTitle}
-                textColor={'#fff'}
-                bgColor={'rgba(3, 166, 60, 1)'}
-                disabled={false}
-                icon={auxBtnIcon}
-            />
-        </div>
+        {
+            auxBtnAppear ? (
+                <div className='aux-head-btn-cont'>
+                    <CustomButton
+                        btnHeight={44}
+                        onClick={auxHeadBtnClick} 
+                        title={auxBtnTitle}
+                        textColor={'#fff'}
+                        bgColor={'rgba(3, 166, 60, 1)'}
+                        disabled={false}
+                        icon={auxBtnIcon}
+                    />
+                </div>
+            ) : ('')
+        }
     </div>
   )
 };

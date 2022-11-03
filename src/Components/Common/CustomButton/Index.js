@@ -19,6 +19,10 @@ function Index({
         style={{
             background: !disabled ? bgColor : disabledColor,
             height: !btnHeight ? 66 : btnHeight, 
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignContent: 'center'
         }}
     >
         <p

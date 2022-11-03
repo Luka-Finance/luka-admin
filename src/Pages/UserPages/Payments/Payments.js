@@ -22,6 +22,7 @@ function Payments() {
           auxHeadTitle={'Payments'}
           auxHeadBtnClick={handleShow}
           auxBtnTitle={'Download Invoice'}
+          auxBtnAppear={true}
         />
 
         <SummaryCard data={debtDB} />
