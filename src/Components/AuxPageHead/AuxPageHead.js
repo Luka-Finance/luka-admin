@@ -37,7 +37,7 @@ function AuxPageHead({
             auxBtnAppear ? (
                 <div className='aux-head-btn-cont'>
                     <CustomButton
-                        btnHeight={44}
+                        btnHeight={50}
                         onClick={auxHeadBtnClick} 
                         title={auxBtnTitle}
                         textColor={'#fff'}

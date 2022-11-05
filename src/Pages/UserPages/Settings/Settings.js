@@ -158,7 +158,10 @@ function Settings() {
 
                <div className='settings-sub-form-cont'>
                     <div className='settings-input-cont'>
-                        <CustomSelector />
+                        <CustomSelector
+                            label={'Who pay transaction fee?'}
+                            options={['Employer', 'Employee']}
+                        />
                     </div>
 
                     <div className='settings-input-cont'>

@@ -91,13 +91,16 @@
 }
 
 .location-cont {
+    /* border: 1px solid red; */
     display: flex;
     flex-direction: row;
     align-items: center;
+    width: 100%;
 }
 
 .location-cont-child {
     margin-bottom: 25px;
+    width: 100%;
 }
 
 .location-cont-child:nth-child(1) {
@@ -126,7 +129,7 @@
     width: 215px;
     height: 215px;
     mix-blend-mode: darken;
-    background-color: rgba(3, 166, 60, 0.5);
+    background-color: rgba(71, 238, 129, 0.5);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -152,6 +155,18 @@
     line-height: 26px;
     text-align: center;
     color: #333333;
+}
+
+.otp-entry-form-text {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: center;
+    color: #333333;
+    width: 600px;
+    /* border: 1px solid red; */
 }
 
 .enter-otp-link {
@@ -248,7 +263,8 @@
 }
 
 @media screen and (max-width: 769px) {
-    .form-text {
+    .form-text,
+    .otp-entry-form-text {
         width: 100%;
         padding: 0px 10px;
     }

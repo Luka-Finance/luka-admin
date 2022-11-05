@@ -3,6 +3,7 @@ import Image from 'react-bootstrap/Image';
 import Input from '../../Components/Common/Input/Input';
 import { AiFillEyeInvisible } from 'react-icons/ai';
 import CustomButton from '../../Components/Common/CustomButton/Index';
+import CustomSelector from '../../Components/Common/CustomSelector/CustomSelector';
 
 import './Styles.css';
 
@@ -39,20 +40,16 @@ function Register() {
 
                 <div className='location-cont'>
                     <div className='location-cont-child'>
-                        <Input  
+                        <CustomSelector 
                             label={'Country'}
-                            type={'text'}
-                            onChange={(e) => {console.log(e.target.value)}}
-                            error={''}
+                            options={['Nigeria', 'Ghana','Togo', 'Cameroon']}
                         />
                     </div>
 
                     <div className='location-cont-child'>
-                        <Input  
+                        <CustomSelector 
                             label={'City'}
-                            type={'text'}
-                            onChange={(e) => {console.log(e.target.value)}}
-                            error={''}
+                            options={['Lagos', 'Accra','Cotonou', 'Abijan']}
                         />
                     </div>
                 </div>

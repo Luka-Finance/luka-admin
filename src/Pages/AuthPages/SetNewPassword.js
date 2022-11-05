@@ -21,7 +21,7 @@ function SetNewPassword() {
             <div className='form-cont'>
                 <div className='input-holder'>
                     <Input  
-                        label={'Create Password'}
+                        label={'New Password'}
                         type={'password'}
                         onChange={(e) => {console.log(e.target.value)}}
                         error={''}

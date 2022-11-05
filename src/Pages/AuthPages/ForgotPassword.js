@@ -17,7 +17,7 @@ function ForgotPassword() {
                 Forgot Pasword
             </div>
 
-            <p className='success-text'>
+            <p className='otp-entry-form-text'>
                 To recover your password, please enter your email address
             </p>
 

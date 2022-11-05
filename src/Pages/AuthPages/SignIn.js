@@ -30,7 +30,7 @@ function SignIn() {
 
                 <div className='input-holder'>
                     <Input  
-                        label={'Create Password'}
+                        label={'Password'}
                         type={'password'}
                         onChange={(e) => {console.log(e.target.value)}}
                         error={''}

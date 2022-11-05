@@ -16,7 +16,7 @@ function OtpPage() {
                 Enter OTP
             </p>
 
-            <p className='form-text'>
+            <p className='otp-entry-form-text'>
                 A one-time password have been sent to your registered email
                 kindly input the 6-digit code below
             </p>

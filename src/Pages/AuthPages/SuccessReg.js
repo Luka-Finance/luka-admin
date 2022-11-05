@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'react-bootstrap/Image';
-import { BsCheckLg } from 'react-icons/bs';
+import { BsCheck2 } from 'react-icons/bs';
 
 import './Styles.css';
 
@@ -13,7 +13,7 @@ function SuccessReg() {
 
         <div className='body'>
             <div className='check-cont'>
-                <BsCheckLg style={{fontSize: 70, color: '#03A63C',}}  />
+                <BsCheck2 style={{fontSize: 150, color: '#03A63C',}}  />
             </div>
 
             <p className='success-title'>
