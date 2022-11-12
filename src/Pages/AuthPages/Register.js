@@ -4,8 +4,13 @@ import Input from '../../Components/Common/Input/Input';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import CustomButton from '../../Components/Common/CustomButton/Index';
 import CustomSelector from '../../Components/Common/CustomSelector/CustomSelector';
+import axiosInstance from '../../Utils/axiosInstance';
+ import { toast, ToastContainer } from 'react-toastify';
+ import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
+ import 'react-toastify/dist/ReactToastify.css';
 
 import './Styles.css';
+import { Link } from 'react-router-dom';
 
 function Register() {
     const [form, setForm] = useState({});
@@ -13,6 +18,7 @@ function Register() {
     const [passwordA, setPasswordA] = useState(false);
     const [passwordB, setPasswordB] = useState(false);
     const [disable, setDisable] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const onEnterValue = ({name, value}) => {
         setForm({...form, [name]: value});
@@ -54,7 +60,25 @@ function Register() {
                 setErrors(prev => {return {...prev, [name]: null}});
             };
 
-          } else if (name === 'companyPhone') {
+          } 
+        //   else if (name === 'businessType') {
+
+        //     if(value === '') {
+        //         setErrors(prev => {return {...prev, [name]: `Please select a business type`}});
+        //     } else {
+        //         setErrors(prev => {return {...prev, [name]: null}});
+        //     }
+
+        //   } else if (name === 'companyRCNumber') {
+
+        //     if(form.businessType === 'registered' && value.length < 7) {
+        //         setErrors(prev => {return {...prev, [name]: `Please enter a correct RC number`}});
+        //     } else {
+        //         setErrors(prev => {return {...prev, [name]: null}});
+        //     }
+
+        //   } 
+          else if (name === 'companyPhone') {
             let val;
             let num = [];
             num.push(value[0]);
@@ -75,9 +99,41 @@ function Register() {
         };
     };
 
+    const formatPhone = (phone) => {
+        return phone.replace(/[0-9]/, '+234');
+    };
+
+    const register = async() => {
+        setLoading(true);
+        try {
+            const res = await axiosInstance({
+                url: '/business/register',
+                method: 'POST',
+                data:{
+                    name: form.companyName,
+                    email: form.companyEmail,
+                    password: form.password,
+                    country: form.companyCountry,
+                    city: form.companyCity,
+                    phone: formatPhone(form.companyPhone), 
+                }
+            });
+
+            console.log('res ', res);
+            toast.success(res.message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            setLoading(false);
+        } catch(error) {
+            setLoading(false);
+            console.log('err ', error.message);
+            toast.error(error.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        }
+    };
+
     const onSubmit = () => {
-        // validation
-        // console.log('form: >>', form);
     
         if(!form.companyName) {
           setErrors(prev => {return {...prev, companyName: 'Please add a company name'}});
@@ -108,11 +164,16 @@ function Register() {
         }
 
         if(
-            Object.values(form).length === 5 && 
+            Object.values(form).length === 7 &&
             Object.values(form).every(item => item.trim().length > 0) &&
             Object.values(errors).every(item => !item)
         ) {
-            console.log(form)
+            register();
+        } else {
+            toast.warning('Please ensure all fields are filled.', {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            return(<ToastContainer />)
         }
     
     };
@@ -128,9 +189,16 @@ function Register() {
         }
     }, [form, errors])
 
+    if(loading) {
+        return (<LoaderScreen loadingText={'processing registration'} />)
+    }
+
 
   return (
     <div className='parent-cont'>
+        {/* for toast notification containing */}
+        <ToastContainer />
+
         <div className='banner'>
             <Image src='assets/Logo.svg' alt="logo" />
         </div>
@@ -203,6 +271,36 @@ function Register() {
                     />
                 </div>
 
+                {/* <div className='location-cont'>
+                    <div className='location-cont-child'>
+                        <CustomSelector 
+                            label={'Type'}
+                            options={['unregistered', 'registered']}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'businessType', value})
+                            }}
+                            error={errors.businessType}
+                        />
+                    </div>
+
+                    <div className='location-cont-child'>
+                       {
+                        form.businessType === 'registered' && (
+                            <Input  
+                                label={'RC Number'}
+                                type={'text'}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'companyRCNumber', value})
+                                }}
+                                error={errors.companyRCNumber}
+                            />
+                        )
+                       }
+                    </div>
+                </div> */}
+
                 <div className='input-holder'>
                     <Input  
                         label={'Create Password'}
@@ -232,7 +330,7 @@ function Register() {
                 </div>
 
                 <div className='tc-cont'>
-                    <input type={'checkbox'} className='tc-checkbox'checked={true} />
+                    <input type={'checkbox'} className='tc-checkbox' checked={true} readOnly />
                     <p style={{paddingTop: 10, marginLeft: 10}}> 
                         By activating your account, you agree to our Terms and Conditions.  
                     </p>
@@ -244,18 +342,20 @@ function Register() {
                         textColor={'#fff'}
                         bgColor={'#03A63C'}
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
-                        disabled={disable}
+                        disabled={false}
                         onClick={onSubmit}
                     />
                 </div>
 
-                <p className='otp-aux-link'>
-                    Click here to  
-                    <span className='otp-aux-link'>
-                        sign in
-                    </span>
-                    if registered
-                </p>
+                <Link style={{textDeoration: 'none'}} to={'/sign-in'}>
+                    <p className='otp-aux-link'>
+                        Click here to  
+                        <span style={{margin: '0px 5px'}} className='otp-aux-link'>
+                            sign in
+                        </span>
+                        if registered
+                    </p>
+                </Link>
             </div>
         </div>
     </div>

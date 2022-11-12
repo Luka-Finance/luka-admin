@@ -1,14 +1,112 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Image } from 'react-bootstrap';
 import CustomButton from '../../Components/Common/CustomButton/Index';
 import Input from '../../Components/Common/Input/Input';
-import { AiFillEyeInvisible } from 'react-icons/ai';
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import { toast, ToastContainer } from 'react-toastify';
+import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
+import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from '../../Utils/axiosInstance';
 
 import './Styles.css';
+import { Link } from 'react-router-dom';
 
 function SignIn() {
+    const [form, setForm] = useState({});
+    const [errors, setErrors] = useState({});
+    const [passwordA, setPasswordA] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const onEnterValue = ({name, value}) => { 
+        setForm({...form, [name]: value});
+        
+        if(value !== '') {
+
+            if(name === 'password') {
+
+                if(value.length < 5) {
+                    setErrors(prev => {return {...prev, [name]: `Password needs to made up of alpha-numeric characters`}});
+                } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+                }; 
+
+            } else if (name === 'companyEmail') {
+               
+                const regex = new RegExp (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
+                const isEmailValid = regex.test(value);
+    
+                if(value.length < 12 || !isEmailValid) {
+                    setErrors(prev => {return {...prev, [name]: `Please email should be properly formated`}});
+                } else {
+                    setErrors(prev => {return {...prev, [name]: null}});
+                };
+
+            }
+        } else {
+            setErrors(prev => {return {...prev, [name]: `This field is required`}});
+        };
+    };
+
+    const signIn = async() => {
+        setLoading(true);
+        try {
+            const res = await axiosInstance({
+                url: '/business/login',
+                method: 'POST',
+                data:{
+                    email: form.companyEmail,
+                    password: form.password,
+                }
+            });
+
+            console.log('res ', res);
+            toast.success(res.message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            setLoading(false);
+        } catch(error) {
+            setLoading(false);
+            console.log('err ', error.message);
+            toast.error(error.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            return(<ToastContainer />)
+        }
+    };
+
+    const onSubmit = () => {
+
+        if(!form.companyEmail) {
+            setErrors(prev => {return {...prev, firstName: 'Please add a company email'}});
+        }
+
+        if(!form.password) {
+            setErrors(prev => {return {...prev, password: 'Please add a password'}});
+        }
+
+        if(
+            Object.values(form).length === 2 &&
+            Object.values(form).every(item => item.trim().length > 0) &&
+            Object.values(errors).every(item => !item)
+        ) {
+            signIn();
+        } else {
+            toast.warning('Please ensure all fields are filled.', {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        }
+
+    };
+
+    if(loading) {
+        return (<LoaderScreen loadingText={'processing sign in'} />)
+    }
+
   return (
     <div className='parent-cont-2'>
+        {/* for toast notification containing */}
+        <ToastContainer />
+
         <div className='banner'>
             <Image src='assets/Logo.svg' alt="logo" />
         </div>
@@ -23,18 +121,25 @@ function SignIn() {
                     <Input  
                         label={'Email'}
                         type={'email'}
-                        onChange={(e) => {console.log(e.target.value)}}
-                        error={''}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            onEnterValue({name: 'companyEmail', value})
+                        }}
+                        error={errors.companyEmail}
                     />
                 </div>
 
                 <div className='input-holder'>
                     <Input  
                         label={'Password'}
-                        type={'password'}
-                        onChange={(e) => {console.log(e.target.value)}}
-                        error={''}
-                        icon={<AiFillEyeInvisible style={{fontSize: 20}} />}
+                        type={!passwordA ? 'password' : 'text'}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            onEnterValue({name: 'password', value})
+                        }}
+                        error={errors.password}
+                        icon={!passwordA ? <AiFillEyeInvisible style={{fontSize: 20}} /> : <AiFillEye style={{fontSize: 20}} />}
+                        iconClick={() => setPasswordA(!passwordA)}
                     />
                 </div>
 
@@ -44,16 +149,19 @@ function SignIn() {
                         textColor={'#fff'}
                         bgColor={'#03A63C'}
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
-                        disabled={true}
+                        disabled={false}
+                        onClick={onSubmit}
                     />
                 </div>
 
-                <p className='otp-aux-link'>
-                    Not registered? Click here to 
-                    <span style={{marginLeft: 5}} className='otp-aux-link'>
-                     Register
-                    </span>
-                </p>
+                <Link style={{textDeoration: 'none'}} to={'/'}>
+                    <p className='otp-aux-link'>
+                        Not registered? Click here to 
+                        <span style={{marginLeft: 5}} className='otp-aux-link'>
+                        Register
+                        </span>
+                    </p>
+                </Link>
             </div>
         </div>
     </div>
