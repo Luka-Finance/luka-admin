@@ -1,12 +1,100 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Image } from 'react-bootstrap';
 import CustomButton from '../../Components/Common/CustomButton/Index';
+import { toast, ToastContainer } from 'react-toastify';
+import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
+import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from '../../Utils/axiosInstance';
+import accessLocalStorage from '../../Utils/accessLocalStorage';
 
 import './Styles.css';
 
 function OtpPage() {
+    const [entry1, setEntry1] = useState('');
+    const [entry2, setEntry2] = useState('');
+    const [entry3, setEntry3] = useState('');
+    const [entry4, setEntry4] = useState('');
+    const [entry5, setEntry5] = useState('');
+    const [entry6, setEntry6] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [loaderMsg, setLoaderMsg] = useState('');
+
+    const resendOtp = async() => {
+        setLoaderMsg('resending otp');
+        try {
+            const res = await axiosInstance({
+                url: '/business/resend-otp',
+                method: 'POST',
+                data: {
+                    type: 'verification',
+                    email: accessLocalStorage.getFromLs('companyEmail'), 
+                    phone: accessLocalStorage.getFromLs('companyPhone')
+                }
+            })
+            console.log('res ', res);
+        } catch(error) {
+            setLoading(false);
+            toast.error(error.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            return(<ToastContainer />) 
+        }
+    };
+
+    const verifyOtp = async(otp) => {
+        setLoaderMsg('verifying otp');
+        setLoading(true);
+        try {
+            const res = await axiosInstance({
+                url: '/business/verify-otp',
+                method: 'POST',
+                data: {
+                  token: accessLocalStorage.getFromLs('token'),
+                  otp,
+                  client: accessLocalStorage.getFromLs('companyEmail'),
+                  type: 'verification'  
+                }
+            })
+            setLoading(false);
+            console.log('res ', res);
+        } catch(error) {
+            setLoading(false);
+            toast.error(error.message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            return(<ToastContainer />) 
+        }
+    };
+
+    const onSubmit = () => {
+        let arr = [];
+        arr[0] = entry1;
+        arr[1] = entry2;
+        arr[2] = entry3;
+        arr[3] = entry4;
+        arr[4] = entry5;
+        arr[5] = entry6;
+        let checker = arr.map(cur => cur === '');
+        const otp = arr.join(''); 
+        if(checker.includes(true)) {
+            toast.warning('Enter your correct 6 digit OTP code.', {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            return(<ToastContainer />) 
+        } else {
+            verifyOtp(otp); 
+        }
+    };
+
+    if(loading) {
+        return (<LoaderScreen loadingText={loaderMsg} />)
+    }
+
   return (
     <div className='parent-cont-2'>
+        {/* for toast notification containing */}
+        <ToastContainer />
+
         <div className='banner'>
             <Image src='assets/Logo.svg' alt="logo" />
         </div>
@@ -28,30 +116,55 @@ function OtpPage() {
                         type={'text'} 
                         className='otp-input' 
                         maxLength={1}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setEntry1(value)
+                        }}
                     />
                     <input 
                         type={'text'} 
                         className='otp-input'
                         maxLength={1} 
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setEntry2(value)
+                        }}
                     />
                     <input 
                         type={'text'} 
                         className='otp-input' 
+                        maxLength={1} 
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setEntry3(value)
+                        }}
                     />
                     <input 
                         type={'text'} 
                         className='otp-input' 
                         maxLength={1}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setEntry4(value)
+                        }}
                     />
                     <input 
                         type={'text'} 
                         className='otp-input' 
                         maxLength={1}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setEntry5(value)
+                        }}
                     />
                     <input 
                         type={'text'} 
                         className='otp-input' 
                         maxLength={1}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setEntry6(value)
+                        }}
                     />
                 </div>
 
@@ -61,13 +174,14 @@ function OtpPage() {
                         textColor={'#fff'}
                         bgColor={'#03A63C'}
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
-                        disabled={true}
+                        disabled={false}
+                        onClick={onSubmit}
                     />
                 </div>
 
                 <p className='otp-aux-link'>
                     Didn't get the email? 
-                    <span style={{marginLeft: 5}} className='otp-aux-link'>
+                    <span style={{marginLeft: 5}} className='otp-aux-link' onClick={resendOtp}>
                         Send OTP code again
                     </span>
                 </p>

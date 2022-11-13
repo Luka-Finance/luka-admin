@@ -174,7 +174,7 @@ function Settings() {
                     </div>
 
                     <div className='scheduled-payment-cont'>
-                        <spaan>
+                        <span>
                             <BsExclamationCircle 
                                 style={{
                                     color: '#03A63C',
@@ -182,7 +182,7 @@ function Settings() {
                                     marginRight: 10
                                 }} 
                             />
-                        </spaan>
+                        </span>
 
                         <p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
                             On this day you have written here, we will reset all your employee card back to Zero

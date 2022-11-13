@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import AuxPageHead from '../../../Components/AuxPageHead/AuxPageHead';
 import Layout from '../../../Components/Layout/Layout';
 import CustomSelector from '../../../Components/Common/CustomSelector/CustomSelector';
@@ -9,18 +9,53 @@ import Input from '../../../Components/Common/Input/Input';
 import { fakeDBTwo } from '../../../FakeDB/fakeDB-2';
 import CustomTable from '../../../Components/Common/CustomTable/CustomTable';
 import {FaRegPlusSquare} from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
+import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
+import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from '../../../Utils/axiosInstance';
 
 import './Styles.css';
 
 function Accounts() {
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   // const [accounts, setAccounts] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const getStaffs = async() => {
+    setLoading(true);
+    try {
+      const res = await axiosInstance({
+        url: '/staffs',
+        method: 'GET',
+      })
+      console.log(res);
+      setLoading(false);
+    }catch(error) {
+      setLoading(false);
+      console.log('err ', error.message);
+      toast.error(error.message, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      return(<ToastContainer />)
+    }
+  }
+
+  useEffect(() => {
+    getStaffs();
+  }, [])
+
+  if(loading) {
+    return (<LoaderScreen loadingText={'fetching accounts'} />)
+  }
+
   return (
     <Layout currentPage={'accounts'}>
+      {/* for toast notification containing */}
+      <ToastContainer />
+
         <AuxPageHead 
           auxHeadFilter={true}
           auxHeadBtnClick={handleShow}

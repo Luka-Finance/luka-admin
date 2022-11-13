@@ -5,12 +5,13 @@ import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import CustomButton from '../../Components/Common/CustomButton/Index';
 import CustomSelector from '../../Components/Common/CustomSelector/CustomSelector';
 import axiosInstance from '../../Utils/axiosInstance';
- import { toast, ToastContainer } from 'react-toastify';
- import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
- import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
+import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './Styles.css';
 import { Link } from 'react-router-dom';
+import accessLocalStorage from '../../Utils/accessLocalStorage';
 
 function Register() {
     const [form, setForm] = useState({});
@@ -44,7 +45,7 @@ function Register() {
           } else if (name === 'companyName') {
 
             if(value.length < 3) {
-                setErrors(prev => {return {...prev, [name]: `Please first name should be a minimum of 3 characters`}});
+                setErrors(prev => {return {...prev, [name]: `Company name should be a minimum of 3 characters`}});
               } else {
                 setErrors(prev => {return {...prev, [name]: null}});
             };
@@ -55,7 +56,7 @@ function Register() {
             const isEmailValid = regex.test(value);
 
             if(value.length < 12 || !isEmailValid) {
-                setErrors(prev => {return {...prev, [name]: `Please email should be properly formated`}});
+                setErrors(prev => {return {...prev, [name]: `Company email should be properly formated`}});
             } else {
                 setErrors(prev => {return {...prev, [name]: null}});
             };
@@ -118,7 +119,8 @@ function Register() {
                     phone: formatPhone(form.companyPhone), 
                 }
             });
-
+            accessLocalStorage.setToLs('companyEmail', form.companyEmail);
+            accessLocalStorage.setToLs('companyPhone', form.companyPhone);
             console.log('res ', res);
             toast.success(res.message, {
                 position: toast.POSITION.TOP_RIGHT
@@ -130,6 +132,7 @@ function Register() {
             toast.error(error.message, {
                 position: toast.POSITION.TOP_RIGHT
             })
+            return(<ToastContainer />)
         }
     };
 

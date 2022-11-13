@@ -1,7 +1,8 @@
 import axios from 'axios';
+import accessLocalStorage from './accessLocalStorage';
 
 const getAccessToken = () => {
- const token = localStorage.getItem('token');
+ const token = accessLocalStorage.getFromLs('token');
  if(token) {
   return `Beare ${token}`;
  } else {
