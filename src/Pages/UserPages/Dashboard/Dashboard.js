@@ -5,7 +5,6 @@ import AuxPageHead from '../../../Components/AuxPageHead/AuxPageHead';
 import Modal from 'react-bootstrap/Modal';
 import CustomButton from '../../../Components/Common/CustomButton/Index';
 import Input from '../../../Components/Common/Input/Input';
-import { fakeDB } from '../../../FakeDB/FakeDB-1';
 import { InputListOne } from '../../../Components/Common/InputListOne/InputListOne';
 import {FaRegPlusSquare} from 'react-icons/fa';
 import {BsCheck2} from 'react-icons/bs'
@@ -25,6 +24,14 @@ function Dashboard() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [loaderText, setLoaderText] = useState('');
+  const [stats, setStats] = useState({
+    totalEarnedThisMonth: 0,
+    totalWithdrawn: 0,
+    pendingBalance: 0,
+    totalStaff: 0,
+    activeStaffs: 0,
+    inactiveStaffs: 0
+  });
 
   const {business} = businessData;
 
@@ -173,9 +180,37 @@ function Dashboard() {
       return(<ToastContainer />)
     }
   };
-// {
-//   action:  'deactvate' || 'restore' || 'suspend'
-// }
+
+  const getBusinessStats = async() => {
+    setLoaderText('Fetching stats');
+    setLoading(true);
+    try {
+      const res = await axiosInstance({
+        url: '/business/stats',
+        method: 'GET'
+      });
+      const {data, message} = res.data;
+      setStats(data);
+      toast.success(message, {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      setLoading(false);
+      return(<ToastContainer />)
+    } catch (error) {
+      setLoading(false);
+      const err = error.response.data.message
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      return(<ToastContainer />)
+    }
+  }; 
+
+  useEffect(() => {
+    if(Object.keys(business).length > 0) {
+      getBusinessStats();
+    } 
+  }, [business])
 
   if(loading) {
     return(<LoaderScreen loadingText={loaderText} />)
@@ -199,7 +234,7 @@ function Dashboard() {
           }
         />
         
-        <SummaryCard data={fakeDB} />
+        <SummaryCard data={stats} />
 
         <Modal 
           show={show} 

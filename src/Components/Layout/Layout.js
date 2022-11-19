@@ -17,8 +17,10 @@ import Popover from 'react-bootstrap/Popover';
 import LoaderScreen from '../Common/LoaderScreen/LoaderScreen';
 import axiosInstance from '../../Utils/axiosInstance';
 import './Styles.css';
-import { saveBusiness } from '../../Redux/Actions/businessActions';
+import { saveBusiness, logoutBusiness } from '../../Redux/Actions/businessActions';
+import { logoutUser } from '../../Redux/Actions/userActions';
 import { toast, ToastContainer } from 'react-toastify';
+import accessLocalStorage from '../../Utils/accessLocalStorage';
 
 function Layout({
     children,
@@ -76,9 +78,29 @@ function Layout({
     
       };
 
+      const checkForAccessToken = () => {
+        let token = accessLocalStorage.getFromLs('token');
+        if(!token) {
+            toast.error('Please sign in.', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            window.location.replace('/sign-in');
+            return(<ToastContainer />);
+        }
+      };
+
+    const userLogout = () => {
+        dispatch(logoutBusiness());
+        dispatch(logoutUser());
+        accessLocalStorage.clearLs();
+        window.location.replace('/sign-in');
+    };
+
     useEffect(() => {
+        checkForAccessToken();
+
         if(Object.keys(business).length === 0) {
-            getUserData()
+            getUserData();
         }
     }, [])
 
@@ -190,7 +212,9 @@ function Layout({
                         <Popover id="popover-contained">
                         <Popover.Header as="h3">Profile</Popover.Header>
                         <Popover.Body>
-                            <strong>logout</strong>
+                            <div style={{width: 70, cursor: 'pointer'}} onClick={userLogout}>
+                                <strong>logout</strong>
+                            </div>
                         </Popover.Body>
                         </Popover>
                     </Overlay>

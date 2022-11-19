@@ -9,44 +9,159 @@ import './Styles.css';
 function SummaryCard({data}) {
   return (
     <div className='dashboard-card-cont'>
-          {
-            data.map((cur,index) => (
-              <div 
-                className='dashboard-card'
-                key={index}
-              >
-                <div className='dashboard-card-head'>
-                  <p className='dashboard-card-text' style={{color: cur.pending ? '#C30000' : '#000'}} >
-                    <span style={{marginRight: 5}}>{cur.amount > 0 && (getSymbolFromCurrency('NGN'))}</span>
-                    <span>
-                      {
-                        cur.amount > 0 ? 
-                        (cur.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) 
-                        : (cur.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-                      }
-                    </span>
-                  </p>
+      <div 
+        className='dashboard-card'
+      >
+        <div className='dashboard-card-head'>
+          <p className='dashboard-card-text' style={{color: '#000'}} >
+            <span style={{marginRight: 5}}>{(getSymbolFromCurrency('NGN'))}</span>
+            <span>
+              {
+                data.totalEarnedThisMonth.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+            </span>
+          </p>
 
-                  <p 
-                    className='dashboard-card-icon-cont'
-                    style={{backgroundColor: cur.pending ? 'rgba(211, 56, 56, 0.1)' : 'rgba(3, 166, 60, 0.1)'}}
-                  >
-                    {
-                      cur.icon === 'BiWallet' ? (<BiWallet style={{fontSize: 20, color: cur.pending ? '#C30000' : '#03A63C'}} />) : 
-                      cur.icon === 'BsCheckLg' ? (<BsCheckLg style={{fontSize: 20, color: cur.pending ? '#C30000' : '#03A63C'}} />) :
-                      cur.icon === 'BsExclamationSquare'? (<BsExclamationSquare style={{fontSize: 20, color: cur.pending ? '#C30000' : '#03A63C'}} />) :
-                      cur.icon === 'HiUsers' ? (<HiUsers style={{fontSize: 20, color: cur.pending ? '#C30000' : '#03A63C'}} />) : (<div></div>)
-                    }
-                  </p>
-                </div>
-
-                <p className='dashboard-card-text-2'>
-                    {cur.text}
-                </p>
-              </div>
-            ))
-          }
+          <p 
+            className='dashboard-card-icon-cont'
+            style={{backgroundColor: 'rgba(3, 166, 60, 0.1)'}}
+          > 
+            <BiWallet style={{fontSize: 20, color: '#03A63C'}} />
+          </p>
         </div>
+
+        <p className='dashboard-card-text-2'>
+         Total earned this month
+        </p>
+      </div> 
+
+      <div 
+        className='dashboard-card'
+      >
+        <div className='dashboard-card-head'>
+          <p className='dashboard-card-text' style={{color: '#000'}} >
+            <span style={{marginRight: 5}}>{(getSymbolFromCurrency('NGN'))}</span>
+            <span>
+              {
+                data.totalWithdrawn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+            </span>
+          </p>
+
+          <p 
+            className='dashboard-card-icon-cont'
+            style={{backgroundColor: 'rgba(3, 166, 60, 0.1)'}}
+          > 
+            <BsCheckLg style={{fontSize: 20, color: '#03A63C'}} />
+          </p>
+        </div>
+
+        <p className='dashboard-card-text-2'>
+         Total Withdrawn
+        </p>
+      </div>
+
+      <div 
+        className='dashboard-card'
+      >
+        <div className='dashboard-card-head'>
+          <p className='dashboard-card-text' style={{color: '#C30000'}} >
+            <span style={{marginRight: 5}}>{(getSymbolFromCurrency('NGN'))}</span>
+            <span>
+              {
+                data.pendingBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+            </span>
+          </p>
+
+          <p 
+            className='dashboard-card-icon-cont'
+            style={{backgroundColor: 'rgba(211, 56, 56, 0.1)'}}
+          > 
+            <BsExclamationSquare style={{fontSize: 20, color: '#C30000'}} />
+          </p>
+        </div>
+
+        <p className='dashboard-card-text-2'>
+         Pending Balance
+        </p>
+      </div>  
+
+      <div 
+        className='dashboard-card'
+      >
+        <div className='dashboard-card-head'>
+          <p className='dashboard-card-text' style={{color: '#000'}} >
+            <span>
+              {
+                data.totalStaff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+            </span>
+          </p>
+
+          <p 
+            className='dashboard-card-icon-cont'
+            style={{backgroundColor: 'rgba(3, 166, 60, 0.1)'}}
+          > 
+            <HiUsers style={{fontSize: 20, color: '#03A63C'}} />
+          </p>
+        </div>
+
+        <p className='dashboard-card-text-2'>
+         Total Employee
+        </p>
+      </div>
+
+      <div 
+        className='dashboard-card'
+      >
+        <div className='dashboard-card-head'>
+          <p className='dashboard-card-text' style={{color: '#000'}} >
+            <span>
+              {
+                data.activeStaffs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+            </span>
+          </p>
+
+          <p 
+            className='dashboard-card-icon-cont'
+            style={{backgroundColor: 'rgba(3, 166, 60, 0.1)'}}
+          > 
+            <HiUsers style={{fontSize: 20, color: '#03A63C'}} />
+          </p>
+        </div>
+
+        <p className='dashboard-card-text-2'>
+         Active Employee
+        </p>
+      </div>
+
+      <div 
+        className='dashboard-card'
+      >
+        <div className='dashboard-card-head'>
+          <p className='dashboard-card-text' style={{color: '#000'}} >
+            <span>
+              {
+                data.inactiveStaffs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+            </span>
+          </p>
+
+          <p 
+            className='dashboard-card-icon-cont'
+            style={{backgroundColor: 'rgba(3, 166, 60, 0.1)'}}
+          > 
+            <HiUsers style={{fontSize: 20, color: '#03A63C'}} />
+          </p>
+        </div>
+
+        <p className='dashboard-card-text-2'>
+         Inactive Employee
+        </p>
+      </div>  
+    </div>
   );
 };
 

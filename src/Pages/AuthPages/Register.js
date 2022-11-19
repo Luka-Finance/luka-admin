@@ -10,16 +10,11 @@ import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import accessLocalStorage from '../../Utils/accessLocalStorage';
-import { 
-    saveAccessToken 
-} from '../../Redux/Actions/userActions';
-import { useDispatch } from 'react-redux';
 import './Styles.css';
 
 
 
 function Register() {
-    const dispatch = useDispatch();
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
     const [passwordA, setPasswordA] = useState(false);
@@ -263,7 +258,7 @@ function Register() {
                     <div className='location-cont-child'>
                         <CustomSelector 
                             label={'City'}
-                            options={['Lagos', 'Accra','Cotonou', 'Abijan']}
+                            options={['Lagos', 'Accra','Lome', 'Yaounde']}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 onEnterValue({name: 'companyCity', value})

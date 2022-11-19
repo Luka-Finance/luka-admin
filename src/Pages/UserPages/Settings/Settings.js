@@ -18,13 +18,14 @@ function Settings() {
   const [loading, setLoading] = useState(false);
   const [loadingRC, setLoadingRC] = useState(false);
   const [loadingTIM, setLoadingTIN] = useState(false);
+  const [loaderText, setLoaderText] = useState('');
 
   const onEnterValue = ({name, value}) => { 
     setForm({...form, [name]: value});
 
     if(value !== '') {
 
-        if(name === 'companyName') {
+        if(name === 'companyName' || name === 'contactName') {
 
             if(value.length < 3) {
                 setErrors(prev => {return {...prev, [name]: `Company name should be a minimum of 3 characters`}});
@@ -48,6 +49,108 @@ function Settings() {
                 setErrors(prev => {return {...prev, [name]: null}});
             };
 
+        } else if (name === 'companyPhone') {
+            let val;
+            let num = [];
+            num.push(value[0]);
+            num.push(value[1]);
+            num.push(value[2]);
+            val = num.join('');
+            if (value.length !== 11 && (val !== '070' || val !== '081' || val !== '080' || val !== '090')) {
+                setErrors(prev => {return {...prev, [name]: `Please enter a valid phone number`}});
+            } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            }
+        } else if (name === 'companyEmail') {
+
+            const regex = new RegExp (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
+            const isEmailValid = regex.test(value);
+
+            if(value.length < 12 || !isEmailValid) {
+                setErrors(prev => {return {...prev, [name]: `Company email should be properly formated`}});
+            } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            };
+
+        } else if (name === 'contactName') {
+
+            if(value.length < 3) {
+                setErrors(prev => {return {...prev, [name]: `Contact name should be a minimum of 3 characters`}});
+              } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            };
+
+        } else if (name === 'contactRole') {
+
+            if(value.length < 4) {
+                setErrors(prev => {return {...prev, [name]: `Contact role should be a minimum of 4 characters`}});
+              } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            };
+
+        } else if (name === 'contactEmail') {
+
+            const regex = new RegExp (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
+            const isEmailValid = regex.test(value);
+
+            if(value.length < 12 || !isEmailValid) {
+                setErrors(prev => {return {...prev, [name]: `Company email should be properly formated`}});
+            } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            };
+
+        } else if (name === 'contactPhone') {
+            let val;
+            let num = [];
+            num.push(value[0]);
+            num.push(value[1]);
+            num.push(value[2]);
+            val = num.join('');
+            if (value.length !== 11 && (val !== '070' || val !== '081' || val !== '080' || val !== '090')) {
+                setErrors(prev => {return {...prev, [name]: `Please enter a valid phone number`}});
+            } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            }
+        } else if (name === 'companyAddress') {
+
+            if(value.length < 15) {
+                setErrors(prev => {return {...prev, [name]: `Enter correct address`}});
+              } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            };
+
+        } else if (name === 'companyCountry') {
+
+            if(value.length < 5) {
+              setErrors(prev => {return {...prev, [name]: `Select the country`}});
+            } else {
+              setErrors(prev => {return {...prev, [name]: null}});
+            };
+    
+        } else if (name === 'companyCity') {
+
+            if(value.length < 5) {
+              setErrors(prev => {return {...prev, [name]: `Select the city`}});
+            } else {
+              setErrors(prev => {return {...prev, [name]: null}});
+            };
+    
+        } else if (name === 'payTransactionFee') {
+
+            if(value.length < 5) {
+              setErrors(prev => {return {...prev, [name]: `Select select who pays transaction fee`}});
+            } else {
+              setErrors(prev => {return {...prev, [name]: null}});
+            };
+    
+        } else if (name === 'paymentDate') {
+
+            if(value.length < 5) {
+              setErrors(prev => {return {...prev, [name]: `Enter payment date`}});
+            } else {
+              setErrors(prev => {return {...prev, [name]: null}});
+            };
+    
         }
 
     } else {
@@ -62,17 +165,22 @@ function Settings() {
             const res = await axiosInstance({
                 url: '/business/verify/rc',
                 method: 'POST',
-                body: {
+                data: {
                     companyName: form.companyName,
                     rcNumber: form.rcNumber
                 }
             });
-            console.log('res ', res);
+            const {message} = res.data;
+            toast.success(message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
             setLoadingRC(false);
+            return(<ToastContainer />)
         } catch (error) {
             setLoadingRC(false);
             setErrors(prev => {return {...prev, ['rcNumber']: `${error.message}`}});
-            toast.error(error.message, {
+            const err = error.response.data.message;
+            toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
             return(<ToastContainer />)
@@ -87,22 +195,86 @@ function Settings() {
             const res = await axiosInstance({
                 url: '/business/verify/tin',
                 method: 'POST',
-                body: {
+                data: {
                     searchParameter: form.tinNumber,
                 }
             });
-            console.log('res ', res);
+            const {message} = res.data;
+            toast.success(message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
             setLoadingTIN(false);
+            return(<ToastContainer />)
         } catch (error) {
             setLoadingTIN(false);
             setErrors(prev => {return {...prev, ['tinNumber']: `${error.message}`}});
-            toast.error(error.message, {
+            const err = error.response.data.message
+            toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
             return(<ToastContainer />)
         }
     }
   };
+
+  const formatMyDate = (value) => {
+    let formatedDate = [];
+    let arr = [];
+    formatedDate.push(value.split("-")[0]);
+    formatedDate.push(value.split("-")[1]);
+    formatedDate.push(value.split("-")[2]);
+    arr.push(formatedDate[2]);
+    arr.push(formatedDate[1]);
+    arr.push(formatedDate[0]);
+    let properDate = arr.join("-");
+    return properDate;
+  };
+
+  const updateProfile = async() => {
+    setLoaderText('Upadeting profile');
+    setLoading(true);
+
+    const formData = new FormData();
+    const file = form.companyCac ? form.companyCac : '';
+	formData.append('File', file);
+
+    try {
+      const res = await axiosInstance({
+        url: '/business/update-profile',
+        method: 'PATCH',
+        data: {
+            name: form.companyName,
+            phone: form.companyPhone,
+            country: form.companyCountry,
+            city: form.companyCity,
+            email: form.companyEmail,
+            paysTransactionFee: form.payTransactionFee,
+            payday: formatMyDate(form.paymentDate),
+            rcNumber: form.rcNumber,
+            type: '',
+            address: form.companyAddress,
+            contactPersonName: form.contactName,
+            contactPersonEmail: form.contactEmail,
+            contactPersonRole: form.contactRole,
+            contactPersonPhone: form.contactPhone,
+            // cacDoc: formData,
+        }
+      });
+      console.log('res ', res);
+      setLoading(false);   
+    } catch (error) {
+        setLoading(false);
+        const err = error.response.data.message
+        toast.error(err, {
+            position: toast.POSITION.TOP_RIGHT
+        })
+        return(<ToastContainer />)   
+    }
+  };
+
+  if(loading) {
+    return (<LoaderScreen loadingText={loaderText} />)
+  }
 
   return (
     <Layout currentPage={'settings'}>
@@ -168,8 +340,11 @@ function Settings() {
                         <Input 
                             label={'Company email'}
                             type={'email'}
-                            onChange={(e) => console.log(e)}
-                            error={''}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'companyEmail', value});
+                            }}
+                            error={errors.companyEmail}
                         />
                     </div>
 
@@ -177,8 +352,11 @@ function Settings() {
                         <Input 
                             label={'Company phone number'}
                             type={'tel'}
-                            onChange={(e) => console.log(e)}
-                            error={''}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'companyPhone', value})
+                            }}
+                            error={errors.companyPhone}
                         />
                     </div>
 
@@ -187,8 +365,11 @@ function Settings() {
                             <Input 
                                 label={'Contact person name'}
                                 type={'text'}
-                                onChange={(e) => console.log(e)}
-                                error={''}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'contactName', value})
+                                }}
+                                error={errors.contactName}
                             />
                         </div>
 
@@ -196,8 +377,11 @@ function Settings() {
                             <Input 
                                 label={'Role of contact person'}
                                 type={'text'}
-                                onChange={(e) => console.log(e)}
-                                error={''}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'contactRole', value})
+                                }}
+                                error={errors.contactRole}
                             />
                         </div>
                     </div>
@@ -207,8 +391,11 @@ function Settings() {
                             <Input 
                                 label={'Email of contact person'}
                                 type={'email'}
-                                onChange={(e) => console.log(e)}
-                                error={''}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'contactEmail', value})
+                                }}
+                                error={errors.contactEmail}
                             />
                         </div>
 
@@ -216,8 +403,11 @@ function Settings() {
                             <Input 
                                 label={'Mobile of the contact person'}
                                 type={'tel'}
-                                onChange={(e) => console.log(e)}
-                                error={''}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'contactPhone', value})
+                                }}
+                                error={errors.contactPhone}
                             />
                         </div>
                     </div>
@@ -235,41 +425,54 @@ function Settings() {
                </div> 
 
                <div className='settings-sub-form-cont'>
-                    <div className='settings-input-cont'>
+                    {/* <div className='settings-input-cont'>
                         <Input 
                             label={'CAC Document Upload'}
                             type={'file'}
-                            onChange={(e) => console.log(e)}
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                console.log(file);
+                                onEnterValue({name: 'companyCac', file})
+                            }}
                             icon={<BsCloudArrowUp style={{marginRight: 20, fontSize: 25}} />}
                             error={''}
                         />
-                    </div>
+                    </div> */}
 
                     <div className='settings-input-cont'>
                         <Input 
                             label={'Company Address'}
                             type={'text'}
-                            onChange={(e) => console.log(e)}
-                            error={''}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'companyAddress', value})
+                            }}
+                            error={errors.companyAddress}
                         />
                     </div>
 
                     <div className='settings-sub-form-cont-child'>
                         <div className='settings-input-cont'>
-                            <Input 
+                            <CustomSelector 
                                 label={'Country'}
-                                type={'text'}
-                                onChange={(e) => console.log(e)}
-                                error={''}
+                                options={['Nigeria', 'Ghana','Togo', 'Cameroon']}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'companyCountry', value})
+                                }}
+                                error={errors.companyCountry}
                             />
                         </div>
 
                         <div className='settings-input-cont'>
-                            <Input 
+                            <CustomSelector 
                                 label={'City'}
-                                type={'text'}
-                                onChange={(e) => console.log(e)}
-                                error={''}
+                                options={['Lagos', 'Accra','Lome', 'Yaounde']}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'companyCity', value})
+                                }}
+                                error={errors.companyCity}
                             />
                         </div>
                     </div>
@@ -290,6 +493,11 @@ function Settings() {
                         <CustomSelector
                             label={'Who pay transaction fee?'}
                             options={['Employer', 'Employee']}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'payTransactionFee', value})
+                            }}
+                            error={errors.payTransactionFee}
                         />
                     </div>
 
@@ -297,8 +505,11 @@ function Settings() {
                         <Input 
                             label={'Set salary payment date'}
                             type={'date'}
-                            onChange={(e) => console.log(e)}
-                            error={''}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'paymentDate', value})
+                            }}
+                            error={errors.paymentDate}
                         />
                     </div>
 
@@ -319,12 +530,13 @@ function Settings() {
                     </div>
 
                     <div className='settings-form-btn-cont'>
-                        <CustomButton 
+                        <CustomButton
+                            onClick={updateProfile} 
                             title={'Save Changes'}
                             textColor={'#fff'}
                             bgColor={'rgba(3, 166, 60, 1)'}
                             disabledColor={'rgba(3, 166, 60, 0.5)'}
-                            disabled={true}
+                            disabled={false}
                             btnHeight={47}
                         />
                     </div>

@@ -1,5 +1,6 @@
 import {
     SAVE_USER_ACCESS_TOKEN,
+    LOG_OUT
 } from '../Constants/userConstants';
 
 export const saveAccessToken = (token) => async (dispatch) => {
@@ -10,4 +11,13 @@ export const saveAccessToken = (token) => async (dispatch) => {
     });
 
     localStorage.setItem('token', JSON.stringify(token));
+};
+
+export const logoutUser = () => async (dispatch) => {
+
+    dispatch({
+        type: LOG_OUT,
+        payload: {},
+    });
+
 };
