@@ -1,0 +1,2 @@
+export const SAVE_USER_ACCESS_TOKEN = 'SAVE_USER_ACCESS_TOKEN';
+export const LOG_OUT = 'LOG_OUT';

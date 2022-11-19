@@ -1,4 +1,5 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { 
     AiOutlineAppstore, 
@@ -13,17 +14,26 @@ import {BiMenuAltRight} from 'react-icons/bi';
 import { Image } from 'react-bootstrap';
 import Overlay from 'react-bootstrap/Overlay';
 import Popover from 'react-bootstrap/Popover';
-
+import LoaderScreen from '../Common/LoaderScreen/LoaderScreen';
+import axiosInstance from '../../Utils/axiosInstance';
 import './Styles.css';
+import { saveBusiness } from '../../Redux/Actions/businessActions';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Layout({
     children,
     currentPage
 }) {
+    const dispatch = useDispatch();
+    const businessData = useSelector(state => state.businessData);
+    const {business} = businessData;
+
     const [mobileNav, setMobileNav] = useState(false);
     const [show, setShow] = useState(false);
     const [target, setTarget] = useState(null);
     const ref = useRef(null);
+    const [loading, setLoading] = useState(false);
+    const [loaderText, setLoaderText] = useState('');
   
     const handleClick = (event) => {
       setShow(!show);
@@ -37,8 +47,49 @@ function Layout({
         'Payments',
         'Settings'
     ];
+
+    const getUserData = async() => {
+        setLoaderText('fetching data');
+        setLoading(true);
+        try {
+          const res = await axiosInstance({
+            method: 'GET',
+            url: '/business/me',
+          });
+          const {data, message} = res.data;
+          dispatch(saveBusiness(data))
+          setLoading(false);
+    
+          toast.success(message, {
+            position: toast.POSITION.TOP_RIGHT
+          });
+          return(<ToastContainer />)
+        } catch(error) {
+          setLoading(false);
+          console.log(error);
+          // const err = error.response.data.message
+          toast.error('err', {
+            position: toast.POSITION.TOP_RIGHT
+          })
+          return(<ToastContainer />)
+        };
+    
+      };
+
+    useEffect(() => {
+        if(Object.keys(business).length === 0) {
+            getUserData()
+        }
+    }, [])
+
+    if(loading) {
+        return(<LoaderScreen loadingText={loaderText} />)
+    }
   return (
     <div className='layout-cont'>
+        {/* for toast notification containing */}
+         <ToastContainer />
+
         <div className='side-nav'>
             <div className='side-nav-logo-cont'>
                 <Image 
@@ -139,7 +190,7 @@ function Layout({
                         <Popover id="popover-contained">
                         <Popover.Header as="h3">Profile</Popover.Header>
                         <Popover.Body>
-                            <strong>Do something</strong> not entirely sure.
+                            <strong>logout</strong>
                         </Popover.Body>
                         </Popover>
                     </Overlay>

@@ -6,7 +6,7 @@ const getAccessToken = () => {
  if(token) {
   return `Beare ${token}`;
  } else {
-  return ` `;
+  return ``;
  }
 };
 

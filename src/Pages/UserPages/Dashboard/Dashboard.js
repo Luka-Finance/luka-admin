@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import { useSelector } from 'react-redux';
 import Layout from '../../../Components/Layout/Layout';
 import AuxPageHead from '../../../Components/AuxPageHead/AuxPageHead';
 import Modal from 'react-bootstrap/Modal';
@@ -17,11 +18,15 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Dashboard() {
+  const businessData = useSelector(state => state.businessData);
   const [show, setShow] = useState(false);
   const [created, setCreated] = useState(false);
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loaderText, setLoaderText] = useState('');
+
+  const {business} = businessData;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -133,47 +138,51 @@ function Dashboard() {
   };
 
   const onSubmit = async() => {
-    console.log(form);
+    setLoaderText('Creating staff');
     setLoading(true);
     try {
       const res = await axiosInstance({
         url: '/business/create-staff',
         method: 'POST',
-        body: {
+        data: {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
           phone: form.phone,
           salary: form.salary,
           role: form.role,
-          businessId: '6',
+          businessId: business.id,
           startDate: formatMyDate(form.startDate)
         }
       })
-      console.log('res ', res);
-      toast.success(res.message, {
+      const{message} = res.data;
+      // console.log('res ', res);
+      toast.success(message, {
         position: toast.POSITION.TOP_RIGHT
       });
       setLoading(false);
+      setCreated(true);
+      return(<ToastContainer />)
     } catch(error) {
       setLoading(false);
-      console.log('err ', error.message);
-      toast.error(error.message, {
+      // console.log('err ', error.message);
+      const err = error.response.data.message
+      toast.error(err, {
         position: toast.POSITION.TOP_RIGHT
       })
       return(<ToastContainer />)
     }
   };
+// {
+//   action:  'deactvate' || 'restore' || 'suspend'
+// }
 
   if(loading) {
-    return(<LoaderScreen loadingText={'Creating staff'} />)
+    return(<LoaderScreen loadingText={loaderText} />)
   }
 
   return (
     <Layout currentPage={'dashboard'}>
-      {/* for toast notification containing */}
-      <ToastContainer />
-      
         <AuxPageHead 
           auxHeadTitle={'Overview'}
           auxHeadFilter={false}
@@ -209,7 +218,7 @@ function Dashboard() {
                 <div className='employee-form-input-cont'>
                   <CustomSelector
                     label={'Select Employment type*'}
-                    options={['Temporary', 'Permanent', 'Contract']}
+                    options={['regular']}
                     onChange={(e) => {
                       const value = e.target.value;
                       onEnterValue({name: 'role', value})
@@ -268,7 +277,14 @@ function Dashboard() {
                 Employee Successfully Added
               </p>
 
-              <p className='success-emplyee-text'>
+              <p 
+                style={{cursor: 'pointer'}} 
+                onClick={() => {
+                  handleClose(); 
+                  setCreated(false);
+                }} 
+                className='success-emplyee-text'
+              >
                   Go to account
               </p>
             </div>   

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { Image } from 'react-bootstrap';
 import CustomButton from '../../Components/Common/CustomButton/Index';
 import Input from '../../Components/Common/Input/Input';
@@ -7,11 +8,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../Utils/axiosInstance';
-
 import './Styles.css';
 import { Link } from 'react-router-dom';
+import { saveAccessToken } from '../../Redux/Actions/userActions';
 
 function SignIn() {
+    const dispatch = useDispatch();
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
     const [passwordA, setPasswordA] = useState(false);
@@ -58,16 +60,24 @@ function SignIn() {
                     password: form.password,
                 }
             });
+            const {data, message} = res.data;
+            const accessToken = data.token;
+            const business = data.business;
 
-            console.log('res ', res);
-            toast.success(res.message, {
+            dispatch(saveAccessToken(accessToken));
+
+            toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             });
+            return(<ToastContainer />)
+
+            window.location.assign('/dashboard');
             setLoading(false);
         } catch(error) {
             setLoading(false);
-            console.log('err ', error.message);
-            toast.error(error.message, {
+            const err = error.response.data.message;
+            console.log('err ', err);
+            toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
             return(<ToastContainer />)
@@ -85,9 +95,7 @@ function SignIn() {
         }
 
         if(
-            Object.values(form).length === 2 &&
-            Object.values(form).every(item => item.trim().length > 0) &&
-            Object.values(errors).every(item => !item)
+            Object.values(form).length === 2 
         ) {
             signIn();
         } else {

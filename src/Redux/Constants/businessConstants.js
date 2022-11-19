@@ -1,0 +1,1 @@
+export const SAVE_USER_BUSINESS = 'SAVE_USER_BUSINESS';

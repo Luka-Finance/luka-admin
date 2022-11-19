@@ -16,7 +16,7 @@ function Input({
       {label && (<label htmlFor="label" className='input-label'>{label}</label>)}
 
       <div className='input-wrapper'>
-        {icon && (<div onClick={iconClick}>{icon}</div>)}
+        {icon && (<div style={{cursor: 'pointer'}} onClick={iconClick}>{icon}</div>)}
 
         <input
             className='input-self'

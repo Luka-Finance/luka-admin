@@ -8,12 +8,18 @@ import axiosInstance from '../../Utils/axiosInstance';
 import { toast, ToastContainer } from 'react-toastify';
 import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
-
-import './Styles.css';
 import { Link } from 'react-router-dom';
 import accessLocalStorage from '../../Utils/accessLocalStorage';
+import { 
+    saveAccessToken 
+} from '../../Redux/Actions/userActions';
+import { useDispatch } from 'react-redux';
+import './Styles.css';
+
+
 
 function Register() {
+    const dispatch = useDispatch();
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
     const [passwordA, setPasswordA] = useState(false);
@@ -121,15 +127,22 @@ function Register() {
             });
             accessLocalStorage.setToLs('companyEmail', form.companyEmail);
             accessLocalStorage.setToLs('companyPhone', form.companyPhone);
-            console.log('res ', res);
-            toast.success(res.message, {
+
+            window.location.assign('/otp-entry');
+            setLoading(false);
+
+            const {data, message} = res;
+            const otpToken = data.data.otp.data;
+            accessLocalStorage.setToLs('otpToken', otpToken);
+            toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             });
-            setLoading(false);
+            return(<ToastContainer />)
         } catch(error) {
             setLoading(false);
-            console.log('err ', error.message);
-            toast.error(error.message, {
+            // console.log('err ', error);
+            const err = error.response.data.message
+            toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
             return(<ToastContainer />)
@@ -167,9 +180,7 @@ function Register() {
         }
 
         if(
-            Object.values(form).length === 7 &&
-            Object.values(form).every(item => item.trim().length > 0) &&
-            Object.values(errors).every(item => !item)
+            Object.values(form).length === 7 
         ) {
             register();
         } else {

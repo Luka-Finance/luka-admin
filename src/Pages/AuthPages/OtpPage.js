@@ -14,13 +14,14 @@ function OtpPage() {
     const [entry2, setEntry2] = useState('');
     const [entry3, setEntry3] = useState('');
     const [entry4, setEntry4] = useState('');
-    const [entry5, setEntry5] = useState('');
-    const [entry6, setEntry6] = useState('');
+    // const [entry5, setEntry5] = useState('');
+    // const [entry6, setEntry6] = useState('');
     const [loading, setLoading] = useState(false);
     const [loaderMsg, setLoaderMsg] = useState('');
 
     const resendOtp = async() => {
         setLoaderMsg('resending otp');
+        setLoading(true);
         try {
             const res = await axiosInstance({
                 url: '/business/resend-otp',
@@ -32,9 +33,18 @@ function OtpPage() {
                 }
             })
             console.log('res ', res);
+            const {data, message} = res;
+            const otpToken = data.data.otp.data;
+            accessLocalStorage.setToLs('otpToken', otpToken);
+            toast.success(message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            return(<ToastContainer />)
+            setLoading(false);
         } catch(error) {
             setLoading(false);
-            toast.error(error.message, {
+            const err = error.response.data.message;
+            toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
             return(<ToastContainer />) 
@@ -49,17 +59,25 @@ function OtpPage() {
                 url: '/business/verify-otp',
                 method: 'POST',
                 data: {
-                  token: accessLocalStorage.getFromLs('token'),
+                  token: accessLocalStorage.getFromLs('otpToken'),
                   otp,
                   client: accessLocalStorage.getFromLs('companyEmail'),
                   type: 'verification'  
                 }
             })
+            window.location.assign('/sign-in');
             setLoading(false);
-            console.log('res ', res);
+            // console.log('res ', res);
+            const message = res.data.message;
+            toast.success(message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            return(<ToastContainer />)
         } catch(error) {
             setLoading(false);
-            toast.error(error.message, {
+            const err = error.response.data.message;
+            // console.log(error);
+            toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
             return(<ToastContainer />) 
@@ -72,12 +90,12 @@ function OtpPage() {
         arr[1] = entry2;
         arr[2] = entry3;
         arr[3] = entry4;
-        arr[4] = entry5;
-        arr[5] = entry6;
+        // arr[4] = entry5;
+        // arr[5] = entry6;
         let checker = arr.map(cur => cur === '');
         const otp = arr.join(''); 
         if(checker.includes(true)) {
-            toast.warning('Enter your correct 6 digit OTP code.', {
+            toast.warning('Enter your correct 4 digit OTP code.', {
                 position: toast.POSITION.TOP_RIGHT
             })
             return(<ToastContainer />) 
@@ -148,7 +166,7 @@ function OtpPage() {
                             setEntry4(value)
                         }}
                     />
-                    <input 
+                    {/* <input 
                         type={'text'} 
                         className='otp-input' 
                         maxLength={1}
@@ -165,7 +183,7 @@ function OtpPage() {
                             const value = e.target.value;
                             setEntry6(value)
                         }}
-                    />
+                    /> */}
                 </div>
 
                 <div className='input-holder-1'>
