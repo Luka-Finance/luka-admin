@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
 import getSymbolFromCurrency from 'currency-symbol-map';
 import {BsExclamationSquare} from 'react-icons/bs';
+import { Modal } from 'react-bootstrap';
 
 function Payments() {
   const [show, setShow] = useState(false);
@@ -24,6 +25,7 @@ function Payments() {
     activeStaffs: 0,
     inactiveStaffs: 0
   });
+  const [details, setDetails] = useState({});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -58,7 +60,7 @@ function Payments() {
     setLoading(true);
     try {
       const res = await axiosInstance({
-        url: '/business/payment-history',
+        url: '/business/get-invoices',
         method: 'GET'
       });
       const {data, message} = res.data;
@@ -78,9 +80,35 @@ function Payments() {
     }
   }; 
 
+  const getPaymentDetails = async() => {
+    setLoaderText('Fetching payment details');
+    setLoading(true);
+    try {
+      const res = await axiosInstance({
+        url: '/business/get-payment-account',
+        method: 'GET'
+      });
+      const {data, message} = res.data;
+      setDetails(data);
+      toast.success(message, {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      setLoading(false);
+      return(<ToastContainer />)
+    } catch (error) {
+      setLoading(false);
+      const err = error.response.data.message
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      return(<ToastContainer />)
+    }
+  }; 
+
   useEffect(() => {
     getBusinessStats();
     getPaymentHistory();
+    getPaymentDetails();
   }, [])
 
   if(loading) {
@@ -132,10 +160,70 @@ function Payments() {
                No Payments made yet 
               </p>
             ) : (
-              <CustomTableTwo data={payments} />
+              <CustomTableTwo 
+                data={payments} 
+                setShow={setShow}
+              />
             )
           }
         </div>
+
+      <Modal
+        show={show} 
+        onHide={handleClose}
+        size={'lg'}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Payment details
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <div style={{margin: '10px 0px'}}>
+              <span style={{marginRight: 20}}>
+                Account name:
+              </span>
+
+              <span>
+                {details.walletName}
+              </span>
+          </div>
+
+          <div style={{margin: '10px 0px'}}> 
+            <span style={{marginRight: 20}}>
+              Account number:
+            </span>
+
+            <span>
+              {details.wallet}
+            </span>
+          </div>
+
+          <div style={{margin: '10px 0px'}}>
+            <span style={{marginRight: 20}}>
+              Bank name:
+            </span>
+
+            <span>
+              {details.bankName}
+            </span>
+          </div>
+
+          <div style={{margin: '10px 0px'}}>
+            <span style={{marginRight: 20}}>
+              Bank number:
+            </span>
+
+            <span>
+              {details.accountNumber}
+            </span>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button onClick={props.onHide}>Close</Button> */}
+        </Modal.Footer>
+      </Modal>
     </Layout>
   );
 };

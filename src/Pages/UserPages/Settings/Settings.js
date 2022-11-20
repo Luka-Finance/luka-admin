@@ -145,8 +145,8 @@ function Settings() {
     
         } else if (name === 'paymentDate') {
 
-            if(value.length < 5) {
-              setErrors(prev => {return {...prev, [name]: `Enter payment date`}});
+            if(value < 1 || value > 28) {
+              setErrors(prev => {return {...prev, [name]: `Enter value between 1 and 28`}});
             } else {
               setErrors(prev => {return {...prev, [name]: null}});
             };
@@ -217,19 +217,6 @@ function Settings() {
     }
   };
 
-  const formatMyDate = (value) => {
-    let formatedDate = [];
-    let arr = [];
-    formatedDate.push(value.split("-")[0]);
-    formatedDate.push(value.split("-")[1]);
-    formatedDate.push(value.split("-")[2]);
-    arr.push(formatedDate[2]);
-    arr.push(formatedDate[1]);
-    arr.push(formatedDate[0]);
-    let properDate = arr.join("-");
-    return properDate;
-  };
-
   const updateProfile = async() => {
     setLoaderText('Upadeting profile');
     setLoading(true);
@@ -249,7 +236,7 @@ function Settings() {
             city: form.companyCity,
             email: form.companyEmail,
             paysTransactionFee: form.payTransactionFee,
-            payday: formatMyDate(form.paymentDate),
+            payday: form.paymentDate,
             rcNumber: form.rcNumber,
             type: 'registered',
             address: form.companyAddress,
@@ -261,7 +248,12 @@ function Settings() {
         }
       });
       console.log('res ', res);
-      setLoading(false);   
+      const {message} = res.data;
+        toast.success(message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+        setLoading(false); 
+        return(<ToastContainer />)  
     } catch (error) {
         setLoading(false);
         const err = error.response.data.message
@@ -503,11 +495,11 @@ function Settings() {
 
                     <div className='settings-input-cont'>
                         <Input 
-                            label={'Set monthly pay day'}
-                            type={'text'}
-                            maxLength={28}
+                            label={'Set monthly pay day [1 - 28]'}
+                            type={'number'}
                             onChange={(e) => {
                                 const value = e.target.value;
+                                // console.log(value)
                                 onEnterValue({name: 'paymentDate', value})
                             }}
                             error={errors.paymentDate}
