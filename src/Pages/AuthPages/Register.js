@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Image from 'react-bootstrap/Image';
 import Input from '../../Components/Common/Input/Input';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
@@ -19,7 +19,6 @@ function Register() {
     const [errors, setErrors] = useState({});
     const [passwordA, setPasswordA] = useState(false);
     const [passwordB, setPasswordB] = useState(false);
-    const [disable, setDisable] = useState(true);
     const [loading, setLoading] = useState(false);
 
     const onEnterValue = ({name, value}) => {
@@ -186,17 +185,6 @@ function Register() {
         }
     
     };
-
-    useEffect(() => {
-        if(
-            Object.values(form).length === 5 && 
-            Object.values(errors).every(item => !item)
-        ) {
-            setDisable(false);
-        } else {
-            setDisable(true); 
-        }
-    }, [form, errors])
 
     if(loading) {
         return (<LoaderScreen loadingText={'processing registration'} />)

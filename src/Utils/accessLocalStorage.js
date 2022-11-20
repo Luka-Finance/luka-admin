@@ -1,5 +1,3 @@
-import React from 'react';
-
 function getFromLs(key) {
   const data = JSON.parse(localStorage.getItem(key));
   return data;

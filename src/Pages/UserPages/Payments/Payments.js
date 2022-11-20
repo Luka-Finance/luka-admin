@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import AuxPageHead from '../../../Components/AuxPageHead/AuxPageHead';
 import Layout from '../../../Components/Layout/Layout';
-import SummaryCard from '../../../Components/Common/SummaryCard/SummaryCard';
-import { debtDB } from '../../../FakeDB/debtDB';
 import CustomTableTwo from '../../../Components/Common/CustomTableTwo/CustomTableTwo';
-import { PaymentDB } from '../../../FakeDB/PaymentDB';
 import '../Accounts/Styles.css'
 import '../../../Components/Common/SummaryCard/Styles.css'
 import axiosInstance from '../../../Utils/axiosInstance';

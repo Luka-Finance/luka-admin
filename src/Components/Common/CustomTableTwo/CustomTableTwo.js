@@ -1,22 +1,10 @@
-import React, {useState, useRef} from 'react';
-import { Dropdown, Table } from 'react-bootstrap';
-import {BsThreeDotsVertical} from 'react-icons/bs';
+import React from 'react';
+import { Table } from 'react-bootstrap';
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 function CustomTableTwo({
     data
 }) {
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-        <p
-          ref={ref}
-          onClick={(e) => {
-            e.preventDefault();
-            onClick(e);
-          }}
-        >
-          {children}
-        </p>
-    ));
   return (
     <Table
         borderless={true} 

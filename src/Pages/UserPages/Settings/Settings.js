@@ -3,7 +3,7 @@ import AuxPageHead from '../../../Components/AuxPageHead/AuxPageHead';
 import Layout from '../../../Components/Layout/Layout';
 import Input from '../../../Components/Common/Input/Input';
 import CustomSelector from '../../../Components/Common/CustomSelector/CustomSelector';
-import {BsCloudArrowUp, BsExclamationCircle} from 'react-icons/bs';
+import { BsExclamationCircle} from 'react-icons/bs';
 import CustomButton from '../../../Components/Common/CustomButton/Index';
 import { toast, ToastContainer } from 'react-toastify';
 import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
@@ -251,7 +251,7 @@ function Settings() {
             paysTransactionFee: form.payTransactionFee,
             payday: formatMyDate(form.paymentDate),
             rcNumber: form.rcNumber,
-            type: '',
+            type: 'registered',
             address: form.companyAddress,
             contactPersonName: form.contactName,
             contactPersonEmail: form.contactEmail,
@@ -503,8 +503,9 @@ function Settings() {
 
                     <div className='settings-input-cont'>
                         <Input 
-                            label={'Set salary payment date'}
-                            type={'date'}
+                            label={'Set monthly pay day'}
+                            type={'text'}
+                            maxLength={28}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 onEnterValue({name: 'paymentDate', value})

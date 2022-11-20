@@ -62,7 +62,6 @@ function SignIn() {
             });
             const {data, message} = res.data;
             const accessToken = data.token;
-            const business = data.business;
 
             dispatch(saveAccessToken(accessToken));
 

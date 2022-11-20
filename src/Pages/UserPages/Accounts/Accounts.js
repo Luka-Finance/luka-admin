@@ -6,7 +6,6 @@ import CustomButton from '../../../Components/Common/CustomButton/Index';
 import { Modal } from 'react-bootstrap';
 import { InputListOne } from '../../../Components/Common/InputListOne/InputListOne';
 import Input from '../../../Components/Common/Input/Input';
-import { fakeDBTwo } from '../../../FakeDB/fakeDB-2';
 import CustomTable from '../../../Components/Common/CustomTable/CustomTable';
 import {FaRegPlusSquare} from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
@@ -14,7 +13,7 @@ import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../../Utils/axiosInstance';
 import { useSelector } from 'react-redux';
-import {BsCheck2} from 'react-icons/bs'
+import {BsCheck2} from 'react-icons/bs';
 
 import './Styles.css';
 
@@ -42,6 +41,7 @@ function Accounts() {
         method: 'GET',
       })
       const {data, message} = res.data;
+      console.log(data);
       setAccounts(data);
       setLoading(false);
       toast.success(message, {

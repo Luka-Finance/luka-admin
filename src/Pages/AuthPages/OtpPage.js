@@ -39,8 +39,8 @@ function OtpPage() {
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             });
-            return(<ToastContainer />)
             setLoading(false);
+            return(<ToastContainer />)
         } catch(error) {
             setLoading(false);
             const err = error.response.data.message;
