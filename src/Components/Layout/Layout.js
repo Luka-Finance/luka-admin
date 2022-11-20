@@ -189,7 +189,7 @@ function Layout({
                         />
 
                         <p className='profile-name'>
-                            Ikebe inc
+                            {business.name}
                         </p>
 
                         {
