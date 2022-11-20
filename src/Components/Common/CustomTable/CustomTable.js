@@ -84,20 +84,24 @@ function CustomTable({
                     data.map((cur) => (
                         <tr key={cur.id}>
                             <td> {`${cur.firstName} ${cur.lastName}`} </td>
-                            <td> {cur.id} </td>
+                            <td>
+                                <p style={{overflowX: 'hidden', width: 70}}>
+                                {cur.id} 
+                                </p> 
+                            </td>
                             <td> {cur.phone} </td>
                             <td> 
                                 <p style={{overflowX: 'hidden', width: 70}}>
                                 {cur.email}    
                                 </p> 
                             </td>
-                            <td> {cur.startDate.split('T')[0]} </td>
+                            <td> {cur.startDate} </td>
                             <td> 
                             <p 
                                 style={{
                                     fontWeight: '400',
-                                    color: cur.status === 'active' ? '#007737' : cur.status === 'pending' ? '#333333' : '#910202',
-                                    backgroundColor: cur.status === 'active' ? 'rgba(230, 252, 239, 1)' : cur.status === 'pending' ? 'rgba(230, 230, 230, 1)' : 'rgba(255, 236, 236, 1)',
+                                    color: cur.status === 'active' ? '#007737' : cur.status === 'pending' ? '#333333' : cur.status === 'suspended'  ? 'yellow' : '#910202',
+                                    backgroundColor: cur.status === 'active' ? 'rgba(230, 252, 239, 1)' : cur.status === 'pending' ? 'rgba(230, 230, 230, 1)' : cur.status === 'suspended'  ? 'black' : 'rgba(255, 236, 236, 1)',
                                     width: 80,
                                     textAlign: 'center',
                                     borderRadius: 3

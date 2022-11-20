@@ -7,14 +7,14 @@ export const InputListOne = [
         onChange: (e) => {console.log(e.target.value)},
         error: ''
     },
-    {
-        id: 2,
-        tag: 'middleName',
-        label: 'Middle Name*',
-        type: 'text',
-        onChange: (e) => {console.log(e.target.value)},
-        error: ''
-    },
+    // {
+    //     id: 2,
+    //     tag: 'middleName',
+    //     label: 'Middle Name*',
+    //     type: 'text',
+    //     onChange: (e) => {console.log(e.target.value)},
+    //     error: ''
+    // },
     {
         id: 3,
         tag: 'lastName',

@@ -69,10 +69,10 @@ function SignIn() {
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             });
-            return(<ToastContainer />)
-
             window.location.assign('/dashboard');
             setLoading(false);
+            return(<ToastContainer />)
+
         } catch(error) {
             setLoading(false);
             const err = error.response.data.message;

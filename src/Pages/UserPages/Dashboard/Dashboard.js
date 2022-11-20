@@ -317,6 +317,7 @@ function Dashboard() {
                 onClick={() => {
                   handleClose(); 
                   setCreated(false);
+                  getBusinessStats();
                 }} 
                 className='success-emplyee-text'
               >
