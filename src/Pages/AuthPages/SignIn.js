@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { Image } from 'react-bootstrap';
 import CustomButton from '../../Components/Common/CustomButton/Index';
@@ -14,10 +14,11 @@ import { saveAccessToken } from '../../Redux/Actions/userActions';
 
 function SignIn() {
     const dispatch = useDispatch();
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({companyEmail: '', password: ''});
     const [errors, setErrors] = useState({});
     const [passwordA, setPasswordA] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [disable, setDisable] = useState(true);
 
     const onEnterValue = ({name, value}) => { 
         setForm({...form, [name]: value});
@@ -105,6 +106,14 @@ function SignIn() {
 
     };
 
+    useEffect(() => {
+        if(form.companyEmail.length > 12 && form.password.length > 5) {
+            setDisable(false); 
+        } else {
+            setDisable(true)
+        }
+    }, [form])
+
     if(loading) {
         return (<LoaderScreen loadingText={'processing sign in'} />)
     }
@@ -156,13 +165,13 @@ function SignIn() {
                         textColor={'#fff'}
                         bgColor={'#03A63C'}
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
-                        disabled={false}
+                        disabled={disable}
                         onClick={onSubmit}
                     />
                 </div>
 
-                <Link style={{textDeoration: 'none'}} to={'/'}>
-                    <p className='otp-aux-link'>
+                <Link style={{textDecoration: 'none'}} to={'/'}>
+                    <p className='otp-aux-link-2'>
                         Not registered? Click here to 
                         <span style={{marginLeft: 5}} className='otp-aux-link'>
                         Register

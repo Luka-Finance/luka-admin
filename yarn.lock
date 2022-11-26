@@ -1572,6 +1572,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
+"@odusanya/african-countries@^2.2.2":
+  "integrity" "sha512-Y0eipN6I/xpkiQ5dLJ6GCXvqMmNfN+mMQBLZ14i2KlQercHgK7PiifgLKs8WTXIXlxDlapuqk+6iZskMSaW8Lg=="
+  "resolved" "https://registry.npmjs.org/@odusanya/african-countries/-/african-countries-2.2.2.tgz"
+  "version" "2.2.2"
+
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   "integrity" "sha512-wxXRwf+IQ6zvHSJZ+5T2RQNEsq+kx4jKRXfFvdt3nBIUzJUAvXEFsUeoaohDe/Kr84MTjGwcuIUPNcstNJORsA=="
   "resolved" "https://registry.npmjs.org/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.8.tgz"
@@ -3229,7 +3234,7 @@
   "resolved" "https://registry.npmjs.org/cjs-module-lexer/-/cjs-module-lexer-1.2.2.tgz"
   "version" "1.2.2"
 
-"classnames@^2.3.1":
+"classnames@^2.2.6", "classnames@^2.3.1":
   "integrity" "sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw=="
   "resolved" "https://registry.npmjs.org/classnames/-/classnames-2.3.2.tgz"
   "version" "2.3.2"
@@ -6398,10 +6403,20 @@
   "resolved" "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
   "version" "4.6.2"
 
+"lodash.reduce@^4.6.0":
+  "integrity" "sha512-6raRe2vxCYBhpBu+B+TtNGUzah+hQjVdu3E17wfusjyrXBka2nBS8OH/gjVZ5PvHOhWmIZTYri09Z6n/QfnNMw=="
+  "resolved" "https://registry.npmjs.org/lodash.reduce/-/lodash.reduce-4.6.0.tgz"
+  "version" "4.6.0"
+
 "lodash.sortby@^4.7.0":
   "integrity" "sha1-7dFMgk4sycHgsKG0K7UhBRakJDg="
   "resolved" "https://registry.npmjs.org/lodash.sortby/-/lodash.sortby-4.7.0.tgz"
   "version" "4.7.0"
+
+"lodash.startswith@^4.2.1":
+  "integrity" "sha512-XClYR1h4/fJ7H+mmCKppbiBmljN/nGs73iq2SjCT9SF4CBPoUHzLvWmH1GtZMhMBZSiRkHXfeA2RY1eIlJ75ww=="
+  "resolved" "https://registry.npmjs.org/lodash.startswith/-/lodash.startswith-4.2.1.tgz"
+  "version" "4.2.1"
 
 "lodash.uniq@^4.5.0":
   "integrity" "sha1-0CJTc662Uq3BvILklFM5qEJ1R3M="
@@ -7874,6 +7889,18 @@
   "integrity" "sha512-lfb+shYXI2tXlQrNUpNr05/1D/kzFj8Isbfp89DQrpZk0fs2JIAnLHWETR0hQS9zvtzwLWlVv0wKLffbue5HoA=="
   "resolved" "https://registry.npmjs.org/react-moment/-/react-moment-1.1.2.tgz"
   "version" "1.1.2"
+
+"react-phone-input-2@^2.15.1":
+  "integrity" "sha512-W03abwhXcwUoq+vUFvC6ch2+LJYMN8qSOiO889UH6S7SyMCQvox/LF3QWt+cZagZrRdi5z2ON3omnjoCUmlaYw=="
+  "resolved" "https://registry.npmjs.org/react-phone-input-2/-/react-phone-input-2-2.15.1.tgz"
+  "version" "2.15.1"
+  dependencies:
+    "classnames" "^2.2.6"
+    "lodash.debounce" "^4.0.8"
+    "lodash.memoize" "^4.1.2"
+    "lodash.reduce" "^4.6.0"
+    "lodash.startswith" "^4.2.1"
+    "prop-types" "^15.7.2"
 
 "react-redux@^8.0.4":
   "integrity" "sha512-yMfQ7mX6bWuicz2fids6cR1YT59VTuT8MKyyE310wJQlINKENCeT1UcPdEiX6znI5tF8zXyJ/VYvDgeGuaaNwQ=="

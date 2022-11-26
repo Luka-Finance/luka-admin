@@ -3,6 +3,21 @@
     background-color: rgba(235, 241, 237, 1);
 }
 
+.phone-cont {
+    height: 60px;
+    border-radius: 6px;
+}
+
+.phone-label {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
 .parent-cont-2 {
     height: 100vh;
     background-color: rgba(235, 241, 237, 1);
@@ -220,6 +235,18 @@
     line-height: 26px;
     color: #333333;
     cursor: pointer;
+    text-decoration: none;
+}
+
+.otp-aux-link-2 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    color: #333333;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .otp-aux-link:nth-child(1) {

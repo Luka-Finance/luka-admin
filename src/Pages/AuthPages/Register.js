@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from 'react-bootstrap/Image';
 import Input from '../../Components/Common/Input/Input';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
@@ -11,7 +11,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import accessLocalStorage from '../../Utils/accessLocalStorage';
 import './Styles.css';
-
+import countries from '@odusanya/african-countries';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 
 function Register() {
@@ -19,7 +21,12 @@ function Register() {
     const [errors, setErrors] = useState({});
     const [passwordA, setPasswordA] = useState(false);
     const [passwordB, setPasswordB] = useState(false);
+    const [phone, setPhone] = useState('')
     const [loading, setLoading] = useState(false);
+    const [loadingText, setLoadingText] = useState('')
+    const [countryList, setCountryList] = useState(['Nigeria', 'Ghana','Togo', 'Cameroon']);
+    const [terms, setTerms] = useState(false);
+     
 
     const onEnterValue = ({name, value}) => {
         setForm({...form, [name]: value});
@@ -62,31 +69,31 @@ function Register() {
             };
 
           } 
-        //   else if (name === 'businessType') {
+          else if (name === 'companyCountry') {
 
-        //     if(value === '') {
-        //         setErrors(prev => {return {...prev, [name]: `Please select a business type`}});
-        //     } else {
-        //         setErrors(prev => {return {...prev, [name]: null}});
-        //     }
+            if(value === '') {
+                setErrors(prev => {return {...prev, [name]: `Please select country of business location`}});
+            } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            }
 
-        //   } else if (name === 'companyRCNumber') {
+          } else if (name === 'companyCity') {
 
-        //     if(form.businessType === 'registered' && value.length < 7) {
-        //         setErrors(prev => {return {...prev, [name]: `Please enter a correct RC number`}});
-        //     } else {
-        //         setErrors(prev => {return {...prev, [name]: null}});
-        //     }
+            if(value.length < 3) {
+                setErrors(prev => {return {...prev, [name]: `Please enter the city of business location`}});
+            } else {
+                setErrors(prev => {return {...prev, [name]: null}});
+            }
 
-        //   } 
+          } 
           else if (name === 'companyPhone') {
-            let val;
-            let num = [];
-            num.push(value[0]);
-            num.push(value[1]);
-            num.push(value[2]);
-            val = num.join('');
-            if (value.length !== 11 && (val !== '070' || val !== '081' || val !== '080' || val !== '090')) {
+            // let val;
+            // let num = [];
+            // num.push(value[0]);
+            // num.push(value[1]);
+            // num.push(value[2]);
+            // val = num.join('');
+            if (value.length !== 13) {
                 setErrors(prev => {return {...prev, [name]: `Please enter a valid phone number`}});
             } else {
                 setErrors(prev => {return {...prev, [name]: null}});
@@ -100,11 +107,12 @@ function Register() {
         };
     };
 
-    const formatPhone = (phone) => {
-        return phone.replace(/[0-9]/, '+234');
-    };
+    // const formatPhone = (phone) => {
+    //     return phone.replace(/[0-9]/, '+234');
+    // };
 
     const register = async() => {
+        setLoadingText('processing registration')
         setLoading(true);
         try {
             const res = await axiosInstance({
@@ -116,7 +124,7 @@ function Register() {
                     password: form.password,
                     country: form.companyCountry,
                     city: form.companyCity,
-                    phone: formatPhone(form.companyPhone), 
+                    phone: `+${form.companyPhone}`, 
                 }
             });
             accessLocalStorage.setToLs('companyEmail', form.companyEmail);
@@ -150,19 +158,19 @@ function Register() {
         }
     
         if(!form.companyEmail) {
-          setErrors(prev => {return {...prev, firstName: 'Please add a company email'}});
+          setErrors(prev => {return {...prev, companyEmail: 'Please add a company email'}});
         }
     
         if(!form.companyCountry) {
-          setErrors(prev => {return {...prev, lastName: 'Please add the country of your company'}});
+          setErrors(prev => {return {...prev, companyCountry: 'Please add the country of your company'}});
         }
     
         if(!form.companyCity) {
-          setErrors(prev => {return {...prev, email: 'Please add the city of your company'}});
+          setErrors(prev => {return {...prev, companyCity: 'Please add the city of your company'}});
         }
 
         if(!form.companyPhone) {
-            setErrors(prev => {return {...prev, email: 'Please add a company phone number'}});   
+            setErrors(prev => {return {...prev, companyPhone: 'Please add a company phone number'}});   
         }
     
         if(!form.password) {
@@ -170,7 +178,7 @@ function Register() {
         }
 
         if(!form.confirmPassword) {
-            setErrors(prev => {return {...prev, password: 'Please confirm your password'}});
+            setErrors(prev => {return {...prev, confirmPassword: 'Please confirm your password'}});
         }
 
         if(
@@ -186,8 +194,22 @@ function Register() {
     
     };
 
+    const getCountries = () => {
+        let arr1 = [];
+        const { listCountries} = countries;
+        const countriesData = listCountries();
+        countriesData.forEach((cur) => {
+            arr1.push(cur['Country Name'])
+        })
+        setCountryList(arr1);
+    };
+
+    useEffect(() => {
+        getCountries();  
+    }, [])
+
     if(loading) {
-        return (<LoaderScreen loadingText={'processing registration'} />)
+        return (<LoaderScreen loadingText={loadingText} />)
     }
 
 
@@ -234,7 +256,7 @@ function Register() {
                     <div className='location-cont-child'>
                         <CustomSelector 
                             label={'Country'}
-                            options={['Nigeria', 'Ghana','Togo', 'Cameroon']}
+                            options={countryList}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 onEnterValue({name: 'companyCountry', value})
@@ -244,9 +266,9 @@ function Register() {
                     </div>
 
                     <div className='location-cont-child'>
-                        <CustomSelector 
+                        <Input 
                             label={'City'}
-                            options={['Lagos', 'Accra','Lome', 'Yaounde']}
+                            type={'text'}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 onEnterValue({name: 'companyCity', value})
@@ -257,46 +279,31 @@ function Register() {
                 </div>
 
                 <div className='input-holder'>
-                    <Input  
-                        label={'Company\'s Phone number'}
-                        type={'tel'}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            onEnterValue({name: 'companyPhone', value})
-                        }}
-                        error={errors.companyPhone}
-                    />
-                </div>
-
-                {/* <div className='location-cont'>
-                    <div className='location-cont-child'>
-                        <CustomSelector 
-                            label={'Type'}
-                            options={['unregistered', 'registered']}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                onEnterValue({name: 'businessType', value})
+                    <div>
+                        <label className='phone-label'>Company's Phone number</label>
+                        <PhoneInput
+                            country={'ng'}
+                            value={phone}
+                            onChange={value => {
+                                setPhone(value);
+                                onEnterValue({name: 'companyPhone', value});
                             }}
-                            error={errors.businessType}
+                            placeholder={'eg +23470***********'}
+                            enableSearch={true}
+                            containerClass={'phone-cont'}
+                            inputStyle={{width: '100%', height: '100%', borderRadius: 6}}
+                            isValid={(value, country) => {
+                                if(country.name === 'Nigeria' && value.length !== 13) {
+                                   return 'Invalid phone number'; 
+                                } else if(errors.companyPhone) {
+                                    return errors.companyPhone;
+                                } else {
+                                    return false;
+                                }
+                            }}
                         />
                     </div>
-
-                    <div className='location-cont-child'>
-                       {
-                        form.businessType === 'registered' && (
-                            <Input  
-                                label={'RC Number'}
-                                type={'text'}
-                                onChange={(e) => {
-                                    const value = e.target.value;
-                                    onEnterValue({name: 'companyRCNumber', value})
-                                }}
-                                error={errors.companyRCNumber}
-                            />
-                        )
-                       }
-                    </div>
-                </div> */}
+                </div>
 
                 <div className='input-holder'>
                     <Input  
@@ -327,7 +334,7 @@ function Register() {
                 </div>
 
                 <div className='tc-cont'>
-                    <input type={'checkbox'} className='tc-checkbox' checked={true} readOnly />
+                    <input type={'checkbox'} className='tc-checkbox' onClick={() => setTerms(!terms)}/>
                     <p style={{paddingTop: 10, marginLeft: 10}}> 
                         By activating your account, you agree to our Terms and Conditions.  
                     </p>
@@ -339,13 +346,13 @@ function Register() {
                         textColor={'#fff'}
                         bgColor={'#03A63C'}
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
-                        disabled={false}
+                        disabled={!terms}
                         onClick={onSubmit}
                     />
                 </div>
 
-                <Link style={{textDeoration: 'none'}} to={'/sign-in'}>
-                    <p className='otp-aux-link'>
+                <Link style={{textDecoration: 'none'}} to={'/sign-in'}>
+                    <p className='otp-aux-link-2'>
                         Click here to  
                         <span style={{margin: '0px 5px'}} className='otp-aux-link'>
                             sign in
