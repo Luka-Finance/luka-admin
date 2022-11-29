@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Image } from 'react-bootstrap';
 import CustomButton from '../../Components/Common/CustomButton/Index';
 import { toast, ToastContainer } from 'react-toastify';
@@ -14,10 +14,9 @@ function OtpPage() {
     const [entry2, setEntry2] = useState('');
     const [entry3, setEntry3] = useState('');
     const [entry4, setEntry4] = useState('');
-    // const [entry5, setEntry5] = useState('');
-    // const [entry6, setEntry6] = useState('');
     const [loading, setLoading] = useState(false);
     const [loaderMsg, setLoaderMsg] = useState('');
+    const [disable, setDisable] = useState(true);
 
     const resendOtp = async() => {
         setLoaderMsg('resending otp');
@@ -104,6 +103,20 @@ function OtpPage() {
         }
     };
 
+    useEffect(() => {
+        let arr = [];
+        arr[0] = entry1;
+        arr[1] = entry2;
+        arr[2] = entry3;
+        arr[3] = entry4;
+
+        if(arr.length === 4) {
+            setDisable(false);
+        } else {
+            setDisable(true);
+        }
+    }, [entry1, entry2, entry3, entry4])
+
     if(loading) {
         return (<LoaderScreen loadingText={loaderMsg} />)
     }
@@ -166,24 +179,6 @@ function OtpPage() {
                             setEntry4(value)
                         }}
                     />
-                    {/* <input 
-                        type={'text'} 
-                        className='otp-input' 
-                        maxLength={1}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            setEntry5(value)
-                        }}
-                    />
-                    <input 
-                        type={'text'} 
-                        className='otp-input' 
-                        maxLength={1}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            setEntry6(value)
-                        }}
-                    /> */}
                 </div>
 
                 <div className='input-holder-1'>
@@ -192,7 +187,7 @@ function OtpPage() {
                         textColor={'#fff'}
                         bgColor={'#03A63C'}
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
-                        disabled={false}
+                        disabled={disable}
                         onClick={onSubmit}
                     />
                 </div>

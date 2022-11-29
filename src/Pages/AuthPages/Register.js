@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Image from 'react-bootstrap/Image';
 import Input from '../../Components/Common/Input/Input';
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import { AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai';
 import CustomButton from '../../Components/Common/CustomButton/Index';
 import CustomSelector from '../../Components/Common/CustomSelector/CustomSelector';
 import axiosInstance from '../../Utils/axiosInstance';
@@ -128,7 +128,7 @@ function Register() {
                 }
             });
             accessLocalStorage.setToLs('companyEmail', form.companyEmail);
-            accessLocalStorage.setToLs('companyPhone', form.companyPhone);
+            accessLocalStorage.setToLs('companyPhone', `+${form.companyPhone}`);
 
             window.location.assign('/otp-entry');
             setLoading(false);
@@ -293,9 +293,7 @@ function Register() {
                             containerClass={'phone-cont'}
                             inputStyle={{width: '100%', height: '100%', borderRadius: 6}}
                             isValid={(value, country) => {
-                                if(country.name === 'Nigeria' && value.length !== 13) {
-                                   return 'Invalid phone number'; 
-                                } else if(errors.companyPhone) {
+                                if(errors.companyPhone) {
                                     return errors.companyPhone;
                                 } else {
                                     return false;
@@ -314,7 +312,7 @@ function Register() {
                             onEnterValue({name: 'password', value})
                         }}
                         error={errors.password}
-                        icon={!passwordA ? <AiFillEyeInvisible style={{fontSize: 20}} /> : <AiFillEye style={{fontSize: 20}} />}
+                        icon={!passwordA ? <AiOutlineEyeInvisible style={{fontSize: 20, marginRight: 15}} /> : <AiOutlineEye style={{fontSize: 20, marginRight: 15}} />}
                         iconClick={() => setPasswordA(!passwordA)}
                     />
                 </div>
@@ -328,16 +326,19 @@ function Register() {
                             onEnterValue({name: 'confirmPassword', value})
                         }}
                         error={errors.confirmPassword}
-                        icon={!passwordB ? <AiFillEyeInvisible style={{fontSize: 20}} /> : <AiFillEye style={{fontSize: 20}} />}
+                        icon={!passwordB ? <AiOutlineEyeInvisible style={{fontSize: 20, marginRight: 15}} /> : <AiOutlineEye style={{fontSize: 20, marginRight: 15}} />}
                         iconClick={() => setPasswordB(!passwordB)}
                     />
                 </div>
 
                 <div className='tc-cont'>
-                    <input type={'checkbox'} className='tc-checkbox' onClick={() => setTerms(!terms)}/>
-                    <p style={{paddingTop: 10, marginLeft: 10}}> 
+                    <label className="check-box-cont">
+                        <input type="checkbox" onClick={() => setTerms(!terms)} />
+                        <span className="checkmark"></span>
+                    </label>
+                    <span style={{paddingTop: 10, marginLeft: 10}}> 
                         By activating your account, you agree to our Terms and Conditions.  
-                    </p>
+                    </span>
                 </div>
 
                 <div className='input-holder'>

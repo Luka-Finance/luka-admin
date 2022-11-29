@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Image } from 'react-bootstrap';
 import CustomButton from '../../Components/Common/CustomButton/Index';
 import Input from '../../Components/Common/Input/Input';
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import { AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai';
 import { toast, ToastContainer } from 'react-toastify';
 import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
@@ -154,7 +154,7 @@ function SignIn() {
                             onEnterValue({name: 'password', value})
                         }}
                         error={errors.password}
-                        icon={!passwordA ? <AiFillEyeInvisible style={{fontSize: 20}} /> : <AiFillEye style={{fontSize: 20}} />}
+                        icon={!passwordA ? <AiOutlineEyeInvisible style={{fontSize: 20}} /> : <AiOutlineEye style={{fontSize: 20}} />}
                         iconClick={() => setPasswordA(!passwordA)}
                     />
                 </div>
@@ -175,6 +175,14 @@ function SignIn() {
                         Not registered? Click here to 
                         <span style={{marginLeft: 5}} className='otp-aux-link'>
                         Register
+                        </span>
+                    </p>
+                </Link>
+
+                <Link style={{textDecoration: 'none', marginTop: 5}} to={'/forgot-password'}>
+                    <p className='otp-aux-link-2'>
+                        <span style={{marginLeft: 5}} className='otp-aux-link'>
+                            Forgot your password ?
                         </span>
                     </p>
                 </Link>
