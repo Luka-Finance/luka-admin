@@ -132,6 +132,7 @@ function Register() {
 
             window.location.assign('/otp-entry');
             setLoading(false);
+            setTerms(false)
 
             const {data, message} = res;
             const otpToken = data.data.otp.data;
@@ -142,6 +143,7 @@ function Register() {
             return(<ToastContainer />)
         } catch(error) {
             setLoading(false);
+            setTerms(false)
             // console.log('err ', error);
             const err = error.response.data.message
             toast.error(err, {
