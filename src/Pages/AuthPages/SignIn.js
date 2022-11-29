@@ -154,7 +154,7 @@ function SignIn() {
                             onEnterValue({name: 'password', value})
                         }}
                         error={errors.password}
-                        icon={!passwordA ? <AiOutlineEyeInvisible style={{fontSize: 20}} /> : <AiOutlineEye style={{fontSize: 20}} />}
+                        icon={!passwordA ? <AiOutlineEyeInvisible style={{fontSize: 20, marginRight: 15}} /> : <AiOutlineEye style={{fontSize: 20, marginRight: 15}} />}
                         iconClick={() => setPasswordA(!passwordA)}
                     />
                 </div>
