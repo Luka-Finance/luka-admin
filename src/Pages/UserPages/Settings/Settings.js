@@ -19,6 +19,7 @@ function Settings() {
   const [loadingRC, setLoadingRC] = useState(false);
   const [loadingTIM, setLoadingTIN] = useState(false);
   const [loaderText, setLoaderText] = useState('');
+  const [editForm, setEditForm] = useState(false);
 
   const onEnterValue = ({name, value}) => { 
     setForm({...form, [name]: value});
@@ -288,7 +289,7 @@ function Settings() {
                </div>
 
                <div className='settings-sub-form-cont'>
-                    <div className='settings-input-cont'>
+                    <div className='settings-input-cont-aux'>
                         <Input 
                             label={'Company name'}
                             type={'text'}
@@ -297,35 +298,22 @@ function Settings() {
                                 onEnterValue({name: 'companyName', value})
                             }}
                             error={errors.companyName}
+                            disableInput={!editForm}
                         />
-                    </div>
 
-                    <div className='settings-input-cont'>
-                        <Input 
-                            label={'RC Number'}
-                            type={'text'}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                onEnterValue({name: 'rcNumber', value});
-                                verifyRcNUmber(value);
-                            }}
-                            error={errors.rcNumber}
-                        />
-                        {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
-                    </div>
-
-                    <div className='settings-input-cont'>
-                        <Input 
-                            label={'TIN Number'}
-                            type={'text'}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                onEnterValue({name: 'tinNumber', value});
-                                verifyTin(value);
-                            }}
-                            error={errors.tinNumber}
-                        />
-                        {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
+                        <p 
+                            onClick={() => {
+                                if(!editForm) {
+                                    setEditForm(true);
+                                } else {
+                                    updateProfile();
+                                    setEditForm(false);
+                                }
+                            }} 
+                            className='edit-and-save-btn'
+                        >
+                            {editForm ? 'Save' : 'Edit'}
+                        </p>
                     </div>
 
                     <div className='settings-input-cont'>
@@ -337,6 +325,7 @@ function Settings() {
                                 onEnterValue({name: 'companyEmail', value});
                             }}
                             error={errors.companyEmail}
+                            disableInput={!editForm}
                         />
                     </div>
 
@@ -349,6 +338,7 @@ function Settings() {
                                 onEnterValue({name: 'companyPhone', value})
                             }}
                             error={errors.companyPhone}
+                            disableInput={!editForm}
                         />
                     </div>
 
@@ -362,6 +352,7 @@ function Settings() {
                                     onEnterValue({name: 'contactName', value})
                                 }}
                                 error={errors.contactName}
+                                disableInput={!editForm}
                             />
                         </div>
 
@@ -374,6 +365,7 @@ function Settings() {
                                     onEnterValue({name: 'contactRole', value})
                                 }}
                                 error={errors.contactRole}
+                                disableInput={!editForm}
                             />
                         </div>
                     </div>
@@ -388,6 +380,7 @@ function Settings() {
                                     onEnterValue({name: 'contactEmail', value})
                                 }}
                                 error={errors.contactEmail}
+                                disableInput={!editForm}
                             />
                         </div>
 
@@ -400,6 +393,7 @@ function Settings() {
                                     onEnterValue({name: 'contactPhone', value})
                                 }}
                                 error={errors.contactPhone}
+                                disableInput={!editForm}
                             />
                         </div>
                     </div>
@@ -417,21 +411,37 @@ function Settings() {
                </div> 
 
                <div className='settings-sub-form-cont'>
-                    {/* <div className='settings-input-cont'>
+                    <div className='settings-input-cont'>
                         <Input 
-                            label={'CAC Document Upload'}
-                            type={'file'}
+                            label={'RC Number'}
+                            type={'text'}
                             onChange={(e) => {
-                                const file = e.target.files[0];
-                                console.log(file);
-                                onEnterValue({name: 'companyCac', file})
+                                const value = e.target.value;
+                                onEnterValue({name: 'rcNumber', value});
+                                verifyRcNUmber(value);
                             }}
-                            icon={<BsCloudArrowUp style={{marginRight: 20, fontSize: 25}} />}
-                            error={''}
+                            error={errors.rcNumber}
+                            disableInput={!editForm}
                         />
-                    </div> */}
+                        {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
+                    </div>
 
                     <div className='settings-input-cont'>
+                        <Input 
+                            label={'TIN Number'}
+                            type={'text'}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'tinNumber', value});
+                                verifyTin(value);
+                            }}
+                            error={errors.tinNumber}
+                            disableInput={!editForm}
+                        />
+                        {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
+                    </div>
+
+                    {/* <div className='settings-input-cont'>
                         <Input 
                             label={'Company Address'}
                             type={'text'}
@@ -440,10 +450,11 @@ function Settings() {
                                 onEnterValue({name: 'companyAddress', value})
                             }}
                             error={errors.companyAddress}
+                            disableInput={!editForm}
                         />
-                    </div>
+                    </div> */}
 
-                    <div className='settings-sub-form-cont-child'>
+                    {/* <div className='settings-sub-form-cont-child'>
                         <div className='settings-input-cont'>
                             <CustomSelector 
                                 label={'Country'}
@@ -453,6 +464,7 @@ function Settings() {
                                     onEnterValue({name: 'companyCountry', value})
                                 }}
                                 error={errors.companyCountry}
+                                disableSelect={!editForm}
                             />
                         </div>
 
@@ -465,9 +477,10 @@ function Settings() {
                                     onEnterValue({name: 'companyCity', value})
                                 }}
                                 error={errors.companyCity}
+                                disableSelect={!editForm}
                             />
                         </div>
-                    </div>
+                    </div> */}
                </div>
 
             </div>
@@ -490,6 +503,7 @@ function Settings() {
                                 onEnterValue({name: 'payTransactionFee', value})
                             }}
                             error={errors.payTransactionFee}
+                            disableSelect={!editForm}
                         />
                     </div>
 
@@ -499,10 +513,10 @@ function Settings() {
                             type={'number'}
                             onChange={(e) => {
                                 const value = e.target.value;
-                                // console.log(value)
                                 onEnterValue({name: 'paymentDate', value})
                             }}
                             error={errors.paymentDate}
+                            disableInput={!editForm}
                         />
                     </div>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomButton from '../Common/CustomButton/Index';
-import {BsChevronDown} from 'react-icons/bs';
+// import {BsChevronDown} from 'react-icons/bs';
 
 import './Styles.css'
 
@@ -11,6 +11,7 @@ function AuxPageHead({
     auxBtnTitle,
     auxBtnIcon,
     auxBtnAppear,
+    onAuxSearchChange,
 }) {
   return (
     <div className='aux-head-cont'>
@@ -21,13 +22,15 @@ function AuxPageHead({
                 </p>
             ) : (
                 <div className='filter-btn-cont'>
-                    <p className='filter-btn-text'>Filter</p>
+                    <p className='filter-btn-text'>Search</p>
 
                     <div className='filter-btn-aux-cont'>
-                        <p>Search Employer Name</p>
-                        <span style={{marginBottom: 13}}>
-                            <BsChevronDown />
-                        </span>
+                       <input
+                            placeholder='enter account name' 
+                            type={'text'} 
+                            className='filter-search-input' 
+                            onChange={onAuxSearchChange}
+                        />
                     </div>
                 </div>
             )

@@ -27,6 +27,7 @@ function Accounts() {
   const [loaderText, setLoaderText] = useState('');
   const businessData = useSelector(state => state.businessData);
   const {business} = businessData;
+  const [filterArr, setFilterArr] = useState([]);
   
 
   const handleClose = () => setShow(false);
@@ -43,6 +44,7 @@ function Accounts() {
       const {data, message} = res.data;
       console.log(data);
       setAccounts(data);
+      setFilterArr(data);
       setLoading(false);
       toast.success(message, {
         position: toast.POSITION.TOP_RIGHT
@@ -202,6 +204,20 @@ function Accounts() {
     }
   };
 
+  const searchAccount = (e) => {
+    let value = e.target.value
+    let arr1 = [];
+
+    accounts.forEach(cur => {
+      let name = `${cur.firstName} ${cur.lastName}`
+      if(name.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+        arr1.push(cur)
+      }
+    });
+ 
+    setFilterArr(arr1);
+  }
+
   useEffect(() => {
     getStaffs();
   }, [])
@@ -220,6 +236,7 @@ function Accounts() {
           auxHeadBtnClick={handleShow}
           auxBtnTitle={'Add new employee'}
           auxBtnAppear={true}
+          onAuxSearchChange={searchAccount}
           auxBtnIcon={
             <FaRegPlusSquare 
               style={{
@@ -232,12 +249,12 @@ function Accounts() {
 
         <div className='transaction-dashboard'>
           {
-            accounts.length < 1 ? (
+            filterArr.length < 1 ? (
               <p className='empty-state-text'>
                No Employee Registered yet 
               </p>
             ) : (
-              <CustomTable data={accounts} refresh={getStaffs} />
+              <CustomTable data={filterArr} refresh={getStaffs} />
             )
           }
         </div>
@@ -245,7 +262,7 @@ function Accounts() {
         <Modal 
           show={show} 
           onHide={handleClose}
-          size={'lg'}
+          size={'xl'}
           centered
         >
           {

@@ -38,6 +38,25 @@
     flex: 1;
 }
 
+.settings-input-cont-aux {
+    margin-bottom: 40px;
+    flex: 1;
+    position: relative;
+}
+
+.edit-and-save-btn {
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: #03A63C;
+    cursor: pointer;
+}
+
 .settings-sub-form-cont-child {
     display: flex;
     flex-direction: row;

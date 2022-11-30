@@ -57,7 +57,7 @@ function ForgotPassword() {
             toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
-            return(<ToastContainer />)
+            // return(<ToastContainer />)
         }
     };
 

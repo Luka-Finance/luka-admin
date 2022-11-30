@@ -7,13 +7,14 @@ function CustomSelector({
   options,
   onChange,
   error,
+  disableSelect
 }) {
   return (
     <div className='selector-cont'>
       <label htmlFor={label} className="selecttor-label">{label}</label>
 
-      <div className='selector-wrapper'>
-        <select onChange={onChange} name={label} id={label} className='selector-self'>
+      <div style={{backgroundColor: disableSelect ? '#E8E5E5' : '#F7F7F7'}} className='selector-wrapper'>
+        <select onChange={onChange} name={label} id={label} className='selector-self' disabled={disableSelect && disableSelect}>
           <option value=""></option>
           {
             options.map((opt, index) => (

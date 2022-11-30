@@ -9,14 +9,15 @@ function Input({
     icon,
     error,
     onChange,
-    iconClick
+    iconClick,
+    disableInput,
 }) {
   return (
     <div className='input-cont'>
       {label && (<label htmlFor="label" className='input-label'>{label}</label>)}
 
-      <div className='input-wrapper'>
-        {icon && (<div style={{cursor: 'pointer', backgroundColor: '#F7F7F7'}} onClick={iconClick}>{icon}</div>)}
+      <div style={{backgroundColor: disableInput ? '#E8E5E5' : '#F7F7F7'}} className='input-wrapper'>
+        {icon && (<div style={{cursor: 'pointer', backgroundColor: disableInput ? '#E8E5E5' : '#F7F7F7' }} onClick={iconClick}>{icon}</div>)}
 
         <input
             className='input-self'
@@ -25,6 +26,7 @@ function Input({
             id={label}
             value={value}
             onChange={onChange}
+            readOnly={disableInput && disableInput}
         />
       </div>
 
