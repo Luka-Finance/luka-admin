@@ -89,8 +89,6 @@ function OtpPage() {
         arr[1] = entry2;
         arr[2] = entry3;
         arr[3] = entry4;
-        // arr[4] = entry5;
-        // arr[5] = entry6;
         let checker = arr.map(cur => cur === '');
         const otp = arr.join(''); 
         if(checker.includes(true)) {
@@ -100,6 +98,12 @@ function OtpPage() {
             return(<ToastContainer />) 
         } else {
             verifyOtp(otp); 
+        }
+    };
+
+    function clickEvent(first,last){
+        if(first){
+            document.getElementById(last).focus();
         }
     };
 
@@ -137,7 +141,7 @@ function OtpPage() {
 
             <p className='otp-entry-form-text'>
                 A one-time password have been sent to your registered email
-                kindly input the 6-digit code below
+                kindly input the 4-digit code below
             </p>
 
 
@@ -147,33 +151,40 @@ function OtpPage() {
                         type={'text'} 
                         className='otp-input' 
                         maxLength={1}
+                        id={'ist'}
                         onChange={(e) => {
                             const value = e.target.value;
                             setEntry1(value)
                         }}
+                        onKeyUp={(e) => clickEvent(e.target.value, 'sec')}
                     />
                     <input 
                         type={'text'} 
                         className='otp-input'
                         maxLength={1} 
+                        id={'sec'}
                         onChange={(e) => {
                             const value = e.target.value;
                             setEntry2(value)
                         }}
+                        onKeyUp={(e) => clickEvent(e.target.value, 'third')}
                     />
                     <input 
                         type={'text'} 
                         className='otp-input' 
                         maxLength={1} 
+                        id={'third'}
                         onChange={(e) => {
                             const value = e.target.value;
                             setEntry3(value)
                         }}
+                        onKeyUp={(e) => clickEvent(e.target.value, 'forth')}
                     />
                     <input 
                         type={'text'} 
                         className='otp-input' 
                         maxLength={1}
+                        id={'forth'}
                         onChange={(e) => {
                             const value = e.target.value;
                             setEntry4(value)

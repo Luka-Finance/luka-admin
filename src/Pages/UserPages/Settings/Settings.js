@@ -1,25 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import AuxPageHead from '../../../Components/AuxPageHead/AuxPageHead';
 import Layout from '../../../Components/Layout/Layout';
 import Input from '../../../Components/Common/Input/Input';
 import CustomSelector from '../../../Components/Common/CustomSelector/CustomSelector';
-import { BsExclamationCircle} from 'react-icons/bs';
+import { BsExclamationCircle, BsCheckLg} from 'react-icons/bs';
+import {MdClose} from 'react-icons/md';
 import CustomButton from '../../../Components/Common/CustomButton/Index';
 import { toast, ToastContainer } from 'react-toastify';
 import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../../Utils/axiosInstance';
-
 import './Styles.css';
+import { useSelector } from 'react-redux';
 
 function Settings() {
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    companyName: ''
+  });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [loadingRC, setLoadingRC] = useState(false);
   const [loadingTIM, setLoadingTIN] = useState(false);
   const [loaderText, setLoaderText] = useState('');
   const [editForm, setEditForm] = useState(false);
+  const businessData = useSelector(state => state.businessData);
+  const {business} = businessData;
 
   const onEnterValue = ({name, value}) => { 
     setForm({...form, [name]: value});
@@ -107,7 +112,7 @@ function Settings() {
             num.push(value[1]);
             num.push(value[2]);
             val = num.join('');
-            if (value.length !== 11 && (val !== '070' || val !== '081' || val !== '080' || val !== '090')) {
+            if (value.length !== 11 && (val !== '070' || val !== '081' || val !== '080' || val !== '090' || val !== '+234')) {
                 setErrors(prev => {return {...prev, [name]: `Please enter a valid phone number`}});
             } else {
                 setErrors(prev => {return {...prev, [name]: null}});
@@ -265,6 +270,25 @@ function Settings() {
     }
   };
 
+  const initializeForm = () => {
+    setForm({
+        ...form, 
+        companyName: business?.name,
+        companyEmail: business?.email,
+        companyPhone: business?.phone,
+        contactName: business?.contactPersonName === null ? '' : business?.contactPersonName,
+        contactRole: business?.contactPersonRole === null ? '' : business?.contactPersonRole,
+        contactEmail: business?.contactPersonEmail === null ? '' : business?.contactPersonEmail,
+        contactPhone: business?.contactPersonPhone === null ? '' : business?.contactPersonPhone,
+        rcNumber: business?.rcNumber === null ? '' : business?.rcNumber,
+        paymentDate: business?.payday === null ? '' : business?.payday,
+    });
+  }
+
+  useEffect(() => {
+    initializeForm();
+  }, [business])
+
   if(loading) {
     return (<LoaderScreen loadingText={loaderText} />)
   }
@@ -297,6 +321,7 @@ function Settings() {
                                 const value = e.target.value;
                                 onEnterValue({name: 'companyName', value})
                             }}
+                            value={form.companyName}
                             error={errors.companyName}
                             disableInput={!editForm}
                         />
@@ -320,6 +345,7 @@ function Settings() {
                         <Input 
                             label={'Company email'}
                             type={'email'}
+                            value={form.companyEmail}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 onEnterValue({name: 'companyEmail', value});
@@ -333,6 +359,7 @@ function Settings() {
                         <Input 
                             label={'Company phone number'}
                             type={'tel'}
+                            value={form.companyPhone}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 onEnterValue({name: 'companyPhone', value})
@@ -347,6 +374,7 @@ function Settings() {
                             <Input 
                                 label={'Contact person name'}
                                 type={'text'}
+                                value={form.contactName}
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     onEnterValue({name: 'contactName', value})
@@ -360,6 +388,7 @@ function Settings() {
                             <Input 
                                 label={'Role of contact person'}
                                 type={'text'}
+                                value={form.contactRole}
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     onEnterValue({name: 'contactRole', value})
@@ -375,6 +404,7 @@ function Settings() {
                             <Input 
                                 label={'Email of contact person'}
                                 type={'email'}
+                                value={form.contactEmail}
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     onEnterValue({name: 'contactEmail', value})
@@ -388,6 +418,7 @@ function Settings() {
                             <Input 
                                 label={'Mobile of the contact person'}
                                 type={'tel'}
+                                value={form.contactPhone}
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     onEnterValue({name: 'contactPhone', value})
@@ -411,34 +442,75 @@ function Settings() {
                </div> 
 
                <div className='settings-sub-form-cont'>
-                    <div className='settings-input-cont'>
-                        <Input 
-                            label={'RC Number'}
-                            type={'text'}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                onEnterValue({name: 'rcNumber', value});
-                                verifyRcNUmber(value);
-                            }}
-                            error={errors.rcNumber}
-                            disableInput={!editForm}
-                        />
-                        {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
+                    <div className='settings-input-cont-plus-extra'>
+                        <div style={{flex: 1}}>
+                            <Input 
+                                label={'RC Number'}
+                                type={'text'}
+                                value={form.rcNumber}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'rcNumber', value});
+                                    verifyRcNUmber(value);
+                                }}
+                                error={errors.rcNumber}
+                                disableInput={!editForm}
+                            />
+                            {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
+                            {!loadingRC && (<p style={{color: business?.type === 'registered'  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {business?.type === 'registered' ? 'RC number verified' : 'Incorrect RC number'}
+                            </p>)}
+                        </div>
+                        <div className="number-status-icon-cont">
+                            {
+                                !loadingRC && (
+                                    <>
+                                        {
+                                            business?.type === 'registered'  ? (
+                                            <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
+                                            ) : (
+                                            <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
+                                            )
+                                        }
+                                    </>
+                                )
+                            }
+                        </div>
                     </div>
 
-                    <div className='settings-input-cont'>
-                        <Input 
-                            label={'TIN Number'}
-                            type={'text'}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                onEnterValue({name: 'tinNumber', value});
-                                verifyTin(value);
-                            }}
-                            error={errors.tinNumber}
-                            disableInput={!editForm}
-                        />
-                        {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
+                    <div className='settings-input-cont-plus-extra'>
+                        <div style={{flex: 1}}>
+                            <Input 
+                                label={'TIN Number'}
+                                type={'text'}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    onEnterValue({name: 'tinNumber', value});
+                                    verifyTin(value);
+                                }}
+                                error={errors.tinNumber}
+                                disableInput={!editForm}
+                            />
+                            {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
+                            {!loadingTIM && (<p style={{color: business?.type === 'registered'  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {business?.type === 'registered' ? 'TIN verified' : 'Incorrect TIN'}
+                            </p>)}
+                        </div>
+                        <div className="number-status-icon-cont">
+                            {
+                                !loadingTIM && (
+                                    <>
+                                        {
+                                            business?.type === 'registered'  ? (
+                                            <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
+                                            ) : (
+                                            <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
+                                            )
+                                        }
+                                    </>
+                                )
+                            }
+                        </div>
                     </div>
 
                     {/* <div className='settings-input-cont'>
@@ -511,6 +583,7 @@ function Settings() {
                         <Input 
                             label={'Set monthly pay day [1 - 28]'}
                             type={'number'}
+                            value={form.paymentDate}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 onEnterValue({name: 'paymentDate', value})

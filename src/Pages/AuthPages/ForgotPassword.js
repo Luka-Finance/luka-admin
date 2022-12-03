@@ -5,8 +5,7 @@ import Input from '../../Components/Common/Input/Input';
 import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import axiosInstance from '../../Utils/axiosInstance';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-phone-input-2/lib/style.css'
-
+import 'react-phone-input-2/lib/style.css';
 import './Styles.css';
 import { Link } from 'react-router-dom';
 
@@ -49,7 +48,12 @@ function ForgotPassword() {
             }
            }) 
            setLoading(false);
-           console.log('res ',res)
+           const {message} = res.data;
+           toast.success(message, {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            window.location.assign('/set-new-password')
+            return(<ToastContainer />)
         } catch (error) {
             setLoading(false);
             const err = error.response.data.message
@@ -57,7 +61,7 @@ function ForgotPassword() {
             toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
-            // return(<ToastContainer />)
+            return(<ToastContainer />)
         }
     };
 

@@ -38,6 +38,33 @@
     flex: 1;
 }
 
+.settings-input-cont-plus-extra {
+    margin-bottom: 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.number-status-icon-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid black; */
+    margin-left: 20px;
+    height: 60px;
+    margin-top: 35px;
+}
+
+.number-status-text {
+    margin-top: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+}
+
 .settings-input-cont-aux {
     margin-bottom: 40px;
     flex: 1;
