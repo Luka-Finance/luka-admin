@@ -96,12 +96,24 @@ function Layout({
         window.location.replace('/sign-in');
     };
 
+    const scrubToken = () => {
+        dispatch(logoutBusiness());
+        dispatch(logoutUser());
+        accessLocalStorage.clearLs();
+    };
+
     useEffect(() => {
         checkForAccessToken();
 
         if(Object.keys(business).length === 0) {
             getUserData();
         }
+
+        window.addEventListener('beforeunload', scrubToken);
+
+        return () => {
+            window.removeEventListener('beforeunload', scrubToken);
+        };
     }, [])
 
     if(loading) {

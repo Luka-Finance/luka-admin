@@ -8,6 +8,7 @@ import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import axiosInstance from '../../Utils/axiosInstance';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-phone-input-2/lib/style.css';
+import Spinner from 'react-bootstrap/Spinner';
 
 function SetNewPassword() {
     const [form, setForm] = useState({password: '', confirmPassword: ''});
@@ -112,10 +113,6 @@ function SetNewPassword() {
         }
     }, [form])
 
-    if(loading) {
-        return (<LoaderScreen loadingText={'updating password'} />)
-    };
-
   return (
     <div className='parent-cont-2'>
         <div className='banner'>
@@ -215,6 +212,7 @@ function SetNewPassword() {
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
                         disabled={disable}
                         onClick={onSubmit}
+                        icon={loading && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
                     />
                 </div>
             </div>

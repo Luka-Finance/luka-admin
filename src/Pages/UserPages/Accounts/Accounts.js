@@ -42,7 +42,6 @@ function Accounts() {
         method: 'GET',
       })
       const {data, message} = res.data;
-      console.log(data);
       setAccounts(data);
       setFilterArr(data);
       setLoading(false);

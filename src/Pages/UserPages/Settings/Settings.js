@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../../Utils/axiosInstance';
 import './Styles.css';
 import { useSelector } from 'react-redux';
+import PhoneInput from 'react-phone-input-2'
 
 function Settings() {
   const [form, setForm] = useState({
@@ -25,6 +26,7 @@ function Settings() {
   const [editForm, setEditForm] = useState(false);
   const businessData = useSelector(state => state.businessData);
   const {business} = businessData;
+  const [phone, setPhone] = useState('')
 
   const onEnterValue = ({name, value}) => { 
     setForm({...form, [name]: value});
@@ -367,6 +369,28 @@ function Settings() {
                             error={errors.companyPhone}
                             disableInput={!editForm}
                         />
+                         {/* <div>
+                            <label className='phone-label'>Company's Phone number</label>
+                            <PhoneInput
+                                country={'ng'}
+                                value={phone}
+                                onChange={value => {
+                                    setPhone(value);
+                                    onEnterValue({name: 'companyPhone', value});
+                                }}
+                                placeholder={'eg +23470***********'}
+                                enableSearch={true}
+                                containerClass={'phone-cont'}
+                                inputStyle={{width: '100%', height: '100%', borderRadius: 6}}
+                                isValid={(value, country) => {
+                                    if(errors.companyPhone) {
+                                        return errors.companyPhone;
+                                    } else {
+                                        return false;
+                                    }
+                                }}
+                            />
+                        </div> */}
                     </div>
 
                     <div className='settings-sub-form-cont-child'>

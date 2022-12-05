@@ -8,6 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-phone-input-2/lib/style.css';
 import './Styles.css';
 import { Link } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 function ForgotPassword() {
     const [form, setForm] = useState({companyEmail: ''});
@@ -73,10 +74,6 @@ function ForgotPassword() {
         }
     }, [form])
 
-    if(loading) {
-        return (<LoaderScreen loadingText={'validating email'} />)
-    }
-
   return (
     <div className='parent-cont-2'>
         {/* for toast notification containing */}
@@ -116,6 +113,7 @@ function ForgotPassword() {
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
                         disabled={disable}
                         onClick={onSubmit}
+                        icon={loading && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
                     />
                 </div>
 

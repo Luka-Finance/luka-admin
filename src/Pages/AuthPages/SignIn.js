@@ -11,6 +11,7 @@ import axiosInstance from '../../Utils/axiosInstance';
 import './Styles.css';
 import { Link } from 'react-router-dom';
 import { saveAccessToken } from '../../Redux/Actions/userActions';
+import Spinner from 'react-bootstrap/Spinner';
 
 function SignIn() {
     const dispatch = useDispatch();
@@ -76,7 +77,7 @@ function SignIn() {
         } catch(error) {
             setLoading(false);
             const err = error.response.data.message;
-            console.log('err ', err);
+            console.log('err ', error);
             toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -113,10 +114,6 @@ function SignIn() {
             setDisable(true)
         }
     }, [form])
-
-    if(loading) {
-        return (<LoaderScreen loadingText={'processing sign in'} />)
-    }
 
   return (
     <div className='parent-cont-2'>
@@ -167,6 +164,7 @@ function SignIn() {
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
                         disabled={disable}
                         onClick={onSubmit}
+                        icon={loading && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
                     />
                 </div>
 

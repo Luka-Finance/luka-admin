@@ -15,6 +15,7 @@ import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
 import axiosInstance from '../../../Utils/axiosInstance';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Spinner from 'react-bootstrap/Spinner';
 
 function Dashboard() {
   const businessData = useSelector(state => state.businessData);
@@ -23,6 +24,7 @@ function Dashboard() {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loadingStaffAdd, setLoadingStaffAdd] = useState(false);
   const [loaderText, setLoaderText] = useState('');
   const [stats, setStats] = useState({
     totalEarnedThisMonth: 0,
@@ -145,8 +147,7 @@ function Dashboard() {
   };
 
   const onSubmit = async() => {
-    setLoaderText('Creating staff');
-    setLoading(true);
+    setLoadingStaffAdd(true);
     try {
       const res = await axiosInstance({
         url: '/business/create-staff',
@@ -167,11 +168,11 @@ function Dashboard() {
       toast.success(message, {
         position: toast.POSITION.TOP_RIGHT
       });
-      setLoading(false);
+      setLoadingStaffAdd(false);
       setCreated(true);
       return(<ToastContainer />)
     } catch(error) {
-      setLoading(false);
+      setLoadingStaffAdd(false);
       // console.log('err ', error.message);
       const err = error.response.data.message
       toast.error(err, {
@@ -288,7 +289,7 @@ function Dashboard() {
                     Close
                   </p>
           
-                  <div style={{width: 80}}>
+                  <div style={{width: !loadingStaffAdd ? 80 : 120}}>
                     <CustomButton 
                       btnHeight={44}
                       onClick={onSubmit}
@@ -297,6 +298,7 @@ function Dashboard() {
                       bgColor={'rgba(3, 166, 60, 1)'}
                       disabled={false}
                       disabledColor={'rgba(3, 166, 60, 0.5)'}
+                      icon={loadingStaffAdd && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
                     />
                   </div>
                 </div>

@@ -6,14 +6,14 @@ import CustomButton from '../../Components/Common/CustomButton/Index';
 import CustomSelector from '../../Components/Common/CustomSelector/CustomSelector';
 import axiosInstance from '../../Utils/axiosInstance';
 import { toast, ToastContainer } from 'react-toastify';
-import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import accessLocalStorage from '../../Utils/accessLocalStorage';
 import './Styles.css';
 import countries from '@odusanya/african-countries';
 import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
+import 'react-phone-input-2/lib/style.css';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 function Register() {
@@ -210,11 +210,6 @@ function Register() {
         getCountries();  
     }, [])
 
-    if(loading) {
-        return (<LoaderScreen loadingText={loadingText} />)
-    }
-
-
   return (
     <div className='parent-cont'>
         {/* for toast notification containing */}
@@ -351,6 +346,7 @@ function Register() {
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
                         disabled={!terms}
                         onClick={onSubmit}
+                        icon={loading && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
                     />
                 </div>
 

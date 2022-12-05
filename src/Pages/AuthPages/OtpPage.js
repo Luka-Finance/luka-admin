@@ -6,6 +6,7 @@ import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../Utils/axiosInstance';
 import accessLocalStorage from '../../Utils/accessLocalStorage';
+import Spinner from 'react-bootstrap/Spinner';
 
 import './Styles.css';
 
@@ -121,10 +122,6 @@ function OtpPage() {
         }
     }, [entry1, entry2, entry3, entry4])
 
-    if(loading) {
-        return (<LoaderScreen loadingText={loaderMsg} />)
-    }
-
   return (
     <div className='parent-cont-2'>
         {/* for toast notification containing */}
@@ -200,6 +197,7 @@ function OtpPage() {
                         disabledColor={'rgba(3, 166, 60, 0.5)'}
                         disabled={disable}
                         onClick={onSubmit}
+                        icon={loading && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
                     />
                 </div>
 

@@ -3,8 +3,10 @@ import './styles.css';
 function LoaderScreen({loadingText}) {
   return (
     <div className='loader-screen'>
-        <p className='head-text'>{loadingText && loadingText}</p>
-        <div className="loader"></div>
+       <div className="loader-sub-screen">
+          <p className='head-text'>{loadingText && loadingText}</p>
+          <div className="loader"></div>
+       </div>
     </div>
   )
 };
