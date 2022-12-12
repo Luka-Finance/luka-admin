@@ -102,7 +102,15 @@ function Layout({
         accessLocalStorage.clearLs();
     };
 
+    const checkScreenSize = () => {
+        const screenWidth = window.innerWidth;
+        if(screenWidth < 768) {
+         window.location.replace('/util-page')
+        }
+    };
+
     useEffect(() => {
+        checkScreenSize();
         checkForAccessToken();
 
         if(Object.keys(business).length === 0) {

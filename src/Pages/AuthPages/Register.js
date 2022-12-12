@@ -206,7 +206,15 @@ function Register() {
         setCountryList(arr1);
     };
 
+    const checkScreenSize = () => {
+       const screenWidth = window.innerWidth;
+       if(screenWidth < 768) {
+        window.location.replace('/util-page')
+       }
+    };
+
     useEffect(() => {
+        checkScreenSize();
         getCountries();  
     }, [])
 
