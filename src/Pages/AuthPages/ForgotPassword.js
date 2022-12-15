@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { Image } from 'react-bootstrap';
 import CustomButton from '../../Components/Common/CustomButton/Index';
 import Input from '../../Components/Common/Input/Input';
-import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import axiosInstance from '../../Utils/axiosInstance';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-phone-input-2/lib/style.css';
@@ -53,7 +52,7 @@ function ForgotPassword() {
            toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             })
-            window.location.assign('/set-new-password')
+            window.location.assign('/reset-password')
             return(<ToastContainer />)
         } catch (error) {
             setLoading(false);
