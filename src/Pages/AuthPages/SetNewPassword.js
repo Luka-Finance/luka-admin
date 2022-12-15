@@ -54,7 +54,7 @@ function SetNewPassword() {
                 password: form.password,
               },  
               headers: {
-                token: `Bearer ${window.location.search.split('/')[2]}`
+                token: `Bearer ${window.location.search.split('?')[1]}`
               }
             })
             // await axiosInstance({
