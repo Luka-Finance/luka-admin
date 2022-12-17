@@ -21,7 +21,7 @@ function App() {
         <Route path="/payments" element={<Payments />} />
         <Route path='/accounts' element={<Accounts />} />
         <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/reset-password' element={<SetNewPassword />} />
+        <Route path='/reset-password/:id' element={<SetNewPassword />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/otp-entry' element={<OtpPage />} />

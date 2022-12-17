@@ -49,29 +49,21 @@ function SetNewPassword() {
     const onSubmit = async() => {
         setLoading(true);
         try {
-            const res = axios.post('https://luka-api.vercel.app/business/reset-password', {
-              data: {
+            const res = await axios.post('https://luka-api.vercel.app/business/reset-password', {
                 password: form.password,
-              },  
-              headers: {
-                token: `Bearer ${window.location.search.split('?')[1]}`
-              }
+                token: window.location.href.split('/')[4],
+            },{
+                headers: {
+                    'Authorization': `Bearer ${window.location.href.split('/')[4]}` 
+                }
             })
-            // await axiosInstance({
-            // url: '/business/reset-password',
-            // method: 'POST',
-            // data: {
-            //     password: form.password,
-            //     token: window.location.search.split('/')[2]
-            // }
-            // }) 
             setLoading(false);
         //    console.log('res ',res)
             const {message} = res.data;
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             })
-            window.location.assign('/sign-in');
+            window.location.replace('/sign-in');
             setPasswordA(true);
             setPasswordB(true);
             setDisable(true);
@@ -81,7 +73,8 @@ function SetNewPassword() {
             setPasswordB(true);
             setLoading(false);
             setDisable(true);
-            const err = error.response.data.message
+            const err = error.response.data.message;
+            // console.log('err ',err)
             toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -99,6 +92,9 @@ function SetNewPassword() {
 
   return (
     <div className='parent-cont-2'>
+        {/* for toast notification containing */}
+        <ToastContainer />
+
         <div className='banner'>
             <Image src='assets/Logo.svg' alt="logo" />
         </div>

@@ -52,7 +52,7 @@ function ForgotPassword() {
            toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             })
-            window.location.assign('/reset-password')
+            // window.location.assign('/reset-password')
             return(<ToastContainer />)
         } catch (error) {
             setLoading(false);
