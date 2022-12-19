@@ -197,14 +197,15 @@ function Settings() {
   };
 
   const verifyTin = async(value) => {
-    if(value.length === 7) {
+    if(value.length === 10) {
         setLoadingTIN(true);
         try {
             const res = await axiosInstance({
                 url: '/business/verify/tin',
                 method: 'POST',
                 data: {
-                    searchParameter: form.tinNumber,
+                    ompanyName: form.companyName,
+                    searchParameter: value,
                 }
             });
             const {message} = res.data;
@@ -255,7 +256,7 @@ function Settings() {
             // cacDoc: formData,
         }
       });
-      console.log('res ', res);
+    //   console.log('res ', res);
       const {message} = res.data;
         toast.success(message, {
             position: toast.POSITION.TOP_RIGHT
@@ -283,6 +284,7 @@ function Settings() {
         contactEmail: business?.contactPersonEmail === null ? '' : business?.contactPersonEmail,
         contactPhone: business?.contactPersonPhone === null ? '' : business?.contactPersonPhone,
         rcNumber: business?.rcNumber === null ? '' : business?.rcNumber,
+        tinNumber: business?.tin === null ? '' : business?.tin,
         paymentDate: business?.payday === null ? '' : business?.payday,
     });
   }
@@ -469,6 +471,7 @@ function Settings() {
                     <div className='settings-input-cont-plus-extra'>
                         <div style={{flex: 1}}>
                             <Input 
+                                maxLength={7}
                                 label={'RC Number'}
                                 type={'text'}
                                 value={form.rcNumber}
@@ -505,8 +508,10 @@ function Settings() {
                     <div className='settings-input-cont-plus-extra'>
                         <div style={{flex: 1}}>
                             <Input 
+                                maxLength={10}
                                 label={'TIN Number'}
                                 type={'text'}
+                                value={form.tinNumber}
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     onEnterValue({name: 'tinNumber', value});

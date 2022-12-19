@@ -70,15 +70,15 @@ function Layout({
           setLoading(false);
           console.log(error);
           // const err = error.response.data.message
-          toast.error('err', {
+          toast.error('Error fetxhing data.', {
             position: toast.POSITION.TOP_RIGHT
           })
           return(<ToastContainer />)
         };
     
-      };
+    };
 
-      const checkForAccessToken = () => {
+    const checkForAccessToken = () => {
         let token = accessLocalStorage.getFromLs('token');
         if(!token) {
             toast.error('Please sign in.', {
@@ -87,7 +87,7 @@ function Layout({
             window.location.replace('/sign-in');
             return(<ToastContainer />);
         }
-      };
+    };
 
     const userLogout = () => {
         dispatch(logoutBusiness());

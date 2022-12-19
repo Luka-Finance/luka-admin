@@ -5,7 +5,6 @@ import CustomButton from '../../Components/Common/CustomButton/Index';
 import Input from '../../Components/Common/Input/Input';
 import { AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai';
 import { toast, ToastContainer } from 'react-toastify';
-import LoaderScreen from '../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../Utils/axiosInstance';
 import './Styles.css';
@@ -77,7 +76,6 @@ function SignIn() {
         } catch(error) {
             setLoading(false);
             const err = error.response.data.message;
-            console.log('err ', error);
             toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })

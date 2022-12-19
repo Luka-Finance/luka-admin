@@ -10,12 +10,6 @@ const getAccessToken = () => {
  }
 };
 
-axios.interceptors.response.use(function(err) {
-  if(err.response.data.message.toLowwerCase() === 'token expired') {
-    window.history.replaceState('/sign-in')
-  } 
-})
-
 const axiosInstance = axios.create({
   baseURL : 'https://luka-api.vercel.app',
   headers: {
@@ -24,5 +18,16 @@ const axiosInstance = axios.create({
     timeout : 1000,
   }, 
 });
+
+// axiosInstance.interceptors.response.use(function(err) {
+//   if(err.response.data.message.toLowwerCase() === 'token expired') {
+//     console.log('expired token')
+//     // window.history.replaceState('/sign-in')
+//   } else {
+//     console.log('expired token')
+//   }
+// }, function(error) {
+//    return Promise.reject(error);
+// })
 
 export default axiosInstance;
