@@ -11,6 +11,7 @@ function Input({
     onChange,
     iconClick,
     disableInput,
+    maxLength,
 }) {
   return (
     <div className='input-cont'>
@@ -27,6 +28,7 @@ function Input({
             value={value}
             onChange={onChange}
             readOnly={disableInput && disableInput}
+            maxLength={maxLength && maxLength}
         />
       </div>
 

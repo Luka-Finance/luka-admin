@@ -19,4 +19,15 @@ const axiosInstance = axios.create({
   }, 
 });
 
+// axiosInstance.interceptors.response.use(function(err) {
+//   if(err.response.data.message.toLowwerCase() === 'token expired') {
+//     console.log('expired token')
+//     // window.history.replaceState('/sign-in')
+//   } else {
+//     console.log('expired token')
+//   }
+// }, function(error) {
+//    return Promise.reject(error);
+// })
+
 export default axiosInstance;
