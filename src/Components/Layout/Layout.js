@@ -70,7 +70,7 @@ function Layout({
           setLoading(false);
           console.log(error);
           // const err = error.response.data.message
-          toast.error('Error fetxhing data.', {
+          toast.error('Error fetching data.', {
             position: toast.POSITION.TOP_RIGHT
           })
           return(<ToastContainer />)
