@@ -104,8 +104,8 @@ function Dashboard() {
 
       } else if (name === 'salary') {
 
-        if(value.length < 2) {
-          setErrors(prev => {return {...prev, [name]: `Enter salary`}});
+        if(value < 500) {
+          setErrors(prev => {return {...prev, [name]: `Enter mininum salary of N500`}});
         } else {
           setErrors(prev => {return {...prev, [name]: null}});
         };
@@ -158,7 +158,8 @@ function Dashboard() {
           email: form.email,
           phone: form.phone,
           salary: form.salary,
-          role: form.role,
+          // role: form.role,
+          role: 'regular',
           businessId: business.id,
           startDate: formatMyDate(form.startDate)
         }
@@ -251,7 +252,7 @@ function Dashboard() {
               </p>
 
               <div className='employee-form-cont'>
-                <div className='employee-form-input-cont'>
+                {/* <div className='employee-form-input-cont'>
                   <CustomSelector
                     label={'Select Employment type*'}
                     options={['regular']}
@@ -261,15 +262,17 @@ function Dashboard() {
                     }}
                     error={errors.employmentType}
                   />
-                </div>
+                </div> */}
                 {
                   InputListOne.map((input) => {
                     const {label, id, type, tag} = input;
+                    const max = new Date().toISOString().split("T")[0];
                     return (
                       <div key={id} className='employee-form-input-cont'>
                         <Input  
                           label={label}
                           type={type}
+                          maxDate={type === 'date' && max}
                           onChange={(e) => {
                             const value = e.target.value;
                             onEnterValue({name: tag, value});

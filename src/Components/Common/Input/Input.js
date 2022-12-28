@@ -12,6 +12,7 @@ function Input({
     iconClick,
     disableInput,
     maxLength,
+    maxDate,
 }) {
   return (
     <div className='input-cont'>
@@ -29,6 +30,7 @@ function Input({
             onChange={onChange}
             readOnly={disableInput && disableInput}
             maxLength={maxLength && maxLength}
+            max={maxDate && maxDate}
         />
       </div>
 

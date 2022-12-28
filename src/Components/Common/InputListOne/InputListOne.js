@@ -18,7 +18,7 @@ export const InputListOne = [
     {
         id: 3,
         tag: 'lastName',
-        label: 'Surame*',
+        label: 'Surname*',
         type: 'text',
         onChange: (e) => {console.log(e.target.value)},
         error: ''
@@ -43,7 +43,7 @@ export const InputListOne = [
         id: 6,
         tag: 'salary',
         label: 'Net Salary*',
-        type: 'text',
+        type: 'number',
         onChange: (e) => {console.log(e.target.value)},
         error: ''
     },

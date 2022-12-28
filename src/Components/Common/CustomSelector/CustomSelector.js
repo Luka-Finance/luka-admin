@@ -7,7 +7,8 @@ function CustomSelector({
   options,
   onChange,
   error,
-  disableSelect
+  disableSelect,
+  initialValue
 }) {
   return (
     <div className='selector-cont'>
@@ -15,7 +16,7 @@ function CustomSelector({
 
       <div style={{backgroundColor: disableSelect ? '#E8E5E5' : '#F7F7F7'}} className='selector-wrapper'>
         <select onChange={onChange} name={label} id={label} className='selector-self' disabled={disableSelect && disableSelect}>
-          <option value=""></option>
+          <option value="">{initialValue && initialValue}</option>
           {
             options.map((opt, index) => (
               <option value={opt} key={index}>

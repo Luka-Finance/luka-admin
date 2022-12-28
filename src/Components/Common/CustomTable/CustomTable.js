@@ -95,7 +95,7 @@ function CustomTable({
                             <td> 
                                 {
                                     cur.createdAt ? (
-                                        <Moment date={cur.createdAt} />
+                                        <Moment date={cur.createdAt} format="DD/MM/YYYY" />
                                     ) : (<p>awaiting</p>)
                                 } 
                             </td>
@@ -115,7 +115,10 @@ function CustomTable({
                             </p>  
                             </td>
                             <td> 
-                                {getSymbolFromCurrency('NGN')} {cur.salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00 
+                                <p style={{overFlowX: 'auto'}}>
+                                    <span style={{marginRight: 1}}>{getSymbolFromCurrency('NGN')}</span>
+                                    <span>{cur.salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00 </span>
+                                </p>
                             </td>
                             <td>
                                 <Dropdown>
