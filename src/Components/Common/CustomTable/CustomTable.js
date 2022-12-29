@@ -51,6 +51,11 @@ function CustomTable({
         </p>
     ));
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+    });
+
   return (
     <>
         {loading && (
@@ -65,7 +70,7 @@ function CustomTable({
             <thead>
                 <tr>
                     <th>Fullname</th>
-                    <th>Employee ID</th>
+                    {/* <th>Employee ID</th> */}
                     <th>Phone Number</th>
                     <th>Email</th>
                     <th>Employee strt Dt.</th>
@@ -79,12 +84,9 @@ function CustomTable({
                     data.map((cur) => (
                         <tr key={cur.id}>
                             <td> {`${cur.firstName} ${cur.lastName}`} </td>
-                            <td>
-                                {/* <p style={{width: '70%', display: 'flex', flexWrap: 'wrap'}}>
-                                {cur.id} 
-                                </p>  */}
+                            {/* <td>
                                 {cur.id}
-                            </td>
+                            </td> */}
                             <td> {cur.phone} </td>
                             <td> 
                                 {/* <p style={{width: 100, display: 'flex', flexWrap: 'wrap',border: '1px solid black', borderColor: 'black', borderWidth: 1, height: 60}}>
@@ -116,8 +118,9 @@ function CustomTable({
                             </td>
                             <td> 
                                 <p style={{overFlowX: 'auto'}}>
-                                    <span style={{marginRight: 1}}>{getSymbolFromCurrency('NGN')}</span>
-                                    <span>{cur.salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00 </span>
+                                    {/* <span style={{marginRight: 1}}>{getSymbolFromCurrency('NGN')}</span> */}
+                                    <span>{formatter.format(cur.salary)} </span>
+                                    {/* <span>{cur.salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.00 </span> */}
                                 </p>
                             </td>
                             <td>
@@ -127,9 +130,9 @@ function CustomTable({
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
-                                        <Dropdown.Item onClick={() => staffToggle(cur.id, 'suspend')} style={{color: 'rgba(255, 178, 0, 1)'}}> Suspend account </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => staffToggle(cur.id, 'deactivate')} style={{color: 'rgba(195, 0, 0, 1)'}} > Deactive account </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => staffToggle(cur.id, 'restore')} style={{color: 'rgba(3, 166, 60, 1)'}} > Restore account </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => staffToggle(cur.id, 'suspend')} style={{color: 'rgba(255, 178, 0, 1)'}}> Suspend </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => staffToggle(cur.id, 'deactivate')} style={{color: 'rgba(195, 0, 0, 1)'}} > Deactive </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => staffToggle(cur.id, 'restore')} style={{color: 'rgba(3, 166, 60, 1)'}} > Restore </Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </td>

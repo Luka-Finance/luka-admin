@@ -445,8 +445,8 @@ function Settings() {
                         <div className='settings-input-cont'>
                              <CustomSelector
                                 initialValue={form.contactRole}
-                                label={'Role of contact person'}
-                                options={['CEO', 'COO', 'Founder', 'Accountant', 'Finance lead', 'Human Resources personnel', 'Developer']}
+                                label={'Contact person role'}
+                                options={['CEO', 'COO', 'Founder', 'Accountant', 'Finance Lead', 'Human Resource Personnel', 'Developer']}
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     // onEnterValue({name: 'payTransactionFee', value})
@@ -461,7 +461,7 @@ function Settings() {
                     <div className='settings-sub-form-cont-child'>
                         <div className='settings-input-cont'>
                             <Input 
-                                label={'Email of contact person'}
+                                label={'Contact person email'}
                                 type={'email'}
                                 value={form.contactEmail}
                                 onChange={(e) => {
@@ -475,7 +475,7 @@ function Settings() {
 
                         <div className='settings-input-cont'>
                             <Input 
-                                label={'Mobile of the contact person'}
+                                label={'Contact person phone'}
                                 type={'tel'}
                                 value={form.contactPhone}
                                 onChange={(e) => {
