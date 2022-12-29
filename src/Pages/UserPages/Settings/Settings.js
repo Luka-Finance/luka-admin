@@ -323,7 +323,6 @@ function Settings() {
 
   useEffect(() => {
     initializeForm();
-    console.log('cur biz ', business)
   }, [business, businessData])
 
   if(loading) {
@@ -518,8 +517,8 @@ function Settings() {
                                 disableInput={!editForm}
                             />
                             {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
-                            {!loadingRC && (<p style={{color: business?.type === 'registered'  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
-                                {business?.type === 'registered' ? 'RC number verified' : 'Incorrect RC number'}
+                            {!loadingRC && (<p style={{color: form.rcNumber  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {form.rcNumber ? 'RC number verified' : 'Incorrect RC number'}
                             </p>)}
                         </div>
                         <div className="number-status-icon-cont">
@@ -527,7 +526,7 @@ function Settings() {
                                 !loadingRC && (
                                     <>
                                         {
-                                            business?.type === 'registered'  ? (
+                                            form.rcNumber  ? (
                                             <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
                                             ) : (
                                             <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
@@ -555,8 +554,8 @@ function Settings() {
                                 disableInput={!editForm}
                             />
                             {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
-                            {!loadingTIM && (<p style={{color: business?.type === 'registered'  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
-                                {business?.type === 'registered' ? 'TIN verified' : 'Incorrect TIN'}
+                            {!loadingTIM && (<p style={{color: form.tinNumber  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {form.tinNumber ? 'TIN verified' : 'Incorrect TIN'}
                             </p>)}
                         </div>
                         <div className="number-status-icon-cont">
@@ -564,7 +563,7 @@ function Settings() {
                                 !loadingTIM && (
                                     <>
                                         {
-                                            business?.type === 'registered'  ? (
+                                            form.tinNumber  ? (
                                             <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
                                             ) : (
                                             <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
