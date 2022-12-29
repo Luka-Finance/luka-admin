@@ -11,8 +11,9 @@ import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../../Utils/axiosInstance';
 import './Styles.css';
-import { useSelector } from 'react-redux';
-import PhoneInput from 'react-phone-input-2'
+import { useSelector, useDispatch } from 'react-redux';
+import { saveBusiness } from '../../../Redux/Actions/businessActions';
+// import PhoneInput from 'react-phone-input-2'
 
 function Settings() {
   const [form, setForm] = useState({
@@ -26,7 +27,8 @@ function Settings() {
   const [editForm, setEditForm] = useState(false);
   const businessData = useSelector(state => state.businessData);
   const {business} = businessData;
-  const [phone, setPhone] = useState('')
+//   const [phone, setPhone] = useState('')
+    const dispatch = useDispatch();
 
   const onEnterValue = ({name, value}) => { 
     setForm({...form, [name]: value});
@@ -90,7 +92,7 @@ function Settings() {
 
         } else if (name === 'contactRole') {
 
-            if(value.length < 4) {
+            if(value.length < 3) {
                 setErrors(prev => {return {...prev, [name]: `Contact role should be a minimum of 4 characters`}});
               } else {
                 setErrors(prev => {return {...prev, [name]: null}});
@@ -226,8 +228,37 @@ function Settings() {
     }
   };
 
+  const getUserData = async() => {
+    
+    setLoaderText('fetching data');
+    setLoading(true);
+    try {
+      const res = await axiosInstance({
+        method: 'GET',
+        url: '/business/me',
+      });
+      const {data, message} = res.data;
+      dispatch(saveBusiness(data))
+      setLoading(false);
+
+      toast.success(message, {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return(<ToastContainer />)
+    } catch(error) {
+      setLoading(false);
+    //   console.log(error);
+      // const err = error.response.data.message
+      toast.error('Error fetching data.', {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      return(<ToastContainer />)
+    };
+
+};
+
   const updateProfile = async() => {
-    setLoaderText('Upadeting profile');
+    setLoaderText('Updating profile');
     setLoading(true);
 
     const formData = new FormData();
@@ -244,8 +275,8 @@ function Settings() {
             country: form.companyCountry,
             city: form.companyCity,
             email: form.companyEmail,
-            paysTransactionFee: form.payTransactionFee,
-            payday: form.paymentDate,
+            paysTransactionFee: form.payTransactionFee || 'Employee',
+            payday: form.paymentDate || 28,
             rcNumber: form.rcNumber,
             type: 'registered',
             address: form.companyAddress,
@@ -262,6 +293,7 @@ function Settings() {
             position: toast.POSITION.TOP_RIGHT
         });
         setLoading(false); 
+        getUserData();
         return(<ToastContainer />)  
     } catch (error) {
         setLoading(false);
@@ -291,7 +323,7 @@ function Settings() {
 
   useEffect(() => {
     initializeForm();
-  }, [business])
+  }, [business, businessData])
 
   if(loading) {
     return (<LoaderScreen loadingText={loaderText} />)
@@ -411,16 +443,17 @@ function Settings() {
                         </div>
 
                         <div className='settings-input-cont'>
-                            <Input 
+                             <CustomSelector
+                                initialValue={form.contactRole}
                                 label={'Role of contact person'}
-                                type={'text'}
-                                value={form.contactRole}
+                                options={['CEO', 'COO', 'Founder', 'Accountant', 'Finance lead', 'Human Resources personnel', 'Developer']}
                                 onChange={(e) => {
                                     const value = e.target.value;
+                                    // onEnterValue({name: 'payTransactionFee', value})
                                     onEnterValue({name: 'contactRole', value})
                                 }}
                                 error={errors.contactRole}
-                                disableInput={!editForm}
+                                disableSelect={!editForm}
                             />
                         </div>
                     </div>
@@ -484,8 +517,8 @@ function Settings() {
                                 disableInput={!editForm}
                             />
                             {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
-                            {!loadingRC && (<p style={{color: business?.type === 'registered'  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
-                                {business?.type === 'registered' ? 'RC number verified' : 'Incorrect RC number'}
+                            {!loadingRC && (<p style={{color: form.rcNumber  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {form.rcNumber ? 'RC number verified' : 'Incorrect RC number'}
                             </p>)}
                         </div>
                         <div className="number-status-icon-cont">
@@ -493,7 +526,7 @@ function Settings() {
                                 !loadingRC && (
                                     <>
                                         {
-                                            business?.type === 'registered'  ? (
+                                            form.rcNumber  ? (
                                             <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
                                             ) : (
                                             <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
@@ -521,8 +554,8 @@ function Settings() {
                                 disableInput={!editForm}
                             />
                             {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
-                            {!loadingTIM && (<p style={{color: business?.type === 'registered'  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
-                                {business?.type === 'registered' ? 'TIN verified' : 'Incorrect TIN'}
+                            {!loadingTIM && (<p style={{color: form.tinNumber  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {form.tinNumber ? 'TIN verified' : 'Incorrect TIN'}
                             </p>)}
                         </div>
                         <div className="number-status-icon-cont">
@@ -530,7 +563,7 @@ function Settings() {
                                 !loadingTIM && (
                                     <>
                                         {
-                                            business?.type === 'registered'  ? (
+                                            form.tinNumber  ? (
                                             <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
                                             ) : (
                                             <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
@@ -595,7 +628,7 @@ function Settings() {
                </div> 
 
                <div className='settings-sub-form-cont'>
-                    <div className='settings-input-cont'>
+                    {/* <div className='settings-input-cont'>
                         <CustomSelector
                             label={'Who pay transaction fee?'}
                             options={['Employer', 'Employee']}
@@ -606,7 +639,7 @@ function Settings() {
                             error={errors.payTransactionFee}
                             disableSelect={!editForm}
                         />
-                    </div>
+                    </div> */}
 
                     <div className='settings-input-cont'>
                         <Input 

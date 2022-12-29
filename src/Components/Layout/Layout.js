@@ -45,7 +45,7 @@ function Layout({
     const navList =[
         'Dashboard',
         // 'Transactions',
-        'Accounts',
+        'Staffs',
         'Payments',
         'Settings'
     ];
@@ -68,7 +68,7 @@ function Layout({
           return(<ToastContainer />)
         } catch(error) {
           setLoading(false);
-          console.log(error);
+        //   console.log(error);
           // const err = error.response.data.message
           toast.error('Error fetching data.', {
             position: toast.POSITION.TOP_RIGHT
@@ -160,7 +160,7 @@ function Layout({
                                 link.toLowerCase() === 'transactions' ? (
                                     <AiOutlineCreditCard style={{marginRight: 10, fontSize: 20}} /> 
                                 ) :
-                                link.toLowerCase() === 'accounts' ? (
+                                link.toLowerCase() === 'staffs' ? (
                                     <TbCapture style={{marginRight: 10, fontSize: 20}} /> 
                                 ) :
                                 link.toLowerCase() === 'payments' ? (

@@ -14,6 +14,7 @@ import countries from '@odusanya/african-countries';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css';
 import Spinner from 'react-bootstrap/Spinner';
+import { StateNig } from '../../Components/List/StateNig';
 
 
 function Register() {
@@ -122,7 +123,8 @@ function Register() {
                     name: form.companyName,
                     email: form.companyEmail,
                     password: form.password,
-                    country: form.companyCountry,
+                    // country: form.companyCountry,
+                    country: 'Nigeria',
                     city: form.companyCity,
                     phone: `+${form.companyPhone}`, 
                 }
@@ -259,7 +261,18 @@ function Register() {
 
                 <div className='location-cont'>
                     <div className='location-cont-child'>
-                        <CustomSelector 
+                        <Input  
+                            label={'Country'}
+                            type={'text'}
+                            value={'Nigeria'}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'companyEmail', value})
+                            }}
+                            error={errors.companyEmail}
+                            disableInput={true}
+                        />
+                        {/* <CustomSelector 
                             label={'Country'}
                             options={countryList}
                             onChange={(e) => {
@@ -267,13 +280,22 @@ function Register() {
                                 onEnterValue({name: 'companyCountry', value})
                             }}
                             error={errors.companyCountry}
-                        />
+                        /> */}
                     </div>
 
                     <div className='location-cont-child'>
-                        <Input 
+                        {/* <Input 
                             label={'City'}
                             type={'text'}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                onEnterValue({name: 'companyCity', value})
+                            }}
+                            error={errors.companyCity}
+                        /> */}
+                        <CustomSelector 
+                            label={'State'}
+                            options={StateNig}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 onEnterValue({name: 'companyCity', value})
