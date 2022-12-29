@@ -226,14 +226,7 @@ function Dashboard() {
           auxHeadBtnClick={handleShow}
           auxBtnTitle={'Add new employee'}
           auxBtnAppear={true}
-          auxBtnIcon={
-            <FaRegPlusSquare 
-              style={{
-                marginLeft: 5, 
-                color: '#fff',
-              }} 
-            />
-          }
+          auxBtnIcon={<></>}
         />
         
         <SummaryCard data={stats} />

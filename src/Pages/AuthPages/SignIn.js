@@ -166,7 +166,7 @@ function SignIn() {
                     />
                 </div>
 
-                <Link style={{textDecoration: 'none'}} to={'/'}>
+                <Link style={{textDecoration: 'none'}} to={'/register'}>
                     <p className='otp-aux-link-2'>
                         Not registered? Click here to 
                         <span style={{marginLeft: 5}} className='otp-aux-link'>

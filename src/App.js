@@ -6,6 +6,7 @@ import SignIn from './Pages/AuthPages/SignIn';
 import ForgotPassword from './Pages/AuthPages/ForgotPassword';
 import SetNewPassword from './Pages/AuthPages/SetNewPassword';
 import UtilPage from './Pages/AuthPages/UtilPage/UtilPage';
+import LandingPage from './Pages/AuthPages/LandingPage';
 
 import Dashboard from './Pages/UserPages/Dashboard/Dashboard';
 import Accounts from './Pages/UserPages/Accounts/Accounts';
@@ -26,7 +27,8 @@ function App() {
         <Route path='/sign-in' exact element={<SignIn />} />
         <Route path='/otp-entry' element={<OtpPage />} />
         <Route path='/success-registration' element={<SuccessReg />} />
-        <Route path="/" element={<Register />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </Router>
   );
