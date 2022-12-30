@@ -1,6 +1,6 @@
 {
-  "short_name": "Luka App",
-  "name": "Luka fintech app",
+  "short_name": "Luka Finance",
+  "name": "Luka Finance",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "luka-logo.png",
+      "src": "Logo192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "luka-logo.png",
+      "src": "Logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
