@@ -40,11 +40,11 @@ function Payments() {
       });
       const {data, message} = res.data;
       setStats(data);
-      toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT
-      });
+      // toast.success(message, {
+      //   position: toast.POSITION.TOP_RIGHT
+      // });
       setLoading(false);
-      return(<ToastContainer />)
+      // return(<ToastContainer />)
     } catch (error) {
       setLoading(false);
       const err = error.response.data.message
@@ -65,11 +65,11 @@ function Payments() {
       });
       const {data, message} = res.data;
       setPayments(data);
-      toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT
-      });
+      // toast.success(message, {
+      //   position: toast.POSITION.TOP_RIGHT
+      // });
       setLoading(false);
-      return(<ToastContainer />)
+      // return(<ToastContainer />)
     } catch (error) {
       setLoading(false);
       const err = error.response.data.message
@@ -90,11 +90,11 @@ function Payments() {
       });
       const {data, message} = res.data;
       setDetails(data);
-      toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT
-      });
+      // toast.success(message, {
+      //   position: toast.POSITION.TOP_RIGHT
+      // });
       setLoading(false);
-      return(<ToastContainer />)
+      // return(<ToastContainer />)
     } catch (error) {
       setLoading(false);
       const err = error.response.data.message

@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import AuxPageHead from '../../../Components/AuxPageHead/AuxPageHead';
 import Layout from '../../../Components/Layout/Layout';
-import CustomSelector from '../../../Components/Common/CustomSelector/CustomSelector';
+// import CustomSelector from '../../../Components/Common/CustomSelector/CustomSelector';
 import CustomButton from '../../../Components/Common/CustomButton/Index';
 import { Modal } from 'react-bootstrap';
 import { InputListOne } from '../../../Components/Common/InputListOne/InputListOne';
 import Input from '../../../Components/Common/Input/Input';
 import CustomTable from '../../../Components/Common/CustomTable/CustomTable';
-import {FaRegPlusSquare} from 'react-icons/fa';
+// import {FaRegPlusSquare} from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
 import 'react-toastify/dist/ReactToastify.css';
@@ -45,10 +45,10 @@ function Accounts() {
       setAccounts(data);
       setFilterArr(data);
       setLoading(false);
-      toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT
-      });
-      return(<ToastContainer />)
+      // toast.success(message, {
+      //   position: toast.POSITION.TOP_RIGHT
+      // });
+      // return(<ToastContainer />)
     }catch(error) {
       setLoading(false);
       console.log('err ', error);
@@ -227,7 +227,7 @@ function Accounts() {
   }
 
   return (
-    <Layout currentPage={'staffs'}>
+    <Layout currentPage={'employees'}>
       {/* for toast notification containing */}
       <ToastContainer />
 

@@ -20,7 +20,7 @@ function App() {
         <Route path='/util-page' element={<UtilPage />} />
         <Route path='/settings' element={<Settings />} />
         <Route path="/payments" element={<Payments />} />
-        <Route path='/staffs' element={<Accounts />} />
+        <Route path='/employees' element={<Accounts />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/reset-password/:id' element={<SetNewPassword />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />

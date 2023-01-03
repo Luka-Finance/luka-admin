@@ -362,6 +362,7 @@ function Settings() {
                             disableInput={!editForm}
                         />
 
+                        <div className='adjust-btn-cont'>
                         <p 
                             onClick={() => {
                                 if(!editForm) {
@@ -375,6 +376,19 @@ function Settings() {
                         >
                             {editForm ? 'Save' : 'Edit'}
                         </p>
+                        <span 
+                            className='cancel-btn'
+                            style={{
+                                display: editForm ? 'inline-block' : 'none'
+                            }}
+                            onClick={() => {
+                                setEditForm(false);
+                                initializeForm();
+                            }}
+                        >
+                            Cancel
+                        </span>
+                        </div>
                     </div>
 
                     <div className='settings-input-cont'>
@@ -671,16 +685,37 @@ function Settings() {
                         </p>
                     </div>
 
-                    <div className='settings-form-btn-cont'>
-                        <CustomButton
-                            onClick={updateProfile} 
-                            title={'Save Changes'}
-                            textColor={'#fff'}
-                            bgColor={'rgba(3, 166, 60, 1)'}
-                            disabledColor={'rgba(3, 166, 60, 0.5)'}
-                            disabled={false}
-                            btnHeight={47}
-                        />
+                    <div className='settings-btn-alpha-cont'>
+                        <div className='settings-form-btn-cont'>
+                            <CustomButton
+                                onClick={updateProfile} 
+                                title={'Save Changes'}
+                                textColor={'#fff'}
+                                bgColor={'rgba(3, 166, 60, 1)'}
+                                disabledColor={'rgba(3, 166, 60, 0.5)'}
+                                disabled={false}
+                                btnHeight={47}
+                            />
+                        </div>
+
+                        {
+                            editForm && (
+                                <div className='settings-form-btn-cont'>
+                                    <CustomButton
+                                        onClick={() => {
+                                            initializeForm();
+                                            setEditForm(false);
+                                        }} 
+                                        title={'Cancel changes'}
+                                        textColor={'#fff'}
+                                        bgColor={'#FF0000'}
+                                        disabledColor={'#A52A2A'}
+                                        disabled={false}
+                                        btnHeight={47}
+                                    />
+                                </div>
+                            )
+                        }
                     </div>
                </div>
             </div>

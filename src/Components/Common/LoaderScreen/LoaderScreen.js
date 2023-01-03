@@ -6,7 +6,9 @@ import LoaderAnim from './96898-loader-animation.json'
 function LoaderScreen({loadingText}) {
    const options = {
     animationData: LoaderAnim,
-    loop: true
+    loop: true,
+    width: 100,
+    height: 100
   };
 
   const { View } = useLottie(options);
