@@ -6,7 +6,7 @@ import {
     AiOutlineCreditCard,
     AiOutlineClose 
 } from 'react-icons/ai';
-import { TbCapture } from 'react-icons/tb';
+import {IoIosPeople} from 'react-icons/io'
 import { RiHandCoinLine, RiNotification2Fill } from 'react-icons/ri';
 import {FiSettings} from 'react-icons/fi';
 import {BsChevronDown, BsChevronUp} from 'react-icons/bs';
@@ -45,7 +45,7 @@ function Layout({
     const navList =[
         'Dashboard',
         // 'Transactions',
-        'Staffs',
+        'Employees',
         'Payments',
         'Settings'
     ];
@@ -62,10 +62,10 @@ function Layout({
           dispatch(saveBusiness(data))
           setLoading(false);
     
-          toast.success(message, {
-            position: toast.POSITION.TOP_RIGHT
-          });
-          return(<ToastContainer />)
+        //   toast.success(message, {
+        //     position: toast.POSITION.TOP_RIGHT
+        //   });
+        //   return(<ToastContainer />)
         } catch(error) {
           setLoading(false);
         //   console.log(error);
@@ -160,8 +160,8 @@ function Layout({
                                 link.toLowerCase() === 'transactions' ? (
                                     <AiOutlineCreditCard style={{marginRight: 10, fontSize: 20}} /> 
                                 ) :
-                                link.toLowerCase() === 'staffs' ? (
-                                    <TbCapture style={{marginRight: 10, fontSize: 20}} /> 
+                                link.toLowerCase() === 'employees' ? (
+                                    <IoIosPeople style={{marginRight: 10, fontSize: 20}} /> 
                                 ) :
                                 link.toLowerCase() === 'payments' ? (
                                     <RiHandCoinLine style={{marginRight: 10, fontSize: 20}} />

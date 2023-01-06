@@ -71,10 +71,15 @@
     position: relative;
 }
 
-.edit-and-save-btn {
+.adjust-btn-cont {
     position: absolute;
     right: 10px;
     top: 2px;
+    display: flex;
+    flex-direction: row;
+}
+
+.edit-and-save-btn {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -82,6 +87,17 @@
     line-height: 21px;
     color: #03A63C;
     cursor: pointer;
+}
+
+.cancel-btn {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: red;
+    cursor: pointer;
+    margin-left: 20px;
 }
 
 .settings-sub-form-cont-child {
@@ -110,6 +126,13 @@
     font-size: 15px;
     line-height: 20px;
     color: #03A63C;
+}
+
+.settings-btn-alpha-cont {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .settings-form-btn-cont {

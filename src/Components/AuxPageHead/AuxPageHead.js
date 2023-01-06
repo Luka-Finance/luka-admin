@@ -26,7 +26,7 @@ function AuxPageHead({
 
                     <div className='filter-btn-aux-cont'>
                        <input
-                            placeholder='enter account name' 
+                            placeholder='enter employee name' 
                             type={'text'} 
                             className='filter-search-input' 
                             onChange={onAuxSearchChange}

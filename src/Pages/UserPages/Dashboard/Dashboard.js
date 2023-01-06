@@ -6,9 +6,9 @@ import Modal from 'react-bootstrap/Modal';
 import CustomButton from '../../../Components/Common/CustomButton/Index';
 import Input from '../../../Components/Common/Input/Input';
 import { InputListOne } from '../../../Components/Common/InputListOne/InputListOne';
-import {FaRegPlusSquare} from 'react-icons/fa';
+// import {FaRegPlusSquare} from 'react-icons/fa';
 import {BsCheck2} from 'react-icons/bs'
-import CustomSelector from '../../../Components/Common/CustomSelector/CustomSelector';
+// import CustomSelector from '../../../Components/Common/CustomSelector/CustomSelector';
 import SummaryCard from '../../../Components/Common/SummaryCard/SummaryCard';
 import './Styles.css';
 import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
@@ -193,11 +193,11 @@ function Dashboard() {
       });
       const {data, message} = res.data;
       setStats(data);
-      toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT
-      });
+      // toast.success(message, {
+      //   position: toast.POSITION.TOP_RIGHT
+      // });
       setLoading(false);
-      return(<ToastContainer />)
+      // return(<ToastContainer />)
     } catch (error) {
       setLoading(false);
       const err = error.response.data.message
