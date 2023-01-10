@@ -156,7 +156,6 @@ function Register() {
     };
 
     const onSubmit = () => {
-        console.log('hello')
         if(!form.companyName) {
           setErrors(prev => {return {...prev, companyName: 'Please add a company name'}});
         }

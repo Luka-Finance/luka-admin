@@ -9,6 +9,7 @@ import accessLocalStorage from '../../Utils/accessLocalStorage';
 import Spinner from 'react-bootstrap/Spinner';
 
 import './Styles.css';
+import { Link } from 'react-router-dom';
 
 function OtpPage() {
     const [entry1, setEntry1] = useState('');
@@ -207,6 +208,16 @@ function OtpPage() {
                         Send OTP code again
                     </span>
                 </p>
+
+                <Link style={{textDecoration: 'none'}} to={'/sign-in'}>
+                    <p className='otp-aux-link-2'>
+                        Click here to  
+                        <span style={{margin: '0px 5px'}} className='otp-aux-link'>
+                            sign in
+                        </span>
+                        if registered
+                    </p>
+                </Link>
             </div>
         </div>
     </div>

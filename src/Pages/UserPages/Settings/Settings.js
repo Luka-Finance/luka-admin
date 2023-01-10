@@ -188,8 +188,10 @@ function Settings() {
             return(<ToastContainer />)
         } catch (error) {
             setLoadingRC(false);
-            setErrors(prev => {return {...prev, ['rcNumber']: `${error.message}`}});
             const err = error.response.data.message;
+            setErrors(prev => {return {...prev, ['rcNumber']: `${err}`}});
+            console.log('rc error data  ', error)
+            console.log('rc erro  ', err)
             toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -218,8 +220,8 @@ function Settings() {
             return(<ToastContainer />)
         } catch (error) {
             setLoadingTIN(false);
-            setErrors(prev => {return {...prev, ['tinNumber']: `${error.message}`}});
             const err = error.response.data.message
+            setErrors(prev => {return {...prev, ['tinNumber']: `${err}`}});
             toast.error(err, {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -531,8 +533,8 @@ function Settings() {
                                 disableInput={!editForm}
                             />
                             {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
-                            {!loadingRC && (<p style={{color: form.rcNumber  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
-                                {form.rcNumber ? 'RC number verified' : 'Incorrect RC number'}
+                            {!loadingRC && (<p style={{color: !errors.rcNumber  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {!errors.rcNumber ? 'RC number verified' : ''}
                             </p>)}
                         </div>
                         <div className="number-status-icon-cont">
@@ -568,8 +570,8 @@ function Settings() {
                                 disableInput={!editForm}
                             />
                             {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
-                            {!loadingTIM && (<p style={{color: form.tinNumber  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
-                                {form.tinNumber ? 'TIN verified' : 'Incorrect TIN'}
+                            {!loadingTIM && (<p style={{color: !errors.tinNumber ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {!errors.tinNumber ? 'TIN verified' : ''}
                             </p>)}
                         </div>
                         <div className="number-status-icon-cont">

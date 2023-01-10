@@ -59,6 +59,7 @@ function Layout({
             url: '/business/me',
           });
           const {data, message} = res.data;
+          console.log('user data ', data)
           dispatch(saveBusiness(data))
           setLoading(false);
     
@@ -85,6 +86,7 @@ function Layout({
                 position: toast.POSITION.TOP_RIGHT
             });
             window.location.replace('/sign-in');
+            scrubToken();
             return(<ToastContainer />);
         }
     };
@@ -187,7 +189,7 @@ function Layout({
                     />
                 </div>
 
-               <div ref={ref} className='menu-box'>
+               <div className='menu-box'>
 
                     <div className='bell-cont'>
                         <div className='bell-badge'></div>
@@ -196,10 +198,11 @@ function Layout({
 
                     <div 
                         className='nav-profile'
-                        onClick={handleClick}
+                        onClick={handleClick} 
+                        ref={ref}
                     >
                         <Image 
-                            src='assets/place-holder/profile-circle.svg' 
+                            src='assets/place-holder/profile.png' 
                             alt='profile picture'
                             style={{
                                 width: 44,
@@ -220,24 +223,48 @@ function Layout({
                             )
                         }
 
+                         <Overlay
+                            show={show}
+                            target={target}
+                            placement="bottom"
+                            container={ref}
+                            containerPadding={20}
+                        >
+                            <Popover id="popover-contained">
+                            <Popover.Header as="h3">Profile</Popover.Header>
+                            <Popover.Body>
+                                <div style={{width: 70, cursor: 'pointer'}} onClick={userLogout}>
+                                    <strong>logout</strong>
+                                </div>
+                            </Popover.Body>
+                            </Popover>
+                        </Overlay>
+
                     </div>
 
-                    <Overlay
-                        show={show}
-                        target={target}
-                        placement="bottom"
-                        container={ref}
-                        containerPadding={20}
+                    {/* <div 
+                    // ref={ref}
+                        style={{
+                            position: 'relative',
+                            height: 20,
+                            width: 20,
+                            background: 'red',
+                        }}
+                        onClick={() => {setShow(!show)}}
                     >
-                        <Popover id="popover-contained">
-                        <Popover.Header as="h3">Profile</Popover.Header>
-                        <Popover.Body>
-                            <div style={{width: 70, cursor: 'pointer'}} onClick={userLogout}>
-                                <strong>logout</strong>
-                            </div>
-                        </Popover.Body>
-                        </Popover>
-                    </Overlay>
+                        <div
+                        style={{
+                            height: 150,
+                            width: 150,
+                            zIndex: 999,
+                            position: 'absolute',
+                            display: show ? 'block' : 'none'
+                        }}
+                        >
+                           hello 
+                        </div>
+                       
+                    </div> */}
 
 
                     <div 

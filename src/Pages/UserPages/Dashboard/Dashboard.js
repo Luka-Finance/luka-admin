@@ -21,7 +21,14 @@ function Dashboard() {
   const businessData = useSelector(state => state.businessData);
   const [show, setShow] = useState(false);
   const [created, setCreated] = useState(false);
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    salary: 0,
+    startDate: '',
+  });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [loadingStaffAdd, setLoadingStaffAdd] = useState(false);
@@ -34,6 +41,7 @@ function Dashboard() {
     activeStaffs: 0,
     inactiveStaffs: 0
   });
+  const [disable, setDisable] = useState(true);
 
   const {business} = businessData;
 
@@ -147,40 +155,72 @@ function Dashboard() {
   };
 
   const onSubmit = async() => {
-    setLoadingStaffAdd(true);
-    try {
-      const res = await axiosInstance({
-        url: '/business/create-staff',
-        method: 'POST',
-        data: {
-          firstName: form.firstName,
-          lastName: form.lastName,
-          email: form.email,
-          phone: form.phone,
-          salary: form.salary,
-          // role: form.role,
-          role: 'regular',
-          businessId: business.id,
-          startDate: formatMyDate(form.startDate)
-        }
-      })
-      const{message} = res.data;
-      // console.log('res ', res);
-      toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT
-      });
-      setLoadingStaffAdd(false);
-      setCreated(true);
-      return(<ToastContainer />)
-    } catch(error) {
-      setLoadingStaffAdd(false);
-      // console.log('err ', error.message);
-      const err = error.response.data.message
-      toast.error(err, {
+    if(!form.firstName) {
+      setErrors(prev => {return {...prev, companyName: 'Required'}});
+    }
+
+    if(!form.lastName) {
+      setErrors(prev => {return {...prev, companyEmail: 'Required'}});
+    }
+
+    if(!form.phone) {
+      setErrors(prev => {return {...prev, companyCountry: 'Required'}});
+    }
+
+    if(!form.email) {
+      setErrors(prev => {return {...prev, companyCity: 'Required'}});
+    }
+
+    if(!form.salary) {
+        setErrors(prev => {return {...prev, companyPhone: 'Required'}});   
+    }
+
+    if(!form.startDate) {
+      setErrors(prev => {return {...prev, password: 'Required'}});
+    }
+
+    if(Object.values(form).length === 6 ) { 
+      setLoadingStaffAdd(true);
+      try {
+        const res = await axiosInstance({
+          url: '/business/create-staff',
+          method: 'POST',
+          data: {
+            firstName: form.firstName,
+            lastName: form.lastName,
+            email: form.email,
+            phone: form.phone,
+            salary: form.salary,
+            // role: form.role,
+            role: 'regular',
+            businessId: business.id,
+            startDate: formatMyDate(form.startDate)
+          }
+        })
+        const{message} = res.data;
+        // console.log('res ', res);
+        toast.success(message, {
+          position: toast.POSITION.TOP_RIGHT
+        });
+        setLoadingStaffAdd(false);
+        setCreated(true);
+        return(<ToastContainer />)
+      } catch(error) {
+        setLoadingStaffAdd(false);
+        // console.log('err ', error.message);
+        const err = error.response.data.message
+        toast.error(err, {
+          position: toast.POSITION.TOP_RIGHT
+        })
+        return(<ToastContainer />)
+      }
+    } else {
+      toast.warning('Please ensure all fields are filled.', {
         position: toast.POSITION.TOP_RIGHT
       })
       return(<ToastContainer />)
     }
+
   };
 
   const getBusinessStats = async() => {
@@ -207,6 +247,21 @@ function Dashboard() {
       return(<ToastContainer />)
     }
   }; 
+
+  useEffect(() => {
+    if(
+        form.firstName.length > 2 && 
+        form.lastName.length > 2 &&
+        form.phone.length > 10 &&
+        form.email.length > 11 &&
+        form.salary > 499 && 
+        form.startDate
+      ) {
+        setDisable(false); 
+    } else {
+        setDisable(true)
+    }
+}, [form])
 
   useEffect(() => {
     if(Object.keys(business).length > 0) {
@@ -292,7 +347,7 @@ function Dashboard() {
                       title={'Add'}
                       textColor={'#fff'}
                       bgColor={'rgba(3, 166, 60, 1)'}
-                      disabled={false}
+                      disabled={disable}
                       disabledColor={'rgba(3, 166, 60, 0.5)'}
                       icon={loadingStaffAdd && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
                     />
