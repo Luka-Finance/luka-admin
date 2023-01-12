@@ -187,6 +187,7 @@ function Settings() {
             setLoadingRC(false);
             return(<ToastContainer />)
         } catch (error) {
+            setForm({...form, ['rcNumber']: ''});
             setLoadingRC(false);
             const err = error.response.data.message;
             setErrors(prev => {return {...prev, ['rcNumber']: `${err}`}});
@@ -219,6 +220,7 @@ function Settings() {
             setLoadingTIN(false);
             return(<ToastContainer />)
         } catch (error) {
+            setForm({...form, ['tinNumber']: ''});
             setLoadingTIN(false);
             const err = error.response.data.message
             setErrors(prev => {return {...prev, ['tinNumber']: `${err}`}});
@@ -321,11 +323,34 @@ function Settings() {
         tinNumber: business?.tin === null ? '' : business?.tin,
         paymentDate: business?.payday === null ? '' : business?.payday,
     });
-  }
+  };
+
+  const allowEdit = (paramA, paramB) => {
+    if(paramA === true && paramB) {
+        return false;
+    } else if(paramA === true && !paramB) {
+        return true;
+    }
+  };
+
+    const checkForKyc = () => {
+        const rcNumber = business?.rcNumber;
+        if(!rcNumber) {
+            toast.warning('Please enter your valid R.C Number.', {
+                position: toast.POSITION.TOP_RIGHT
+            }); 
+            return(<ToastContainer />);
+        }
+    };
 
   useEffect(() => {
     initializeForm();
+    checkForKyc();
   }, [business, businessData])
+
+//   useEffect(() => {
+//     checkForKyc();
+//   }, [])
 
   if(loading) {
     return (<LoaderScreen loadingText={loaderText} />)
@@ -533,8 +558,8 @@ function Settings() {
                                 disableInput={!editForm}
                             />
                             {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
-                            {!loadingRC && (<p style={{color: !errors.rcNumber  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
-                                {!errors.rcNumber ? 'RC number verified' : ''}
+                            {!loadingRC && (<p style={{color: (!errors.rcNumber && business?.rcNumber !== null)  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {(!errors.rcNumber && business?.rcNumber) ? 'RC number verified' : ''}
                             </p>)}
                         </div>
                         <div className="number-status-icon-cont">
@@ -542,7 +567,7 @@ function Settings() {
                                 !loadingRC && (
                                     <>
                                         {
-                                            form.rcNumber  ? (
+                                            (!errors.rcNumber && business?.rcNumber)  ? (
                                             <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
                                             ) : (
                                             <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
@@ -570,8 +595,8 @@ function Settings() {
                                 disableInput={!editForm}
                             />
                             {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
-                            {!loadingTIM && (<p style={{color: !errors.tinNumber ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
-                                {!errors.tinNumber ? 'TIN verified' : ''}
+                            {!loadingTIM && (<p style={{color: (!errors.tinNumber && business?.tin)  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
+                                {(!errors.tinNumber && business?.tin) ? 'TIN verified' : ''}
                             </p>)}
                         </div>
                         <div className="number-status-icon-cont">
@@ -579,7 +604,7 @@ function Settings() {
                                 !loadingTIM && (
                                     <>
                                         {
-                                            form.tinNumber  ? (
+                                            (!errors.tinNumber && business?.tin)  ? (
                                             <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
                                             ) : (
                                             <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />

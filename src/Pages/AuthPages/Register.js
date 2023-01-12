@@ -18,7 +18,9 @@ import { StateNig } from '../../Components/List/StateNig';
 
 
 function Register() {
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({
+        companyCountry: 'Nigeria'
+    });
     const [errors, setErrors] = useState({});
     const [passwordA, setPasswordA] = useState(false);
     const [passwordB, setPasswordB] = useState(false);
@@ -185,10 +187,11 @@ function Register() {
         }
 
         if(
-            Object.values(form).length === 6 
+            Object.values(form).length === 7 
         ) {
             register();
         } else {
+            console.log(form)
             toast.warning('Please ensure all fields are filled.', {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -266,9 +269,9 @@ function Register() {
                             value={'Nigeria'}
                             onChange={(e) => {
                                 const value = e.target.value;
-                                onEnterValue({name: 'companyEmail', value})
+                                onEnterValue({name: 'companyCountry', value})
                             }}
-                            error={errors.companyEmail}
+                            error={errors.companyCountry}
                             disableInput={true}
                         />
                         {/* <CustomSelector 

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { 
@@ -11,7 +11,7 @@ import { RiHandCoinLine, RiNotification2Fill } from 'react-icons/ri';
 import {FiSettings} from 'react-icons/fi';
 import {BsChevronDown, BsChevronUp} from 'react-icons/bs';
 import {BiMenuAltRight} from 'react-icons/bi';
-import { Image } from 'react-bootstrap';
+import { Image, Dropdown } from 'react-bootstrap';
 import Overlay from 'react-bootstrap/Overlay';
 import Popover from 'react-bootstrap/Popover';
 import LoaderScreen from '../Common/LoaderScreen/LoaderScreen';
@@ -32,15 +32,8 @@ function Layout({
 
     const [mobileNav, setMobileNav] = useState(false);
     const [show, setShow] = useState(false);
-    const [target, setTarget] = useState(null);
-    const ref = useRef(null);
     const [loading, setLoading] = useState(false);
     const [loaderText, setLoaderText] = useState('');
-  
-    const handleClick = (event) => {
-      setShow(!show);
-      setTarget(event.target);
-    };
 
     const navList =[
         'Dashboard',
@@ -79,6 +72,18 @@ function Layout({
     
     };
 
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <p
+          ref={ref}
+          onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+          }}
+        >
+          {children}
+        </p>
+    ));
+
     const checkForAccessToken = () => {
         let token = accessLocalStorage.getFromLs('token');
         if(!token) {
@@ -111,9 +116,18 @@ function Layout({
         }
     };
 
+    const checkForKyc = () => {
+        const rcNumber = business?.rcNumber;
+        const currentPage = window.location.pathname;
+        if(!rcNumber && !currentPage.includes('settings')) {
+            window.location.assign('/settings'); 
+        }
+    };
+
     useEffect(() => {
         checkScreenSize();
         checkForAccessToken();
+        checkForKyc();
 
         if(Object.keys(business).length === 0) {
             getUserData();
@@ -198,8 +212,6 @@ function Layout({
 
                     <div 
                         className='nav-profile'
-                        onClick={handleClick} 
-                        ref={ref}
                     >
                         <Image 
                             src='assets/place-holder/profile.png' 
@@ -215,57 +227,36 @@ function Layout({
                             {business.name}
                         </p>
 
-                        {
-                            !show ? (
-                                <BsChevronDown />
-                            ) : (
-                                <BsChevronUp />
-                            )
-                        }
+                        <Dropdown>
+                            <Dropdown.Toggle 
+                                // onClick={() => setShow(!show)} 
+                                as={CustomToggle} 
+                                id="dropdown-custom-components"
+                            >
+                            {
+                                !show ? (
+                                    <BsChevronDown />
+                                ) : (
+                                    <BsChevronUp />
+                                )
+                            }
+                            </Dropdown.Toggle>
 
-                         <Overlay
-                            show={show}
-                            target={target}
-                            placement="bottom"
-                            container={ref}
-                            containerPadding={20}
-                        >
-                            <Popover id="popover-contained">
-                            <Popover.Header as="h3">Profile</Popover.Header>
-                            <Popover.Body>
-                                <div style={{width: 70, cursor: 'pointer'}} onClick={userLogout}>
-                                    <strong>logout</strong>
-                                </div>
-                            </Popover.Body>
-                            </Popover>
-                        </Overlay>
+                            <Dropdown.Menu>
+                                <Dropdown.ItemText style={{color: 'grey'}}> 
+                                   <strong> Profile</strong> 
+                                </Dropdown.ItemText>
+                                <Dropdown.Divider />
+                                <Dropdown.Item 
+                                    as="button"
+                                    onClick={userLogout}
+                                > 
+                                    Logout 
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
 
                     </div>
-
-                    {/* <div 
-                    // ref={ref}
-                        style={{
-                            position: 'relative',
-                            height: 20,
-                            width: 20,
-                            background: 'red',
-                        }}
-                        onClick={() => {setShow(!show)}}
-                    >
-                        <div
-                        style={{
-                            height: 150,
-                            width: 150,
-                            zIndex: 999,
-                            position: 'absolute',
-                            display: show ? 'block' : 'none'
-                        }}
-                        >
-                           hello 
-                        </div>
-                       
-                    </div> */}
-
 
                     <div 
                         className='mobile-nav-btn-cont'

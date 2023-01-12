@@ -227,7 +227,8 @@ function Accounts() {
         return(<ToastContainer />)
       } catch(error) {
         setLoading(false);
-        // console.log('err ', error.message);
+        console.log(error)
+        console.log('err ', error.message);
         const err = error.response.data.message
         toast.error(err, {
           position: toast.POSITION.TOP_RIGHT

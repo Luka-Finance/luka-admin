@@ -66,9 +66,9 @@ function OtpPage() {
                   type: 'verification'  
                 }
             })
-            window.location.assign('/sign-in');
+            // window.location.assign('/sign-in');
             setLoading(false);
-            // console.log('res ', res);
+            console.log('res ', res);
             const message = res.data.message;
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT

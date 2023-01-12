@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Dropdown, Table } from 'react-bootstrap';
 import {BsThreeDotsVertical} from 'react-icons/bs';
-import getSymbolFromCurrency from 'currency-symbol-map';
+// import getSymbolFromCurrency from 'currency-symbol-map';
 import axiosInstance from '../../../Utils/axiosInstance';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
