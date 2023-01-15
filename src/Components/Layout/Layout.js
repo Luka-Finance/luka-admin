@@ -12,8 +12,6 @@ import {FiSettings} from 'react-icons/fi';
 import {BsChevronDown, BsChevronUp} from 'react-icons/bs';
 import {BiMenuAltRight} from 'react-icons/bi';
 import { Image, Dropdown } from 'react-bootstrap';
-import Overlay from 'react-bootstrap/Overlay';
-import Popover from 'react-bootstrap/Popover';
 import LoaderScreen from '../Common/LoaderScreen/LoaderScreen';
 import axiosInstance from '../../Utils/axiosInstance';
 import './Styles.css';
@@ -52,7 +50,7 @@ function Layout({
             url: '/business/me',
           });
           const {data, message} = res.data;
-          console.log('user data ', data)
+        //   console.log('user data ', data)
           dispatch(saveBusiness(data))
           setLoading(false);
     
@@ -79,6 +77,7 @@ function Layout({
             e.preventDefault();
             onClick(e);
           }}
+          style={{marginTop: 20}}
         >
           {children}
         </p>
@@ -117,6 +116,7 @@ function Layout({
     };
 
     const checkForKyc = () => {
+        // console.log('hello')
         const rcNumber = business?.rcNumber;
         const currentPage = window.location.pathname;
         if(!rcNumber && !currentPage.includes('settings')) {

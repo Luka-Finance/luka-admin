@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../../Utils/axiosInstance';
 import { useSelector } from 'react-redux';
 import {BsCheck2} from 'react-icons/bs';
+import Moment from 'react-moment';
 
 import './Styles.css';
 
@@ -36,6 +37,14 @@ function Accounts() {
   const {business} = businessData;
   const [filterArr, setFilterArr] = useState([]);
   const [disable, setDisable] = useState(true);
+  const [staff, setStaff] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    salary: 0,
+    createdAt: ''
+  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -68,7 +77,12 @@ function Accounts() {
   }
 
   const onEnterValue = ({name, value}) => {
-    setForm({...form, [name]: value});
+    if(staff?.firstName.length > 0) {
+      setStaff({...staff, [name]: value});
+    } else {
+      setForm({...form, [name]: value});
+    }
+    
 
     if(value !== '') {
 
@@ -137,7 +151,7 @@ function Accounts() {
           setErrors(prev => {return {...prev, [name]: null}});
         };
 
-      } else if (name === 'startDate') {
+      } else if (name === 'startDate' || name === 'createdAt') {
 
         if(!value) {
           setErrors(prev => {return {...prev, [name]: `Enter date`}});
@@ -150,7 +164,26 @@ function Accounts() {
     } else {
       setErrors(prev => {return {...prev, [name]: `This field is required`}});
     }
-  }
+  };
+
+  const getFormInput = (label) => {
+    for(const key in form) {
+      if(label === key) {
+        return form[key];
+      }
+    }
+  };
+
+  const getInputs = (label) => {
+    for(const key in staff) {
+      if(key === 'createdAt') {
+        let freshDate = staff[key].split('T')[0];
+        return(freshDate);
+      } else if(label === key) {
+        return staff[key];
+      }
+    }
+  };
 
   const getErrors = (label) => {
     for(const key in errors) {
@@ -258,6 +291,28 @@ function Accounts() {
     setFilterArr(arr1);
   }
 
+  const resetModal = () => {
+    handleClose(); 
+
+    setForm({
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
+      salary: 0,
+      startDate: '',
+    });
+
+    setStaff({
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
+      salary: 0,
+      createdAt: ''
+    });
+  };
+
   useEffect(() => {
     if(
         form.firstName.length > 2 && 
@@ -302,7 +357,12 @@ function Accounts() {
                No Employee Registered yet 
               </p>
             ) : (
-              <CustomTable data={filterArr} refresh={getStaffs} />
+              <CustomTable 
+                data={filterArr} 
+                refresh={getStaffs} 
+                setStaff={setStaff}
+                openModal={handleShow}
+              />
             )
           }
         </div>
@@ -317,7 +377,9 @@ function Accounts() {
           !created ? (
             <>
               <p className='dashboard-card-text' style={{fontSize: 20, paddingTop: 20, paddingLeft: 15}}>
-                  Add a new employee
+                  {
+                    staff?.firstName.length > 0 ? ('Edit employee') : ('Add a new employee')
+                  }
               </p>
 
               <div className='employee-form-cont'>
@@ -342,6 +404,7 @@ function Accounts() {
                           label={label}
                           type={type}
                           maxDate={type === 'date' && max}
+                          value={staff?.firstName.length > 0 ? getInputs(tag) : getFormInput(tag)}
                           onChange={(e) => {
                             const value = e.target.value;
                             onEnterValue({name: tag, value});
@@ -357,7 +420,7 @@ function Accounts() {
 
               <Modal.Footer>
                 <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}> 
-                  <p onClick={handleClose} style={{color: '#EB5757', fontWeight: '500', cursor: 'pointer'}}>
+                  <p onClick={resetModal} style={{color: '#EB5757', fontWeight: '500', cursor: 'pointer'}}>
                     Close
                   </p>
           
@@ -365,10 +428,10 @@ function Accounts() {
                     <CustomButton 
                       btnHeight={44}
                       onClick={onSubmit}
-                      title={'Add'}
+                      title={staff?.firstName.length > 0 ? 'Update' : 'Add'}
                       textColor={'#fff'}
                       bgColor={'rgba(3, 166, 60, 1)'}
-                      disabled={disable}
+                      disabled={staff?.firstName.length > 0 ? false : disable}
                       disabledColor={'rgba(3, 166, 60, 0.5)'}
                     />
                   </div>

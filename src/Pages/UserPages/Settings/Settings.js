@@ -181,6 +181,7 @@ function Settings() {
                 }
             });
             const {message} = res.data;
+            updateProfile();
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             });
@@ -214,6 +215,7 @@ function Settings() {
                 }
             });
             const {message} = res.data;
+            updateProfile();
             toast.success(message, {
                 position: toast.POSITION.TOP_RIGHT
             });
@@ -277,11 +279,11 @@ function Settings() {
             name: form.companyName,
             phone: form.companyPhone,
             country: form.companyCountry,
-            city: form.companyCity,
+            city: form.companyCity, 
             email: form.companyEmail,
             paysTransactionFee: form.payTransactionFee || 'Employee',
             payday: form.paymentDate || 28,
-            rcNumber: form.rcNumber,
+            rcNumber: form.rcNumber === "" ? null : form.rcNumber,
             type: 'registered',
             address: form.companyAddress,
             contactPersonName: form.contactName,
