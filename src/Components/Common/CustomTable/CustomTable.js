@@ -147,7 +147,7 @@ function CustomTable({
                                         <Dropdown.Item onClick={() => staffToggle(cur.id, 'suspend')} style={{color: 'rgba(255, 178, 0, 1)'}}> Suspend </Dropdown.Item>
                                         <Dropdown.Item onClick={() => staffToggle(cur.id, 'deactivate')} style={{color: 'rgba(195, 0, 0, 1)'}} > Deactive </Dropdown.Item>
                                         <Dropdown.Item onClick={() => staffToggle(cur.id, 'restore')} style={{color: 'rgba(3, 166, 60, 1)'}} > Restore </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => editStaff(cur)} style={{color: 'rgba(10, 100, 200, 1)'}} > Edit </Dropdown.Item>
+                                        {/* <Dropdown.Item onClick={() => editStaff(cur)} style={{color: 'rgba(10, 100, 200, 1)'}} > Edit </Dropdown.Item> */}
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </td>
