@@ -85,6 +85,17 @@
 
 .form-cont {
     padding: 20px;
+    width: 488px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px solid red; */
+}
+
+.form-cont-otp {
+    padding: 20px;
     width: 584px;
     background: #FFFFFF;
     border-radius: 20px;
@@ -245,7 +256,7 @@
     line-height: 26px;
     text-align: center;
     color: #333333;
-    width: 600px;
+    width: 486px;
     /* border: 1px solid red; */
 }
 
@@ -281,6 +292,15 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.otp-input[type=text] {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 57px;
+    color: #03A63C;
 }
 
 .otp-input {
@@ -332,7 +352,8 @@
     align-items: center;
    }
 
-   .form-cont  {
+   .form-cont,
+   .form-cont-otp  {
      width: 100%;
      margin: 0px auto;
    }

@@ -1,6 +1,5 @@
 import React from 'react';
 import CustomButton from '../Common/CustomButton/Index';
-// import {BsChevronDown} from 'react-icons/bs';
 
 import './Styles.css'
 
@@ -40,13 +39,14 @@ function AuxPageHead({
             auxBtnAppear ? (
                 <div className='aux-head-btn-cont'>
                     <CustomButton
-                        btnHeight={50}
+                        btnHeight={47}
                         onClick={auxHeadBtnClick} 
                         title={auxBtnTitle}
                         textColor={'#fff'}
                         bgColor={'rgba(3, 166, 60, 1)'}
                         disabled={false}
                         icon={auxBtnIcon}
+                        btnFontSize={13}
                     />
                 </div>
             ) : ('')

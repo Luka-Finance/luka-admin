@@ -143,7 +143,7 @@ function OtpPage() {
             </p>
 
 
-            <div className='form-cont'>
+            <div className='form-cont-otp'>
                 <div className='otp-input-cont'>
                     <input 
                         type={'text'} 

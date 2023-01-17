@@ -14,7 +14,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../../Utils/axiosInstance';
 import { useSelector } from 'react-redux';
 import {BsCheck2} from 'react-icons/bs';
-import Moment from 'react-moment';
 
 import './Styles.css';
 
@@ -410,6 +409,7 @@ function Accounts() {
                             onEnterValue({name: tag, value});
                             getErrors(tag);
                           }}
+                          inputHt={40}
                           error={getErrors(tag)}
                         />
                       </div>
@@ -420,18 +420,19 @@ function Accounts() {
 
               <Modal.Footer>
                 <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}> 
-                  <p onClick={resetModal} style={{color: '#EB5757', fontWeight: '500', cursor: 'pointer'}}>
+                  <p onClick={resetModal} style={{color: '#EB5757', fontWeight: '500', cursor: 'pointer', fontSize: 16}}>
                     Close
                   </p>
           
                   <div style={{width: 80}}>
                     <CustomButton 
-                      btnHeight={44}
+                      btnHeight={47}
                       onClick={onSubmit}
                       title={staff?.firstName.length > 0 ? 'Update' : 'Add'}
                       textColor={'#fff'}
                       bgColor={'rgba(3, 166, 60, 1)'}
                       disabled={staff?.firstName.length > 0 ? false : disable}
+                      btnFontSize={13}
                       disabledColor={'rgba(3, 166, 60, 0.5)'}
                     />
                   </div>

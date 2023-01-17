@@ -13,6 +13,7 @@ function Input({
     disableInput,
     maxLength,
     maxDate,
+    inputHt
 }) {
   return (
     <div className='input-cont'>
@@ -22,6 +23,7 @@ function Input({
         {icon && (<div style={{cursor: 'pointer', backgroundColor: disableInput ? '#E8E5E5' : '#F7F7F7' }} onClick={iconClick}>{icon}</div>)}
 
         <input
+            style={{height: !inputHt ? 55 : inputHt }}
             className='input-self'
             type={type} 
             placeholder={placeholder ? placeholder : ''}

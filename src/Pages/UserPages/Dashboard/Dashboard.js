@@ -326,6 +326,7 @@ function Dashboard() {
                             onEnterValue({name: tag, value});
                             getErrors(tag);
                           }}
+                          inputHt={40}
                           error={getErrors(tag)}
                         />
                       </div>
@@ -336,19 +337,20 @@ function Dashboard() {
 
               <Modal.Footer>
                 <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}> 
-                  <p onClick={handleClose} style={{color: '#EB5757', fontWeight: '500', cursor: 'pointer'}}>
+                  <p onClick={handleClose} style={{color: '#EB5757', fontWeight: '500', cursor: 'pointer', fontSize: 16}}>
                     Close
                   </p>
           
                   <div style={{width: !loadingStaffAdd ? 80 : 120}}>
                     <CustomButton 
-                      btnHeight={44}
+                      btnHeight={47}
                       onClick={onSubmit}
                       title={'Add'}
                       textColor={'#fff'}
                       bgColor={'rgba(3, 166, 60, 1)'}
                       disabled={disable}
                       disabledColor={'rgba(3, 166, 60, 0.5)'}
+                      btnFontSize={13}
                       icon={loadingStaffAdd && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
                     />
                   </div>

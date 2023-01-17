@@ -116,12 +116,12 @@ function Layout({
     };
 
     const checkForKyc = () => {
-        // console.log('hello')
-        const rcNumber = business?.rcNumber;
-        const currentPage = window.location.pathname;
-        if(!rcNumber && !currentPage.includes('settings')) {
-            window.location.assign('/settings'); 
-        }
+        console.log('hello')
+        // const rcNumber = business?.rcNumber;
+        // const currentPage = window.location.pathname;
+        // if(!rcNumber && !currentPage.includes('settings')) {
+        //     window.location.assign('/settings'); 
+        // }
     };
 
     useEffect(() => {

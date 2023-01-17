@@ -10,7 +10,8 @@ function Index({
     disabled,
     onClick,
     icon,
-    btnHeight
+    btnHeight,
+    btnFontSize,
 }) {
   const runAction = () => {
     if(!disabled) {
@@ -32,7 +33,7 @@ function Index({
     >
         <p
             className='btn-text'
-            style={{color: textColor}}
+            style={{color: textColor, fontSize: !btnFontSize ? 20 : btnFontSize}}
         >
             {title}
         </p>

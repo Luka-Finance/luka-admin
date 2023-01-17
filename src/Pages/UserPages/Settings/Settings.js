@@ -45,7 +45,7 @@ function Settings() {
 
         } else if (name === 'rcNumber') {
 
-            if(value.length < 7) {
+            if(value.length < 9) {
                 setErrors(prev => {return {...prev, [name]: `R.C number should be 7 characters long.`}});
               } else {
                 setErrors(prev => {return {...prev, [name]: null}});
@@ -169,7 +169,7 @@ function Settings() {
   };
 
   const verifyRcNUmber = async(value) => {
-    if(value.length === 7) {
+    if(value.length === 9) {
         setLoadingRC(true);
         try {
             const res = await axiosInstance({
@@ -388,6 +388,7 @@ function Settings() {
                             }}
                             value={form.companyName}
                             error={errors.companyName}
+                            inputHt={50}
                             disableInput={!editForm}
                         />
 
@@ -444,6 +445,7 @@ function Settings() {
                                 onEnterValue({name: 'companyPhone', value})
                             }}
                             error={errors.companyPhone}
+                            inputHt={50}
                             disableInput={!editForm}
                         />
                          {/* <div>
@@ -481,6 +483,7 @@ function Settings() {
                                     onEnterValue({name: 'contactName', value})
                                 }}
                                 error={errors.contactName}
+                                inputHt={50}
                                 disableInput={!editForm}
                             />
                         </div>
@@ -496,6 +499,7 @@ function Settings() {
                                     onEnterValue({name: 'contactRole', value})
                                 }}
                                 error={errors.contactRole}
+                                inputHt={50}
                                 disableSelect={!editForm}
                             />
                         </div>
@@ -512,6 +516,7 @@ function Settings() {
                                     onEnterValue({name: 'contactEmail', value})
                                 }}
                                 error={errors.contactEmail}
+                                inputHt={50}
                                 disableInput={!editForm}
                             />
                         </div>
@@ -526,6 +531,7 @@ function Settings() {
                                     onEnterValue({name: 'contactPhone', value})
                                 }}
                                 error={errors.contactPhone}
+                                inputHt={50}
                                 disableInput={!editForm}
                             />
                         </div>
@@ -547,7 +553,7 @@ function Settings() {
                     <div className='settings-input-cont-plus-extra'>
                         <div style={{flex: 1}}>
                             <Input 
-                                maxLength={7}
+                                maxLength={9}
                                 label={'RC Number'}
                                 type={'text'}
                                 value={form.rcNumber}
@@ -557,6 +563,7 @@ function Settings() {
                                     verifyRcNUmber(value);
                                 }}
                                 error={errors.rcNumber}
+                                inputHt={50}
                                 disableInput={!editForm}
                             />
                             {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
@@ -594,6 +601,7 @@ function Settings() {
                                     verifyTin(value);
                                 }}
                                 error={errors.tinNumber}
+                                inputHt={50}
                                 disableInput={!editForm}
                             />
                             {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
@@ -617,47 +625,6 @@ function Settings() {
                             }
                         </div>
                     </div>
-
-                    {/* <div className='settings-input-cont'>
-                        <Input 
-                            label={'Company Address'}
-                            type={'text'}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                onEnterValue({name: 'companyAddress', value})
-                            }}
-                            error={errors.companyAddress}
-                            disableInput={!editForm}
-                        />
-                    </div> */}
-
-                    {/* <div className='settings-sub-form-cont-child'>
-                        <div className='settings-input-cont'>
-                            <CustomSelector 
-                                label={'Country'}
-                                options={['Nigeria', 'Ghana','Togo', 'Cameroon']}
-                                onChange={(e) => {
-                                    const value = e.target.value;
-                                    onEnterValue({name: 'companyCountry', value})
-                                }}
-                                error={errors.companyCountry}
-                                disableSelect={!editForm}
-                            />
-                        </div>
-
-                        <div className='settings-input-cont'>
-                            <CustomSelector 
-                                label={'City'}
-                                options={['Lagos', 'Accra','Lome', 'Yaounde']}
-                                onChange={(e) => {
-                                    const value = e.target.value;
-                                    onEnterValue({name: 'companyCity', value})
-                                }}
-                                error={errors.companyCity}
-                                disableSelect={!editForm}
-                            />
-                        </div>
-                    </div> */}
                </div>
 
             </div>
@@ -671,19 +638,6 @@ function Settings() {
                </div> 
 
                <div className='settings-sub-form-cont'>
-                    {/* <div className='settings-input-cont'>
-                        <CustomSelector
-                            label={'Who pay transaction fee?'}
-                            options={['Employer', 'Employee']}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                onEnterValue({name: 'payTransactionFee', value})
-                            }}
-                            error={errors.payTransactionFee}
-                            disableSelect={!editForm}
-                        />
-                    </div> */}
-
                     <div className='settings-input-cont'>
                         <Input 
                             label={'Set monthly pay day [1 - 28]'}
@@ -694,6 +648,7 @@ function Settings() {
                                 onEnterValue({name: 'paymentDate', value})
                             }}
                             error={errors.paymentDate}
+                            inputHt={50}
                             disableInput={!editForm}
                         />
                     </div>
