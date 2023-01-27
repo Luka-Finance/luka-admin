@@ -1,311 +1,280 @@
-import React, {useState, useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { 
-    AiOutlineAppstore, 
-    AiOutlineCreditCard,
-    AiOutlineClose 
-} from 'react-icons/ai';
-import {IoIosPeople} from 'react-icons/io'
-import { RiHandCoinLine, RiNotification2Fill } from 'react-icons/ri';
-import {FiSettings} from 'react-icons/fi';
-import {BsChevronDown, BsChevronUp} from 'react-icons/bs';
-import {BiMenuAltRight} from 'react-icons/bi';
-import { Image, Dropdown } from 'react-bootstrap';
-import LoaderScreen from '../Common/LoaderScreen/LoaderScreen';
-import axiosInstance from '../../Utils/axiosInstance';
-import './Styles.css';
-import { saveBusiness, logoutBusiness } from '../../Redux/Actions/businessActions';
-import { logoutUser } from '../../Redux/Actions/userActions';
-import { toast, ToastContainer } from 'react-toastify';
-import accessLocalStorage from '../../Utils/accessLocalStorage';
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import {
+	AiOutlineAppstore,
+	AiOutlineCreditCard,
+	AiOutlineClose,
+} from 'react-icons/ai'
+import { IoIosPeople } from 'react-icons/io'
+import { RiHandCoinLine, RiNotification2Fill } from 'react-icons/ri'
+import { FiSettings } from 'react-icons/fi'
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+import { BiMenuAltRight } from 'react-icons/bi'
+import { Image, Dropdown } from 'react-bootstrap'
+import LoaderScreen from '../Common/LoaderScreen/LoaderScreen'
+import axiosInstance from '../../Utils/axiosInstance'
+import './Styles.css'
+import {
+	saveBusiness,
+	logoutBusiness,
+} from '../../Redux/Actions/businessActions'
+import { logoutUser } from '../../Redux/Actions/userActions'
+import { toast, ToastContainer } from 'react-toastify'
+import accessLocalStorage from '../../Utils/accessLocalStorage'
 
-function Layout({
-    children,
-    currentPage
-}) {
-    const dispatch = useDispatch();
-    const businessData = useSelector(state => state.businessData);
-    const {business} = businessData;
+function Layout({ children, currentPage }) {
+	const dispatch = useDispatch()
+	const businessData = useSelector((state) => state.businessData)
+	const { business } = businessData
 
-    const [mobileNav, setMobileNav] = useState(false);
-    const [show, setShow] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [loaderText, setLoaderText] = useState('');
+	const [mobileNav, setMobileNav] = useState(false)
+	const [show, setShow] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [loaderText, setLoaderText] = useState('')
 
-    const navList =[
-        'Dashboard',
-        // 'Transactions',
-        'Employees',
-        'Payments',
-        'Settings'
-    ];
+	const navList = [
+		'Dashboard',
+		// 'Transactions',
+		'Employees',
+		'Payments',
+		'Settings',
+	]
 
-    const getUserData = async() => {
-        setLoaderText('fetching data');
-        setLoading(true);
-        try {
-          const res = await axiosInstance({
-            method: 'GET',
-            url: '/business/me',
-          });
-          const {data, message} = res.data;
-        //   console.log('user data ', data)
-          dispatch(saveBusiness(data))
-          setLoading(false);
-    
-        //   toast.success(message, {
-        //     position: toast.POSITION.TOP_RIGHT
-        //   });
-        //   return(<ToastContainer />)
-        } catch(error) {
-          setLoading(false);
-        //   console.log(error);
-          // const err = error.response.data.message
-          toast.error('Error fetching data.', {
-            position: toast.POSITION.TOP_RIGHT
-          })
-          return(<ToastContainer />)
-        };
-    
-    };
+	const getUserData = async () => {
+		setLoaderText('fetching data')
+		setLoading(true)
+		try {
+			const res = await axiosInstance({
+				method: 'GET',
+				url: '/business/me',
+			})
+			const { data, message } = res.data
+			//   console.log('user data ', data)
+			dispatch(saveBusiness(data))
+			setLoading(false)
 
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-        <p
-          ref={ref}
-          onClick={(e) => {
-            e.preventDefault();
-            onClick(e);
-          }}
-          style={{marginTop: 20}}
-        >
-          {children}
-        </p>
-    ));
+			//   toast.success(message, {
+			//     position: toast.POSITION.TOP_RIGHT
+			//   });
+			//   return(<ToastContainer />)
+		} catch (error) {
+			setLoading(false)
+			//   console.log(error);
+			// const err = error.response.data.message
+			toast.error('Error fetching data.', {
+				position: toast.POSITION.TOP_RIGHT,
+			})
+			return <ToastContainer />
+		}
+	}
 
-    const checkForAccessToken = () => {
-        let token = accessLocalStorage.getFromLs('token');
-        if(!token) {
-            toast.error('Please sign in.', {
-                position: toast.POSITION.TOP_RIGHT
-            });
-            window.location.replace('/sign-in');
-            scrubToken();
-            return(<ToastContainer />);
-        }
-    };
+	const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+		<p
+			ref={ref}
+			onClick={(e) => {
+				e.preventDefault()
+				onClick(e)
+			}}
+			style={{ marginTop: 20 }}>
+			{children}
+		</p>
+	))
 
-    const userLogout = () => {
-        dispatch(logoutBusiness());
-        dispatch(logoutUser());
-        accessLocalStorage.clearLs();
-        window.location.replace('/sign-in');
-    };
+	const checkForAccessToken = () => {
+		let token = accessLocalStorage.getFromLs('token')
+		if (!token) {
+			toast.error('Please sign in.', {
+				position: toast.POSITION.TOP_RIGHT,
+			})
+			window.location.replace('/sign-in')
+			scrubToken()
+			return <ToastContainer />
+		}
+	}
 
-    const scrubToken = () => {
-        dispatch(logoutBusiness());
-        dispatch(logoutUser());
-        accessLocalStorage.clearLs();
-    };
+	const userLogout = () => {
+		dispatch(logoutBusiness())
+		dispatch(logoutUser())
+		accessLocalStorage.clearLs()
+		window.location.replace('/sign-in')
+	}
 
-    const checkScreenSize = () => {
-        const screenWidth = window.innerWidth;
-        if(screenWidth < 768) {
-         window.location.replace('/util-page')
-        }
-    };
+	const scrubToken = () => {
+		dispatch(logoutBusiness())
+		dispatch(logoutUser())
+		accessLocalStorage.clearLs()
+	}
 
-    const checkForKyc = () => {
-        console.log('hello')
-        // const rcNumber = business?.rcNumber;
-        // const currentPage = window.location.pathname;
-        // if(!rcNumber && !currentPage.includes('settings')) {
-        //     window.location.assign('/settings'); 
-        // }
-    };
+	const checkScreenSize = () => {
+		const screenWidth = window.innerWidth
+		if (screenWidth < 768) {
+			window.location.replace('/util-page')
+		}
+	}
 
-    useEffect(() => {
-        checkScreenSize();
-        checkForAccessToken();
-        checkForKyc();
+	const checkForKyc = () => {
+		console.log('hello')
+		// const rcNumber = business?.rcNumber;
+		// const currentPage = window.location.pathname;
+		// if(!rcNumber && !currentPage.includes('settings')) {
+		//     window.location.assign('/settings');
+		// }
+	}
 
-        if(Object.keys(business).length === 0) {
-            getUserData();
-        }
+	useEffect(() => {
+		checkScreenSize()
+		checkForAccessToken()
+		checkForKyc()
 
-        window.addEventListener('beforeunload', scrubToken);
+		if (Object.keys(business).length === 0) {
+			getUserData()
+		}
 
-        return () => {
-            window.removeEventListener('beforeunload', scrubToken);
-        };
-    }, [])
+		window.addEventListener('beforeunload', scrubToken)
 
-    if(loading) {
-        return(<LoaderScreen loadingText={loaderText} />)
-    }
-  return (
-    <div className='layout-cont'>
-        {/* for toast notification containing */}
-         <ToastContainer />
+		return () => {
+			window.removeEventListener('beforeunload', scrubToken)
+		}
+	}, [])
 
-        <div className='side-nav'>
-            <div className='side-nav-logo-cont'>
-                <Image 
-                    src='assets/Logo.svg' 
-                    alt="logo"
-                    className='side-nav-logo' 
-                />
-            </div>
+	if (loading) {
+		return <LoaderScreen loadingText={loaderText} />
+	}
+	return (
+		<div className='layout-cont'>
+			{/* for toast notification containing */}
+			<ToastContainer />
 
-            <div className='side-nav-link-cont'>
-                {
-                    navList.map((link, index) => (
-                        <Link
-                            key={index} 
-                            className='side-nav-link'
-                            style={{
-                                color: currentPage.toLowerCase() === link.toLowerCase() ? 'rgba(3, 166, 60, 1)' : '#828282',
-                                background: currentPage.toLowerCase() === link.toLowerCase() ? 'rgba(235, 241, 237, 1)' : 'transparent'
-                            }}
-                            to={`/${link.toLowerCase()}`}
-                        >
-                            {
-                                link.toLowerCase() === 'dashboard' ? (
-                                    <AiOutlineAppstore style={{marginRight: 10, fontSize: 20}} />
-                                ) :
-                                link.toLowerCase() === 'transactions' ? (
-                                    <AiOutlineCreditCard style={{marginRight: 10, fontSize: 20}} /> 
-                                ) :
-                                link.toLowerCase() === 'employees' ? (
-                                    <IoIosPeople style={{marginRight: 10, fontSize: 20}} /> 
-                                ) :
-                                link.toLowerCase() === 'payments' ? (
-                                    <RiHandCoinLine style={{marginRight: 10, fontSize: 20}} />
-                                ) : 
-                                link.toLowerCase() === 'settings' ? (
-                                    <FiSettings style={{marginRight: 10, fontSize: 20}} />
-                                ) : (<div></div>)
+			<div className='side-nav'>
+				<div className='side-nav-logo-cont'>
+					<Image
+						src='assets/Logo.svg'
+						alt='logo'
+						className='side-nav-logo'
+						width={200}
+					/>
+				</div>
 
-                            }
-                            {link}
-                        </Link> 
-                    ))
-                }
-            </div>
-        </div>
-        <div className='main-body'>
-            <div className='head-nav'>
-                <div className='head-nav-logo-cont'>
-                    <Image 
-                        src='assets/Logo.svg' 
-                        alt="logo"
-                        className='head-nav-logo' 
-                    />
-                </div>
+				<div className='side-nav-link-cont'>
+					{navList.map((link, index) => (
+						<Link
+							key={index}
+							className='side-nav-link'
+							style={{
+								color:
+									currentPage.toLowerCase() === link.toLowerCase()
+										? 'rgba(3, 166, 60, 1)'
+										: '#828282',
+								background:
+									currentPage.toLowerCase() === link.toLowerCase()
+										? '#EBF8EF'
+										: 'transparent',
+							}}
+							to={`/${link.toLowerCase()}`}>
+							{link.toLowerCase() === 'dashboard' ? (
+								<AiOutlineAppstore style={{ marginRight: 10, fontSize: 20 }} />
+							) : link.toLowerCase() === 'transactions' ? (
+								<AiOutlineCreditCard
+									style={{ marginRight: 10, fontSize: 20 }}
+								/>
+							) : link.toLowerCase() === 'employees' ? (
+								<IoIosPeople style={{ marginRight: 10, fontSize: 20 }} />
+							) : link.toLowerCase() === 'payments' ? (
+								<RiHandCoinLine style={{ marginRight: 10, fontSize: 20 }} />
+							) : link.toLowerCase() === 'settings' ? (
+								<FiSettings style={{ marginRight: 10, fontSize: 20 }} />
+							) : (
+								<div></div>
+							)}
+							{link}
+						</Link>
+					))}
+				</div>
+			</div>
+			<div className='main-body'>
+				<div className='head-nav'>
+					<div className='head-nav-logo-cont'>
+						<Image src='assets/Logo.svg' alt='logo' className='head-nav-logo' />
+					</div>
 
-               <div className='menu-box'>
+					<div className='menu-box'>
+						<div className='bell-cont'>
+							<div className='bell-badge'></div>
+							<RiNotification2Fill style={{ fontSize: 28, color: '#C5C7CD' }} />
+						</div>
 
-                    <div className='bell-cont'>
-                        <div className='bell-badge'></div>
-                        <RiNotification2Fill style={{fontSize: 20, color: '#C5C7CD'}} />
-                    </div>
+						<div className='nav-profile'>
+							<Image
+								src='assets/place-holder/profile-user.svg'
+								alt='profile picture'
+								width={36}
+							/>
 
-                    <div 
-                        className='nav-profile'
-                    >
-                        <Image 
-                            src='assets/place-holder/profile.png' 
-                            alt='profile picture'
-                            style={{
-                                width: 44,
-                                height: 44,
-                                borderRadius: '50%'
-                            }}
-                        />
+							<p className='profile-name'>{business.name}</p>
 
-                        <p className='profile-name'>
-                            {business.name}
-                        </p>
+							<Dropdown>
+								<Dropdown.Toggle
+									// onClick={() => setShow(!show)}
+									as={CustomToggle}
+									id='dropdown-custom-components'>
+									{!show ? <BsChevronDown /> : <BsChevronUp />}
+								</Dropdown.Toggle>
 
-                        <Dropdown>
-                            <Dropdown.Toggle 
-                                // onClick={() => setShow(!show)} 
-                                as={CustomToggle} 
-                                id="dropdown-custom-components"
-                            >
-                            {
-                                !show ? (
-                                    <BsChevronDown />
-                                ) : (
-                                    <BsChevronUp />
-                                )
-                            }
-                            </Dropdown.Toggle>
+								<Dropdown.Menu>
+									<Dropdown.ItemText style={{ color: 'grey' }}>
+										<strong> Profile</strong>
+									</Dropdown.ItemText>
+									<Dropdown.Divider />
+									<Dropdown.Item as='button' onClick={userLogout}>
+										Logout
+									</Dropdown.Item>
+								</Dropdown.Menu>
+							</Dropdown>
+						</div>
 
-                            <Dropdown.Menu>
-                                <Dropdown.ItemText style={{color: 'grey'}}> 
-                                   <strong> Profile</strong> 
-                                </Dropdown.ItemText>
-                                <Dropdown.Divider />
-                                <Dropdown.Item 
-                                    as="button"
-                                    onClick={userLogout}
-                                > 
-                                    Logout 
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+						<div
+							className='mobile-nav-btn-cont'
+							onClick={() => setMobileNav(true)}>
+							<BiMenuAltRight
+								style={{
+									color: 'rgba(3, 166, 60, 1)',
+									fontSize: 30,
+								}}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className='children-body'>{children}</div>
+			</div>
+			{mobileNav && (
+				<div className='mobile-nav'>
+					<div className='mobile-nav-list'>
+						{navList.map((link, index) => (
+							<Link
+								key={index}
+								className='mobile-nav-link'
+								style={{
+									color:
+										currentPage.toLowerCase() === link.toLowerCase()
+											? 'rgba(3, 166, 60, 1)'
+											: '#fff',
+								}}
+								to={`/${link.toLowerCase()}`}>
+								{link}
+							</Link>
+						))}
+					</div>
 
-                    </div>
+					<div
+						className='mobile-nav-close-cont'
+						onClick={() => setMobileNav(false)}>
+						<AiOutlineClose style={{ fontSize: 30, color: '#fff' }} />
+					</div>
+				</div>
+			)}
+		</div>
+	)
+}
 
-                    <div 
-                        className='mobile-nav-btn-cont'
-                        onClick={() => setMobileNav(true)}
-                    >
-                        <BiMenuAltRight  
-                            style={{
-                                color: 'rgba(3, 166, 60, 1)',
-                                fontSize: 30,
-                            }}
-                        />
-                    </div>
-               </div> 
-            </div>
-            <div className='children-body'>
-                {children}
-            </div>
-        </div>
-        {
-            mobileNav && (
-                <div className='mobile-nav'>
-                    <div className='mobile-nav-list'>
-                        {
-                            navList.map((link, index) => (
-                                <Link
-                                    key={index} 
-                                    className='mobile-nav-link'
-                                    style={{
-                                        color: currentPage.toLowerCase() === link.toLowerCase() ? 'rgba(3, 166, 60, 1)' : '#fff',
-                                    }}
-                                    to={`/${link.toLowerCase()}`}
-                                >
-                                    {link}
-                                </Link> 
-                            ))
-                        }
-                    </div>
-
-                    <div 
-                        className='mobile-nav-close-cont'
-                        onClick={() => setMobileNav(false)}
-                    >
-                        <AiOutlineClose style={{fontSize: 30, color: '#fff'}} />
-                    </div>
-                </div>
-            )
-        }
-    </div>
-  );
-};
-
-export default Layout;
+export default Layout

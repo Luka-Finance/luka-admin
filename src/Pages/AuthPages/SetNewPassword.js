@@ -91,64 +91,81 @@ function SetNewPassword() {
     }, [form])
 
   return (
-    <div className='parent-cont-2'>
-        {/* for toast notification containing */}
-        <ToastContainer />
+		<div className='parent-cont-2'>
+			{/* for toast notification containing */}
+			<ToastContainer />
 
-        <div className='banner'>
-            <Image src='assets/Logo.svg' alt="logo" />
-        </div>
+			<div className='banner'>
+				<Image src='assets/Logo.svg' alt='logo' width={200} />
+			</div>
 
-        <div className='body'>
-            <div className='form-title'>
-                Set New Password
-            </div>
+			<div className='body'>
+				<div className='form-title'>Set New Password</div>
 
-            <div className='form-cont'>
+				<div className='form-cont'>
+					<div className='input-holder'>
+						<Input
+							label={'New Password'}
+							type={!passwordA ? 'password' : 'text'}
+							onChange={(e) => {
+								const value = e.target.value
+								onEnterValue({ name: 'password', value })
+							}}
+							error={errors.password}
+							icon={
+								!passwordA ? (
+									<AiOutlineEyeInvisible style={{ fontSize: 20 }} />
+								) : (
+									<AiOutlineEye style={{ fontSize: 20 }} />
+								)
+							}
+							iconClick={() => setPasswordA(!passwordA)}
+						/>
+					</div>
 
-                <div className='input-holder'>
-                    <Input  
-                        label={'New Password'}
-                        type={!passwordA ? 'password' : 'text'}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            onEnterValue({name: 'password', value})
-                        }}
-                        error={errors.password}
-                        icon={!passwordA ? <AiOutlineEyeInvisible style={{fontSize: 20}} /> : <AiOutlineEye style={{fontSize: 20}} />}
-                        iconClick={() => setPasswordA(!passwordA)}
-                    />
-                </div>
+					<div className='input-holder'>
+						<Input
+							label={'Confirm Password'}
+							type={!passwordB ? 'password' : 'text'}
+							onChange={(e) => {
+								const value = e.target.value
+								onEnterValue({ name: 'confirmPassword', value })
+							}}
+							error={errors.confirmPassword}
+							icon={
+								!passwordB ? (
+									<AiOutlineEyeInvisible style={{ fontSize: 20 }} />
+								) : (
+									<AiOutlineEye style={{ fontSize: 20 }} />
+								)
+							}
+							iconClick={() => setPasswordB(!passwordB)}
+						/>
+					</div>
 
-                <div className='input-holder'>
-                    <Input  
-                        label={'Confirm Password'}
-                        type={!passwordB ? 'password' : 'text'}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            onEnterValue({name: 'confirmPassword', value})
-                        }}
-                        error={errors.confirmPassword}
-                        icon={!passwordB ? <AiOutlineEyeInvisible style={{fontSize: 20}} /> : <AiOutlineEye style={{fontSize: 20}} />}
-                        iconClick={() => setPasswordB(!passwordB)}
-                    />
-                </div>
-
-                <div className='input-holder'>
-                    <CustomButton 
-                        title={'Change Pasword'}
-                        textColor={'#fff'}
-                        bgColor={'#03A63C'}
-                        disabledColor={'rgba(3, 166, 60, 0.5)'}
-                        disabled={disable}
-                        onClick={onSubmit}
-                        icon={loading && <Spinner style={{marginTop: 5, marginLeft: 15}} animation="border" variant="light" />}
-                    />
-                </div>
-            </div>
-        </div>
-    </div>
-  );
+					<div className='input-holder'>
+						<CustomButton
+							title={'Change Pasword'}
+							textColor={'#fff'}
+							bgColor={'#03A63C'}
+							disabledColor={'rgba(3, 166, 60, 0.5)'}
+							disabled={disable}
+							onClick={onSubmit}
+							icon={
+								loading && (
+									<Spinner
+										style={{ marginTop: 5, marginLeft: 15 }}
+										animation='border'
+										variant='light'
+									/>
+								)
+							}
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	)
 };
 
 export default SetNewPassword;

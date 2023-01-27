@@ -116,116 +116,90 @@ function Payments() {
   }
 
   return (
-    <Layout currentPage={'payments'}>
-        <AuxPageHead 
-          auxHeadFilter={false}
-          auxHeadTitle={'Payments'}
-          auxHeadBtnClick={handleShow}
-          auxBtnTitle={'Download Invoice'}
-          auxBtnAppear={true}
-        />
+		<Layout currentPage={'payments'}>
+			<AuxPageHead
+				auxHeadFilter={false}
+				auxHeadTitle={'Payments'}
+				auxHeadBtnClick={handleShow}
+				auxBtnTitle={'Download Invoice'}
+				auxBtnAppear={true}
+			/>
 
-        <div className='dashboard-card-cont'>
-          <div 
-           className='dashboard-card'
-          >
-          <div className='dashboard-card-head'>
-            <p className='dashboard-card-text' style={{color: '#C30000'}} >
-              <span style={{marginRight: 5}}>{(getSymbolFromCurrency('NGN'))}</span>
-              <span>
-                {
-                  stats.pendingBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-              </span>
-            </p>
+			<div className=''>
+				<div className='dashboard-card'>
+					<div className='dashboard-card-head'>
+						<p className='dashboard-card-text' style={{ color: '#C30000' }}>
+							<span style={{ marginRight: 5 }}>
+								{getSymbolFromCurrency('NGN')}
+							</span>
+							<span>
+								{stats.pendingBalance
+									.toString()
+									.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+							</span>
+						</p>
 
-              <p 
-                className='dashboard-card-icon-cont'
-                style={{backgroundColor: 'rgba(211, 56, 56, 0.1)'}}
-              > 
-                <BsExclamationSquare style={{fontSize: 20, color: '#C30000'}} />
-              </p>
-            </div>
+						<p
+							className='dashboard-card-icon-cont'
+							style={{ backgroundColor: 'rgba(211, 56, 56, 0.1)' }}>
+							<BsExclamationSquare style={{ fontSize: 20, color: '#C30000' }} />
+						</p>
+					</div>
 
-            <p className='dashboard-card-text-2'>
-              Pending Balance
-            </p>
-          </div> 
-        </div>
+					<p className='dashboard-card-text-2'>Pending Balance</p>
+				</div>
+			</div>
 
-        <div className='transaction-dashboard'>
-          {
-            payments.length < 1 ? (
-              <p className='empty-state-text'>
-               No Payments made yet 
-              </p>
-            ) : (
-              <CustomTableTwo 
-                data={payments} 
-                setShow={setShow}
-              />
-            )
-          }
-        </div>
+			<div className='transaction-dashboard'>
+				{payments.length < 1 ? (
+					<p className='empty-state-text'>No Payments made yet</p>
+				) : (
+					<CustomTableTwo data={payments} setShow={setShow} />
+				)}
+			</div>
 
-      <Modal
-        show={show} 
-        onHide={handleClose}
-        size={'lg'}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Payment details
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <div style={{margin: '10px 0px'}}>
-              <span style={{marginRight: 20}}>
-                Account name:
-              </span>
+			<Modal
+				show={show}
+				onHide={handleClose}
+				className='employee-modal'
+				size={'lg'}
+				centered>
+				<Modal.Header closeButton>
+					<Modal.Title id='contained-modal-title-vcenter'>
+						Payment details
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<div style={{ margin: '10px 0px' }}>
+						<span style={{ marginRight: 20 }}>Account name:</span>
 
-              <span>
-                {details.walletName}
-              </span>
-          </div>
+						<span>{details.walletName}</span>
+					</div>
 
-          <div style={{margin: '10px 0px'}}> 
-            <span style={{marginRight: 20}}>
-              Account number:
-            </span>
+					<div style={{ margin: '10px 0px' }}>
+						<span style={{ marginRight: 20 }}>Account number:</span>
 
-            <span>
-              {details.wallet}
-            </span>
-          </div>
+						<span>{details.wallet}</span>
+					</div>
 
-          <div style={{margin: '10px 0px'}}>
-            <span style={{marginRight: 20}}>
-              Bank name:
-            </span>
+					<div style={{ margin: '10px 0px' }}>
+						<span style={{ marginRight: 20 }}>Bank name:</span>
 
-            <span>
-              {details.bankName}
-            </span>
-          </div>
+						<span>{details.bankName}</span>
+					</div>
 
-          <div style={{margin: '10px 0px'}}>
-            <span style={{marginRight: 20}}>
-              Bank number:
-            </span>
+					<div style={{ margin: '10px 0px' }}>
+						<span style={{ marginRight: 20 }}>Bank number:</span>
 
-            <span>
-              {details.accountNumber}
-            </span>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          {/* <Button onClick={props.onHide}>Close</Button> */}
-        </Modal.Footer>
-      </Modal>
-    </Layout>
-  );
+						<span>{details.accountNumber}</span>
+					</div>
+				</Modal.Body>
+				<Modal.Footer>
+					{/* <Button onClick={props.onHide}>Close</Button> */}
+				</Modal.Footer>
+			</Modal>
+		</Layout>
+	)
 };
 
 export default Payments;

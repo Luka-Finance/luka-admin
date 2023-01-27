@@ -1,48 +1,50 @@
 .input-cont {
-    /* border: 1px solid black; */
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+	/* border: 1px solid black; */
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
 
 .input-label {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 26px;
-    color: #333333;
-    margin-bottom: 10px;
+	/* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+	font-family: 'DM Sans';
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 26px;
+	color: #333333;
+	margin-bottom: 10px;
 }
 
 .input-wrapper {
-    border: 1px solid #C0C0C0;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    background: #F7F7F7;
+	border: 1px solid #c0c0c0;
+	border-radius: 6px;
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	background: #f7f7f7;
 }
 
 .input-self {
-    background-color: transparent;
-    width: 100%;
-    border: none;
-    outline: none;
-    height: 55px;
-    padding-left: 15px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 26px;
-    color: #333333;
+	background-color: transparent;
+	width: 100%;
+	border: none;
+	outline: none;
+	height: 55px;
+	padding-left: 15px;
+	font-family: 'DM Sans';
+	/* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 26px;
+	color: #333333;
 }
 
 .error-text {
-    color: red;
-    padding-top: 4px;
-    font-size: 18px;
-    transition: ease-in-out 0.3s;
+	color: red;
+	padding-top: 4px;
+	font-size: 18px;
+	transition: ease-in-out 0.3s;
 }
