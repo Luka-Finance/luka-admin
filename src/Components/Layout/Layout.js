@@ -152,7 +152,7 @@ function Layout({ children, currentPage }) {
 						src='assets/Logo.svg'
 						alt='logo'
 						className='side-nav-logo'
-						width={200}
+						width={180}
 					/>
 				</div>
 
@@ -208,7 +208,7 @@ function Layout({ children, currentPage }) {
 							<Image
 								src='assets/place-holder/profile-user.svg'
 								alt='profile picture'
-								width={36}
+								width={30}
 							/>
 
 							<p className='profile-name'>{business.name}</p>
