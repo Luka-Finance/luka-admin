@@ -11,9 +11,11 @@ import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
 import getSymbolFromCurrency from 'currency-symbol-map';
 import {BsExclamationSquare} from 'react-icons/bs';
 import { Modal } from 'react-bootstrap';
+import PaymentMethod from './PaymentMethods';
 
 function Payments() {
   const [show, setShow] = useState(false);
+  const [showA, setShowA] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loaderText, setLoaderText] = useState('');
   const [payments, setPayments] = useState([]);
@@ -29,6 +31,9 @@ function Payments() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleCloseA = () => setShowA(false);
+  const handleShowA = () => setShowA(true);
 
   const getBusinessStats = async() => {
     setLoaderText('Fetching stats');
@@ -105,6 +110,43 @@ function Payments() {
     }
   }; 
 
+  const downloadInvoice = async() => {
+    setLoaderText('downloading invoice');
+    setLoading(true);
+
+    try {
+      const res = await axiosInstance({
+        url: '/business/get-invoices',
+        method: 'GET',
+        responseType: 'blob',
+      });
+      console.log(res)
+      if(res.data.length > 0) {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        let stamp = new Date().now();
+        link.setAttribute('download', `invoice-${stamp}.pdf`); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      } else {
+        toast.warning('No invoice data available.', {
+          position: toast.POSITION.TOP_RIGHT
+        })
+        return(<ToastContainer />)
+      }
+      
+      setLoading(false);
+    } catch {
+      setLoading(false);
+      toast.error('Error downoading invoice.', {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      return(<ToastContainer />)
+    }
+
+  };
+
   useEffect(() => {
     getBusinessStats();
     getPaymentHistory();
@@ -120,12 +162,16 @@ function Payments() {
         <AuxPageHead 
           auxHeadFilter={false}
           auxHeadTitle={'Payments'}
-          auxHeadBtnClick={handleShow}
+          auxHeadBtnClick={downloadInvoice}
           auxBtnTitle={'Download Invoice'}
           auxBtnAppear={true}
         />
 
-        <div className='dashboard-card-cont'>
+        <div 
+          className='dashboard-card-cont'
+          onClick={handleShowA}
+          style={{cursor: 'pointer'}}
+        >
           <div 
            className='dashboard-card'
           >
@@ -167,6 +213,15 @@ function Payments() {
             )
           }
         </div>
+
+      <Modal
+        show={showA} 
+        onHide={handleCloseA}
+        size={'md'}
+        centered
+      >
+        <PaymentMethod />
+      </Modal>
 
       <Modal
         show={show} 

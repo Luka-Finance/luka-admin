@@ -39,3 +39,13 @@
     line-height: 26px;
     color: #333333;
 }
+
+.option-text {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 17px;
+    color: #333333;
+    margin-left: 10px;
+}
