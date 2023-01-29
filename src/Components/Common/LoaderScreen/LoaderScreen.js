@@ -16,7 +16,7 @@ function LoaderScreen({loadingText}) {
   return (
     <div className='loader-screen'>
        <div className="loader-sub-screen">
-          <p className='head-text'>{loadingText && loadingText}</p>
+          {/* <p className='head-text'>{loadingText && loadingText}</p> */}
           {View}
           {/* <div className="loader"></div> */}
        </div>

@@ -185,34 +185,24 @@ function Payments() {
               </span>
             </p>
 
-              <p 
-                className='dashboard-card-icon-cont'
-                style={{backgroundColor: 'rgba(211, 56, 56, 0.1)'}}
-              > 
-                <BsExclamationSquare style={{fontSize: 20, color: '#C30000'}} />
-              </p>
-            </div>
+						<p
+							className='dashboard-card-icon-cont'
+							style={{ backgroundColor: 'rgba(211, 56, 56, 0.1)' }}>
+							<BsExclamationSquare style={{ fontSize: 20, color: '#C30000' }} />
+						</p>
+					</div>
 
-            <p className='dashboard-card-text-2'>
-              Pending Balance
-            </p>
-          </div> 
-        </div>
+					<p className='dashboard-card-text-2'>Pending Balance</p>
+				</div>
+			</div>
 
-        <div className='transaction-dashboard'>
-          {
-            payments.length < 1 ? (
-              <p className='empty-state-text'>
-               No Payments made yet 
-              </p>
-            ) : (
-              <CustomTableTwo 
-                data={payments} 
-                setShow={setShow}
-              />
-            )
-          }
-        </div>
+			<div className='transaction-dashboard'>
+				{payments.length < 1 ? (
+					<p className='empty-state-text'>No Payments made yet</p>
+				) : (
+					<CustomTableTwo data={payments} setShow={setShow} />
+				)}
+			</div>
 
       <Modal
         show={showA} 
@@ -240,47 +230,33 @@ function Payments() {
                 Account name:
               </span>
 
-              <span>
-                {details.walletName}
-              </span>
-          </div>
+						<span>{details.walletName}</span>
+					</div>
 
-          <div style={{margin: '10px 0px'}}> 
-            <span style={{marginRight: 20}}>
-              Account number:
-            </span>
+					<div style={{ margin: '10px 0px' }}>
+						<span style={{ marginRight: 20 }}>Account number:</span>
 
-            <span>
-              {details.wallet}
-            </span>
-          </div>
+						<span>{details.wallet}</span>
+					</div>
 
-          <div style={{margin: '10px 0px'}}>
-            <span style={{marginRight: 20}}>
-              Bank name:
-            </span>
+					<div style={{ margin: '10px 0px' }}>
+						<span style={{ marginRight: 20 }}>Bank name:</span>
 
-            <span>
-              {details.bankName}
-            </span>
-          </div>
+						<span>{details.bankName}</span>
+					</div>
 
-          <div style={{margin: '10px 0px'}}>
-            <span style={{marginRight: 20}}>
-              Bank number:
-            </span>
+					<div style={{ margin: '10px 0px' }}>
+						<span style={{ marginRight: 20 }}>Bank number:</span>
 
-            <span>
-              {details.accountNumber}
-            </span>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          {/* <Button onClick={props.onHide}>Close</Button> */}
-        </Modal.Footer>
-      </Modal>
-    </Layout>
-  );
+						<span>{details.accountNumber}</span>
+					</div>
+				</Modal.Body>
+				<Modal.Footer>
+					{/* <Button onClick={props.onHide}>Close</Button> */}
+				</Modal.Footer>
+			</Modal>
+		</Layout>
+	)
 };
 
 export default Payments;
