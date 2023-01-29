@@ -28,6 +28,8 @@ function Payments() {
     inactiveStaffs: 0
   });
   const [details, setDetails] = useState({});
+  const [accDetails, setAccDetails] = useState({});
+  const [paymentStat, setPaymentStat] = useState(0);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -147,10 +149,38 @@ function Payments() {
 
   };
 
+  const getAccountDetails = async() => {
+    setLoaderText('Fetching account details');
+    setLoading(true);
+    try {
+      const res = await axiosInstance({
+        url: '/business/get-payment-account',
+        method: 'GET'
+      });
+      const {data, message} = res.data;
+      setAccDetails(data);
+   
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      const err = error.response.data.message
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      return(<ToastContainer />)
+    }
+  };
+
+  const handlePayment = () => {
+    handleCloseA();
+    setPaymentStat(1);
+  };
+
   useEffect(() => {
     getBusinessStats();
     getPaymentHistory();
     getPaymentDetails();
+    getAccountDetails();
   }, [])
 
   if(loading) {
@@ -192,7 +222,7 @@ function Payments() {
 						</p>
 					</div>
 
-					<p className='dashboard-card-text-2'>Pending Balance</p>
+					<p className='dashboard-card-text-2'>{paymentStat === 0 ? "Pending Balance" : "Validating Payment"}</p>
 				</div>
 			</div>
 
@@ -210,7 +240,7 @@ function Payments() {
         size={'md'}
         centered
       >
-        <PaymentMethod />
+        <PaymentMethod accDetails={accDetails} closeModal={handlePayment} />
       </Modal>
 
       <Modal

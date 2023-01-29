@@ -7,7 +7,7 @@ import { Dropdown } from 'react-bootstrap';
 import { FiChevronDown } from 'react-icons/fi';
 import Form from 'react-bootstrap/Form';
 
-function PaymentMethod() {
+function PaymentMethod({accDetails, closeModal}) {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [cardNum, setCardNum] = useState('');
   const [expire, setExpire] = useState('');
@@ -49,10 +49,10 @@ function PaymentMethod() {
                 <p className='payment-method-title'>Select payment method</p>
                 <Form.Select onChange={(e) => setPaymentMethod(e.target.value)} style={{height: 50}} aria-label="Default select example">
                     <option>Select payment method</option>
-                    <option value="card">
+                    {/* <option value="card">
                         <span> <AiOutlineCreditCard style={{color: '#333', fontSize: 15}} /> </span>
                         <span className='selector-opt-text'> Pay with card </span>
-                    </option>
+                    </option> */}
                     <option value="transfer">
                         <span> <RiBankLine style={{color: '#333', fontSize: 15}} /> </span>
                         <span className='selector-opt-text'> Pay through card transfer </span>
@@ -117,19 +117,20 @@ function PaymentMethod() {
 
                             <div className='bank-details-sub-cont'>
                                 <p className='bank-details-text'>Account name :</p>
-                                <p className='bank-details-text'>Luka Technologies LTD</p>
+                                <p className='bank-details-text'>{accDetails.accountName === "" ? "Luka Technologies LTD" : accDetails.accountName}</p>
                             </div>
                             <div className='bank-details-sub-cont'>
                                 <p className='bank-details-text'>Account number :</p>
-                                <p className='bank-details-text'>5401656450</p>
+                                <p className='bank-details-text'>{accDetails.accountName === "" ? "5401656450" : accDetails.accountNumber}</p>
                             </div>
                             <div className='bank-details-sub-cont'>
                                 <p className='bank-details-text'>Bank name :</p>
-                                <p className='bank-details-text'>Providus Bank</p>
+                                <p className='bank-details-text'>{accDetails.accountName === "" ? "Providus Bank" : accDetails.bankName}</p>
                             </div>
 
                             <div style={{width: 385, margin: '50px auto auto auto',}}>
                                 <CustomButton 
+                                    onClick={closeModal}
                                     btnHeight={66}
                                     textColor={'#fff'}
                                     bgColor={'#03A63C'}

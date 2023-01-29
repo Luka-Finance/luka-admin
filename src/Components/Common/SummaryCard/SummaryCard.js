@@ -33,7 +33,7 @@ function SummaryCard({ data }) {
 					</p>
 				</div>
 
-				<p className='dashboard-card-text-2'>Total earned this month</p>
+				<p className='dashboard-card-text-2'>Accessible Funds This Month</p>
 			</div>
 
 			<div className='dashboard-card' style={{ margin: '0px 20px 20px 0px' }}>
@@ -56,7 +56,7 @@ function SummaryCard({ data }) {
 					</p>
 				</div>
 
-				<p className='dashboard-card-text-2'>Total Withdrawn</p>
+				<p className='dashboard-card-text-2'>Total Amount Withdrawn</p>
 			</div>
 
 			<div className='dashboard-card'>

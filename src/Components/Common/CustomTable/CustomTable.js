@@ -83,11 +83,11 @@ function CustomTable({
         >
             <thead>
                 <tr>
-                    <th>Fullname</th>
+                    <th>Full Name</th>
                     {/* <th>Employee ID</th> */}
                     <th>Phone Number</th>
                     <th>Email</th>
-                    <th>Employee strt Dt.</th>
+                    <th>Employee Start Dt.</th>
                     <th>Status</th>
                     <th>Net Salary</th>
                     <th></th>
@@ -110,8 +110,9 @@ function CustomTable({
                             </td>
                             <td> 
                                 {
-                                    cur.createdAt ? (
-                                        <Moment date={cur.createdAt} format="DD/MM/YYYY" />
+                                    cur.startDate ? (
+                                        // <Moment date={cur.startDate} format="DD/MM/YYYY" />
+                                        cur.startDate.split(' ')[0]
                                     ) : (<p>awaiting</p>)
                                 } 
                             </td>

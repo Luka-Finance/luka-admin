@@ -57,6 +57,7 @@ function Accounts() {
 				method: 'GET',
 			})
 			const { data, message } = res.data
+			console.log(data)
 			setAccounts(data)
 			setFilterArr(data)
 			setLoading(false)
@@ -348,7 +349,7 @@ function Accounts() {
 			salary: 0,
 			createdAt: '',
 		})
-	}
+	};
 
 	useEffect(() => {
 		if (
@@ -503,6 +504,7 @@ function Accounts() {
 								handleClose()
 								setCreated(false)
 								getStaffs()
+								resetModal()
 							}}
 							className='success-emplyee-text'>
 							Go to account

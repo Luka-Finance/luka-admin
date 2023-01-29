@@ -203,7 +203,7 @@ function Settings() {
   };
 
   const verifyTin = async(value) => {
-    if(value.length === 10) {
+    if(value.length === 13) {
         setLoadingTIN(true);
         try {
             const res = await axiosInstance({
@@ -338,7 +338,7 @@ function Settings() {
     const checkForKyc = () => {
         const rcNumber = business?.rcNumber;
         if(!rcNumber) {
-            toast.warning('Please enter your valid R.C Number.', {
+            toast.warning('Please complete your KYC.', {
                 position: toast.POSITION.TOP_RIGHT
             }); 
             return(<ToastContainer />);
@@ -555,6 +555,7 @@ function Settings() {
                             <Input 
                                 maxLength={9}
                                 label={'RC Number'}
+                                placeholder={'eg RC1081237'}
                                 type={'text'}
                                 value={form.rcNumber}
                                 onChange={(e) => {
@@ -566,7 +567,7 @@ function Settings() {
                                 inputHt={50}
                                 disableInput={!editForm}
                             />
-                            {loadingRC && (<h5 style={{color: 'green'}}>Checking R.C number....</h5>)}
+                            {loadingRC && (<h5 style={{color: 'green'}}>Saving R.C number....</h5>)}
                             {!loadingRC && (<p style={{color: (!errors.rcNumber && business?.rcNumber !== null)  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
                                 {(!errors.rcNumber && business?.rcNumber) ? 'RC number verified' : ''}
                             </p>)}
@@ -591,8 +592,9 @@ function Settings() {
                     <div className='settings-input-cont-plus-extra'>
                         <div style={{flex: 1}}>
                             <Input 
-                                maxLength={10}
+                                maxLength={13}
                                 label={'TIN Number'}
+                                placeholder={'eg 12345678-0001'}
                                 type={'text'}
                                 value={form.tinNumber}
                                 onChange={(e) => {
@@ -604,7 +606,7 @@ function Settings() {
                                 inputHt={50}
                                 disableInput={!editForm}
                             />
-                            {loadingTIM && (<h5 style={{color: 'green'}}>Checking TIN number....</h5>)}
+                            {loadingTIM && (<h5 style={{color: 'green'}}>Saving TIN number....</h5>)}
                             {!loadingTIM && (<p style={{color: (!errors.tinNumber && business?.tin)  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
                                 {(!errors.tinNumber && business?.tin) ? 'TIN verified' : ''}
                             </p>)}

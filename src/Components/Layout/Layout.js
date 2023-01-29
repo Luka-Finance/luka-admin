@@ -76,7 +76,7 @@ function Layout({ children, currentPage }) {
 				e.preventDefault()
 				onClick(e)
 			}}
-			style={{ marginTop: 20 }}>
+			style={{ marginTop: 10 }}>
 			{children}
 		</p>
 	))
@@ -211,7 +211,7 @@ function Layout({ children, currentPage }) {
 								width={30}
 							/>
 
-							<p className='profile-name'>{business.name}</p>
+							<p className='profile-name'>{business.name.substring(0, 10)}</p>
 
 							<Dropdown>
 								<Dropdown.Toggle
