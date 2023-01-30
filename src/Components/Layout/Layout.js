@@ -211,7 +211,7 @@ function Layout({ children, currentPage }) {
 								width={30}
 							/>
 
-							<p className='profile-name'>{business.name.substring(0, 10)}</p>
+							<p className='profile-name'>{business?.name?.substring(0, 10)}</p>
 
 							<Dropdown>
 								<Dropdown.Toggle

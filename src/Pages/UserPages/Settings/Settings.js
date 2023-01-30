@@ -53,7 +53,7 @@ function Settings() {
 
         } else if (name === 'tinNumber') {
 
-            if(value.length < 7) {
+            if(value.length < 13) {
                 setErrors(prev => {return {...prev, [name]: `TIN number should be 7 characters long.`}});
               } else {
                 setErrors(prev => {return {...prev, [name]: null}});
@@ -448,28 +448,6 @@ function Settings() {
                             inputHt={50}
                             disableInput={!editForm}
                         />
-                         {/* <div>
-                            <label className='phone-label'>Company's Phone number</label>
-                            <PhoneInput
-                                country={'ng'}
-                                value={phone}
-                                onChange={value => {
-                                    setPhone(value);
-                                    onEnterValue({name: 'companyPhone', value});
-                                }}
-                                placeholder={'eg +23470***********'}
-                                enableSearch={true}
-                                containerClass={'phone-cont'}
-                                inputStyle={{width: '100%', height: '100%', borderRadius: 6}}
-                                isValid={(value, country) => {
-                                    if(errors.companyPhone) {
-                                        return errors.companyPhone;
-                                    } else {
-                                        return false;
-                                    }
-                                }}
-                            />
-                        </div> */}
                     </div>
 
                     <div className='settings-sub-form-cont-child'>
@@ -536,6 +514,22 @@ function Settings() {
                             />
                         </div>
                     </div>
+
+                    <div className='settings-sub-form-cont-child'>
+                        <CustomSelector
+                            initialValue={form.contactRole}
+                            label={'Staff strength'}
+                            options={['1-20', '21-40', '41-60', '61-80', '81-100', '101-120', '120- and above']}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                // onEnterValue({name: 'payTransactionFee', value})
+                                onEnterValue({name: 'staffStrength', value})
+                            }}
+                            error={errors.contactRole}
+                            inputHt={50}
+                            disableSelect={!editForm}
+                        />
+                    </div>
                </div> 
             </div>
 
@@ -561,7 +555,7 @@ function Settings() {
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     onEnterValue({name: 'rcNumber', value});
-                                    verifyRcNUmber(value);
+                                    // verifyRcNUmber(value);
                                 }}
                                 error={errors.rcNumber}
                                 inputHt={50}
@@ -577,7 +571,7 @@ function Settings() {
                                 !loadingRC && (
                                     <>
                                         {
-                                            (!errors.rcNumber && business?.rcNumber)  ? (
+                                            business?.rcNumber  ? (
                                             <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
                                             ) : (
                                             <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
@@ -600,7 +594,7 @@ function Settings() {
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     onEnterValue({name: 'tinNumber', value});
-                                    verifyTin(value);
+                                    // verifyTin(value);
                                 }}
                                 error={errors.tinNumber}
                                 inputHt={50}
@@ -616,7 +610,7 @@ function Settings() {
                                 !loadingTIM && (
                                     <>
                                         {
-                                            (!errors.tinNumber && business?.tin)  ? (
+                                            business?.tin  ? (
                                             <BsCheckLg style={{color: 'rgba(3, 166, 60, 1)'}} />
                                             ) : (
                                             <MdClose style={{color: 'rgba(195, 0, 0, 1)', fontSize: 18}} />
