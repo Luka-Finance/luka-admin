@@ -517,7 +517,7 @@ function Settings() {
 
                     <div className='settings-sub-form-cont-child'>
                         <CustomSelector
-                            initialValue={form.contactRole}
+                            initialValue={''}
                             label={'Staff strength'}
                             options={['1-20', '21-40', '41-60', '61-80', '81-100', '101-120', '120- and above']}
                             onChange={(e) => {
@@ -525,7 +525,6 @@ function Settings() {
                                 // onEnterValue({name: 'payTransactionFee', value})
                                 onEnterValue({name: 'staffStrength', value})
                             }}
-                            error={errors.contactRole}
                             inputHt={50}
                             disableSelect={!editForm}
                         />
@@ -561,10 +560,10 @@ function Settings() {
                                 inputHt={50}
                                 disableInput={!editForm}
                             />
-                            {loadingRC && (<h5 style={{color: 'green'}}>Saving R.C number....</h5>)}
+                            {/* {loadingRC && (<h5 style={{color: 'green'}}>Saving R.C number....</h5>)}
                             {!loadingRC && (<p style={{color: (!errors.rcNumber && business?.rcNumber !== null)  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
                                 {(!errors.rcNumber && business?.rcNumber) ? 'RC number verified' : ''}
-                            </p>)}
+                            </p>)} */}
                         </div>
                         <div className="number-status-icon-cont">
                             {
@@ -600,10 +599,10 @@ function Settings() {
                                 inputHt={50}
                                 disableInput={!editForm}
                             />
-                            {loadingTIM && (<h5 style={{color: 'green'}}>Saving TIN number....</h5>)}
+                            {/* {loadingTIM && (<h5 style={{color: 'green'}}>Saving TIN number....</h5>)}
                             {!loadingTIM && (<p style={{color: (!errors.tinNumber && business?.tin)  ? 'rgba(3, 166, 60, 1)' : 'rgba(195, 0, 0, 1)'}} className='number-status-text'>
                                 {(!errors.tinNumber && business?.tin) ? 'TIN verified' : ''}
-                            </p>)}
+                            </p>)} */}
                         </div>
                         <div className="number-status-icon-cont">
                             {
