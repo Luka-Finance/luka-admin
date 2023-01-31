@@ -66,8 +66,17 @@ function CustomTable({
             phone: obj.phone,
             email: obj.email,
             salary: obj.salary,
-            startDate: obj.startDate ,
+            startDate: obj.startDate,
         }); 
+        console.log({
+            staffId: obj.id,
+            firstName: obj.firstName,
+            lastName: obj.lastName,
+            phone: obj.phone,
+            email: obj.email,
+            salary: obj.salary,
+            startDate: obj.startDate,
+        })
         openModal();
     };
 

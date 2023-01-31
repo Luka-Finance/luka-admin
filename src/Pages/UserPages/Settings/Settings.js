@@ -359,7 +359,7 @@ function Settings() {
 
     const checkForKyc = () => {
         const rcNumber = business?.rcNumber;
-        if(!rcNumber) {
+        if(rcNumber === null || rcNumber === '') {
             toast.warning('Please complete your KYC.', {
                 position: toast.POSITION.TOP_RIGHT
             }); 

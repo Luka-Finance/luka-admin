@@ -82,6 +82,7 @@ function Accounts() {
 			console.log({name, value})
 			setStaff({ ...staff, [name]: value })
 		} else {
+			console.log({name, value})
 			setForm({ ...form, [name]: value })
 		}
 
@@ -203,11 +204,11 @@ function Accounts() {
 		}
 	}
 
-	const getInputs = (label) => {
+	const getStaffInputs = (label) => {
 		for (const key in staff) {
 			if (key === 'startDate') {
-				let freshDate = staff[key].split('T')[0];
-				// let freshDate = staff[key];
+				// let freshDate = staff[key].split('T')[0];
+				let freshDate = staff[key];
 				return freshDate;
 			} else if (label === key) {
 				return staff[key];
@@ -289,7 +290,8 @@ function Accounts() {
 						// role: form.role,
 						role: 'regular',
 						businessId: business.id,
-						startDate: formatMyDate(form.startDate),
+						// startDate: formatMyDate(form.startDate),
+						startDate: form.startDate,
 					},
 				})
 				const { message } = res.data
@@ -482,7 +484,7 @@ function Accounts() {
 											maxDate={type === 'date' && max}
 											value={
 												staff?.firstName.length > 0
-													? getInputs(tag)
+													? getStaffInputs(tag)
 													: getFormInput(tag)
 											}
 											onChange={(e) => {
