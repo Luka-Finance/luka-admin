@@ -4,7 +4,7 @@ import Layout from '../../../Components/Layout/Layout';
 import Input from '../../../Components/Common/Input/Input';
 import CustomSelector from '../../../Components/Common/CustomSelector/CustomSelector';
 import { BsExclamationCircle, BsCheckLg} from 'react-icons/bs';
-import {MdClose} from 'react-icons/md';
+import {MdClose, MdOutlineCloudUpload} from 'react-icons/md';
 import CustomButton from '../../../Components/Common/CustomButton/Index';
 import { toast, ToastContainer } from 'react-toastify';
 import LoaderScreen from '../../../Components/Common/LoaderScreen/LoaderScreen';
@@ -13,6 +13,7 @@ import axiosInstance from '../../../Utils/axiosInstance';
 import './Styles.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveBusiness } from '../../../Redux/Actions/businessActions';
+import { AiTwotoneDelete } from 'react-icons/ai';
 // import PhoneInput from 'react-phone-input-2'
 
 function Settings() {
@@ -27,7 +28,7 @@ function Settings() {
   const [editForm, setEditForm] = useState(false);
   const businessData = useSelector(state => state.businessData);
   const {business} = businessData;
-//   const [phone, setPhone] = useState('')
+  const [cac, setCac] = useState('');
     const dispatch = useDispatch();
 
   const onEnterValue = ({name, value}) => { 
@@ -46,7 +47,7 @@ function Settings() {
         } else if (name === 'rcNumber') {
 
             if(value.length < 9) {
-                setErrors(prev => {return {...prev, [name]: `R.C number should be 7 characters long.`}});
+                setErrors(prev => {return {...prev, [name]: `R.C number should be 9 characters long.`}});
               } else {
                 setErrors(prev => {return {...prev, [name]: null}});
             };
@@ -54,7 +55,7 @@ function Settings() {
         } else if (name === 'tinNumber') {
 
             if(value.length < 13) {
-                setErrors(prev => {return {...prev, [name]: `TIN number should be 7 characters long.`}});
+                setErrors(prev => {return {...prev, [name]: `TIN number should be 13 characters long.`}});
               } else {
                 setErrors(prev => {return {...prev, [name]: null}});
             };
@@ -263,13 +264,30 @@ function Settings() {
 
 };
 
+    const func = () => {
+        const formData = new FormData();
+        formData.append('name', 'Shubham Singh Kshatriya');
+        formData.append('age', 21);
+
+        console.log("Form Data");
+        for (let obj of formData) {
+        console.log('func ', obj);
+        }
+        console.log('checking ', formData.get('name'))
+    };
+
+    
   const updateProfile = async() => {
     setLoaderText('Updating profile');
     setLoading(true);
 
-    const formData = new FormData();
-    const file = form.companyCac ? form.companyCac : '';
-	formData.append('File', file);
+    let fileData = new FormData();
+    const file = cac ? cac : '';
+    console.log('my cac  ', cac)
+	fileData.append('file', file);
+    func()
+    console.log('selected cac file ', file)
+    console.log('appended cac object ', fileData.get('file'))
 
     try {
       const res = await axiosInstance({
@@ -290,10 +308,13 @@ function Settings() {
             contactPersonEmail: form.contactEmail,
             contactPersonRole: form.contactRole,
             contactPersonPhone: form.contactPhone,
-            // cacDoc: formData,
+            cacDoc: fileData.get('file'),
+            staffStrength: form.staffStrength,
         }
       });
-    //   console.log('res ', res);
+      setEditForm(false);
+      initializeForm();
+      setCac('');
       const {message} = res.data;
         toast.success(message, {
             position: toast.POSITION.TOP_RIGHT
@@ -324,6 +345,7 @@ function Settings() {
         rcNumber: business?.rcNumber === null ? '' : business?.rcNumber,
         tinNumber: business?.tin === null ? '' : business?.tin,
         paymentDate: business?.payday === null ? '' : business?.payday,
+        staffStrength: business?.staffStrength === null ? '' : business?.staffStrength,
     });
   };
 
@@ -343,6 +365,11 @@ function Settings() {
             }); 
             return(<ToastContainer />);
         }
+    };
+
+    const uploadCac = (e) => {
+        console.log('just picked you ', e.target.files[0])
+        setCac(e.target.files[0]);
     };
 
   useEffect(() => {
@@ -368,7 +395,7 @@ function Settings() {
          auxHeadTitle={'Settings'}
          auxBtnAppear={false}
         />
-        <div className='settings-dashboard'>
+        <form className='settings-dashboard'>
 
             <div className='settings-sub-cont'>
                <div className='settings-form-title-cont'>
@@ -517,9 +544,9 @@ function Settings() {
 
                     <div className='settings-sub-form-cont-child'>
                         <CustomSelector
-                            initialValue={''}
+                            initialValue={form?.staffStrength === null ? 'Select staff strenght' : form?.staffStrength}
                             label={'Staff strength'}
-                            options={['1-20', '21-40', '41-60', '61-80', '81-100', '101-120', '120- and above']}
+                            options={['1-10', '11-50', '51-200', '201- and above']}
                             onChange={(e) => {
                                 const value = e.target.value;
                                 // onEnterValue({name: 'payTransactionFee', value})
@@ -547,8 +574,8 @@ function Settings() {
                         <div style={{flex: 1}}>
                             <Input 
                                 maxLength={9}
-                                label={'RC Number'}
-                                placeholder={'eg RC1081237'}
+                                label={'BN / RC Number'}
+                                placeholder={'eg BN1234567 or RC1081237'}
                                 type={'text'}
                                 value={form.rcNumber}
                                 onChange={(e) => {
@@ -586,8 +613,8 @@ function Settings() {
                         <div style={{flex: 1}}>
                             <Input 
                                 maxLength={13}
-                                label={'TIN Number'}
-                                placeholder={'eg 12345678-0001'}
+                                label={'JTB / FIRS TIN Number'}
+                                placeholder={'eg 1234567890 or 12345678-0001'}
                                 type={'text'}
                                 value={form.tinNumber}
                                 onChange={(e) => {
@@ -618,6 +645,20 @@ function Settings() {
                                     </>
                                 )
                             }
+                        </div>
+                    </div>
+
+                    <div className='upload-cont' style={{backgroundColor: !editForm ? 'lightgrey' : 'transparent'}}>
+                        <label htmlFor='cac-upload' style={{cursor: 'pointer'}} className='upload-label'>
+                           <MdOutlineCloudUpload style={{color: '#333', fontSize: 22}} /> 
+                        </label>
+
+                        <input id='cac-upload' onChange={uploadCac} className='cac-upload-input' type={'file'} disabled={!editForm} />
+
+                        <div className='cac-upload-file-name-cont'>
+                            <p className='cac-upload-file-name'>{cac?.name || ''}</p>
+
+                            {cac?.name && (<AiTwotoneDelete onClick={() => setCac('')} style={{fontSize: 20, color: 'red', cursor: 'pointer'}} />)}
                         </div>
                     </div>
                </div>
@@ -667,13 +708,14 @@ function Settings() {
                     <div className='settings-btn-alpha-cont'>
                         <div className='settings-form-btn-cont'>
                             <CustomButton
-                                onClick={updateProfile} 
+                                onClick={() => updateProfile()} 
                                 title={'Save Changes'}
                                 textColor={'#fff'}
                                 bgColor={'rgba(3, 166, 60, 1)'}
                                 disabledColor={'rgba(3, 166, 60, 0.5)'}
                                 disabled={false}
                                 btnHeight={47}
+                                
                             />
                         </div>
 
@@ -683,7 +725,7 @@ function Settings() {
                                     <CustomButton
                                         onClick={() => {
                                             initializeForm();
-                                            setEditForm(false);
+                                            setEditForm(false);                                      
                                         }} 
                                         title={'Cancel changes'}
                                         textColor={'#fff'}
@@ -700,7 +742,7 @@ function Settings() {
             </div>
             
 
-        </div>
+        </form>
     </Layout>
   );
 };

@@ -210,7 +210,8 @@ function Payments() {
               <span style={{marginRight: 5}}>{(getSymbolFromCurrency('NGN'))}</span>
               <span>
                 {
-                  stats.pendingBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  // stats.pendingBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  '500,000'
                 }
               </span>
             </p>

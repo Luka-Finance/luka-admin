@@ -42,7 +42,7 @@ function Accounts() {
 		phone: '',
 		email: '',
 		salary: 0,
-		createdAt: '',
+		startDate: '',
 	})
 
 	const handleClose = () => setShow(false)
@@ -78,6 +78,7 @@ function Accounts() {
 
 	const onEnterValue = ({ name, value }) => {
 		if (staff?.firstName.length > 0) {
+			console.log({name, value})
 			setStaff({ ...staff, [name]: value })
 		} else {
 			setForm({ ...form, [name]: value })
@@ -203,11 +204,12 @@ function Accounts() {
 
 	const getInputs = (label) => {
 		for (const key in staff) {
-			if (key === 'createdAt') {
-				let freshDate = staff[key].split('T')[0]
-				return freshDate
+			if (key === 'startDate') {
+				// let freshDate = staff[key].split('T')[0];
+				let freshDate = staff[key];
+				return freshDate;
 			} else if (label === key) {
-				return staff[key]
+				return staff[key];
 			}
 		}
 	}
@@ -299,8 +301,8 @@ function Accounts() {
 				return <ToastContainer />
 			} catch (error) {
 				setLoading(false)
-				console.log(error)
-				console.log('err ', error.message)
+				// console.log(error)
+				// console.log('err ', error.message)
 				const err = error.response.data.message
 				toast.error(err, {
 					position: toast.POSITION.TOP_RIGHT,
@@ -314,6 +316,45 @@ function Accounts() {
 			return <ToastContainer />
 		}
 	}
+
+	const updateStaff = async() => {
+		setLoaderText('Updating staff')
+		setLoading(true)
+		try {
+			const res = await axiosInstance({
+				url: '/business/create-staff',
+				method: 'POST',
+				data: {
+					firstName: staff.firstName,
+				lastName: staff.lastName,
+				email: staff.email,
+				phone: staff.phone,
+				salary: staff.salary,
+				// role: form.role,
+				role: 'regular',
+				businessId: business.id,
+				startDate: staff.startDate,
+				},
+			})
+			console.log(res)
+			const { message } = res.data
+			getStaffs();
+			toast.success(message, {
+				position: toast.POSITION.TOP_RIGHT,
+			})
+			setLoading(false)
+			setCreated(true)
+			return <ToastContainer />
+		} catch(error) {
+			setLoading(false);
+			// const err = error.response.data.message;
+			console.log(error)
+			toast.error('err', {
+				position: toast.POSITION.TOP_RIGHT,
+			})
+			return <ToastContainer />
+		}
+	};
 
 	const searchAccount = (e) => {
 		let value = e.target.value
@@ -444,9 +485,9 @@ function Accounts() {
 													: getFormInput(tag)
 											}
 											onChange={(e) => {
-												const value = e.target.value
-												onEnterValue({ name: tag, value })
-												getErrors(tag)
+												const value = e.target.value;
+												onEnterValue({ name: tag, value });
+												getErrors(tag);
 											}}
 											inputHt={40}
 											error={getErrors(tag)}
@@ -478,7 +519,7 @@ function Accounts() {
 								<div style={{ width: 80 }}>
 									<CustomButton
 										btnHeight={47}
-										onClick={onSubmit}
+										onClick={staff?.firstName.length > 0 ? updateStaff : onSubmit}
 										title={staff?.firstName.length > 0 ? 'Update' : 'Add'}
 										textColor={'#fff'}
 										bgColor={'rgba(3, 166, 60, 1)'}
