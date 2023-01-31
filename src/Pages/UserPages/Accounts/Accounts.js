@@ -37,6 +37,7 @@ function Accounts() {
 	const [filterArr, setFilterArr] = useState([])
 	const [disable, setDisable] = useState(true)
 	const [staff, setStaff] = useState({
+		staffId: '',
 		firstName: '',
 		lastName: '',
 		phone: '',
@@ -205,8 +206,8 @@ function Accounts() {
 	const getInputs = (label) => {
 		for (const key in staff) {
 			if (key === 'startDate') {
-				// let freshDate = staff[key].split('T')[0];
-				let freshDate = staff[key];
+				let freshDate = staff[key].split('T')[0];
+				// let freshDate = staff[key];
 				return freshDate;
 			} else if (label === key) {
 				return staff[key];
@@ -292,6 +293,7 @@ function Accounts() {
 					},
 				})
 				const { message } = res.data
+				getStaffs();
 				// console.log('res ', res);
 				toast.success(message, {
 					position: toast.POSITION.TOP_RIGHT,
@@ -322,21 +324,20 @@ function Accounts() {
 		setLoading(true)
 		try {
 			const res = await axiosInstance({
-				url: '/business/create-staff',
+				url: `/business/update-staff/${staff.staffId}`,
 				method: 'POST',
 				data: {
 					firstName: staff.firstName,
 				lastName: staff.lastName,
 				email: staff.email,
 				phone: staff.phone,
-				salary: staff.salary,
+				salary: staff.salary.toString(),
 				// role: form.role,
 				role: 'regular',
-				businessId: business.id,
 				startDate: staff.startDate,
 				},
 			})
-			console.log(res)
+			// console.log(res)
 			const { message } = res.data
 			getStaffs();
 			toast.success(message, {
@@ -349,7 +350,7 @@ function Accounts() {
 			setLoading(false);
 			// const err = error.response.data.message;
 			console.log(error)
-			toast.error('err', {
+			toast.error(error.response.data.message, {
 				position: toast.POSITION.TOP_RIGHT,
 			})
 			return <ToastContainer />
@@ -537,14 +538,13 @@ function Accounts() {
 							<BsCheck2 style={{ fontSize: 150, color: '#03A63C' }} />
 						</div>
 
-						<p className='success-emplyee-title'>Employee Successfully Added</p>
+						<p className='success-emplyee-title'>Employee Successfully {staff?.firstName.length > 0 ? 'Updated' : 'Added'}</p>
 
 						<p
 							style={{ cursor: 'pointer' }}
 							onClick={() => {
 								handleClose()
 								setCreated(false)
-								getStaffs()
 								resetModal()
 							}}
 							className='success-emplyee-text'>

@@ -60,21 +60,14 @@ function CustomTable({
 
     const editStaff = (obj) => {
         setStaff({
+            staffId: obj.id,
             firstName: obj.firstName,
             lastName: obj.lastName,
             phone: obj.phone,
             email: obj.email,
             salary: obj.salary,
-            createdAt: obj.createdAt,
+            startDate: obj.startDate ,
         }); 
-        console.log('from table', {
-            firstName: obj.firstName,
-            lastName: obj.lastName,
-            phone: obj.phone,
-            email: obj.email,
-            salary: obj.salary,
-            createdAt: obj.createdAt,
-        })
         openModal();
     };
 
@@ -119,8 +112,8 @@ function CustomTable({
                             <td> 
                                 {
                                     cur.startDate ? (
-                                        // <Moment date={cur.startDate} format="DD/MM/YYYY" />
-                                        cur.startDate.split(' ')[0]
+                                        <Moment date={cur.startDate} format="DD/MM/YYYY" />
+                                        // cur.startDate.split(' ')[0]
                                     ) : (<p>awaiting</p>)
                                 } 
                             </td>
@@ -147,7 +140,7 @@ function CustomTable({
                                 </p>
                             </td>
                             <td>
-                                <Dropdown>
+                                <Dropdown style={{cursor: 'pointer'}}>
                                     <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
                                         <BsThreeDotsVertical />
                                     </Dropdown.Toggle>
