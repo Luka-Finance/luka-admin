@@ -310,6 +310,7 @@ function Settings() {
             contactPersonPhone: form.contactPhone,
             cacDoc: fileData.get('file'),
             staffStrength: form.staffStrength,
+            tin: form.tinNumber,
         }
       });
       setEditForm(false);
@@ -367,9 +368,35 @@ function Settings() {
         }
     };
 
-    const uploadCac = (e) => {
-        console.log('just picked you ', e.target.files[0])
-        setCac(e.target.files[0]);
+    const uploadCac = async(e) => {
+        // e.preventDefault();
+        setLoading(true);
+        let myFile = e.target.files[0];
+        console.log('selected file ', myFile)
+        setCac(myFile);
+        const formData = new FormData();
+        formData.append(
+            "file",
+            myFile,
+        );
+        console.log('just picked you ', formData.entries());
+        try {
+            const res = await axiosInstance({
+                url: '/business/upload-files?dir=doc',
+                method: 'POST',
+                data: formData,
+                
+            });
+            console.log('cac res ',res);
+            setLoading(false);
+        } catch(error) {
+            setLoading(false);
+            console.log('cac error ', error);
+            toast.warning(error.response.data.message, {
+                position: toast.POSITION.TOP_RIGHT
+            }); 
+            return(<ToastContainer />);
+        }
     };
 
   useEffect(() => {
@@ -395,7 +422,7 @@ function Settings() {
          auxHeadTitle={'Settings'}
          auxBtnAppear={false}
         />
-        <form className='settings-dashboard'>
+        <div className='settings-dashboard'>
 
             <div className='settings-sub-cont'>
                <div className='settings-form-title-cont'>
@@ -648,8 +675,8 @@ function Settings() {
                         </div>
                     </div>
 
-                    <div className='upload-cont' style={{backgroundColor: !editForm ? 'lightgrey' : 'transparent'}}>
-                        <label htmlFor='cac-upload' style={{cursor: 'pointer'}} className='upload-label'>
+                    <form onSubmit={uploadCac} className='upload-cont' style={{backgroundColor: !editForm ? '#F0F0F0' : 'transparent'}}>
+                        <label type={"submit"} htmlFor='cac-upload' style={{cursor: 'pointer'}} className='upload-label'>
                            <MdOutlineCloudUpload style={{color: '#333', fontSize: 22}} /> 
                         </label>
 
@@ -660,7 +687,7 @@ function Settings() {
 
                             {cac?.name && (<AiTwotoneDelete onClick={() => setCac('')} style={{fontSize: 20, color: 'red', cursor: 'pointer'}} />)}
                         </div>
-                    </div>
+                    </form>
                </div>
 
             </div>
@@ -742,7 +769,7 @@ function Settings() {
             </div>
             
 
-        </form>
+        </div>
     </Layout>
   );
 };
