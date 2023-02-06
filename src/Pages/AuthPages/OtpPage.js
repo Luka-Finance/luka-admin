@@ -132,7 +132,7 @@ function OtpPage() {
 				<Image src='assets/Logo.svg' alt='logo' width={200} />
 			</div>
 
-			<div className='body'>
+			<div className='body-2'>
 				<p className='form-title-1'>Enter OTP</p>
 
 				<p className='otp-entry-form-text'>
@@ -187,7 +187,7 @@ function OtpPage() {
 						/>
 					</div>
 
-					<div className='input-holder-1'>
+					<div className='input-holder-otp'>
 						<CustomButton
 							title={'Continue'}
 							textColor={'#fff'}
@@ -195,6 +195,7 @@ function OtpPage() {
 							disabledColor={'rgba(3, 166, 60, 0.5)'}
 							disabled={disable}
 							onClick={onSubmit}
+                            btnHeight={40}
 							icon={
 								loading && (
 									<Spinner

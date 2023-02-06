@@ -45,16 +45,17 @@ function Settings() {
             };
 
         } else if (name === 'rcNumber') {
-
-            if(value.length < 9) {
-                setErrors(prev => {return {...prev, [name]: `R.C number should be 9 characters long.`}});
+            let prefix = value.substring(0, 2);
+            console.log(prefix)
+            if(prefix !== "RC") {
+                setErrors(prev => {return {...prev, [name]: `Please enter a correct R.C number .`}});
               } else {
                 setErrors(prev => {return {...prev, [name]: null}});
             };
 
         } else if (name === 'tinNumber') {
 
-            if(value.length < 13) {
+            if(value.length < 11 || value.length < 13) {
                 setErrors(prev => {return {...prev, [name]: `TIN number should be 13 characters long.`}});
               } else {
                 setErrors(prev => {return {...prev, [name]: null}});
@@ -368,23 +369,14 @@ function Settings() {
         }
     };
 
-    const uploadCac = async(e) => {
-        // e.preventDefault();
+    const send = async(file) => {
         setLoading(true);
-        let myFile = e.target.files[0];
-        console.log('selected file ', myFile)
-        setCac(myFile);
-        const formData = new FormData();
-        formData.append(
-            "file",
-            myFile,
-        );
-        console.log('just picked you ', formData.entries());
         try {
             const res = await axiosInstance({
                 url: '/business/upload-files?dir=doc',
                 method: 'POST',
-                data: formData,
+                "Content-Type": "",
+                data: file,
                 
             });
             console.log('cac res ',res);
@@ -392,11 +384,29 @@ function Settings() {
         } catch(error) {
             setLoading(false);
             console.log('cac error ', error);
-            toast.warning(error.response.data.message, {
+            toast.warning('Error', {
                 position: toast.POSITION.TOP_RIGHT
             }); 
             return(<ToastContainer />);
         }
+    }
+
+    const uploadCac = async(e) => {
+        let myFile = e.target.files[0];
+        if(!myFile) {return};
+        setCac(myFile);
+        console.log(myFile)
+     
+        // const reader = new FileReader();
+        // reader.onloadend = () => {
+        //     const base64String = reader.result
+        //         .replace('data:', '')
+        //         .replace(/^.+,/, '');
+        //     console.log(reader.result);
+        //     send(base64String)
+        //     // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+        // };
+        // reader.readAsDataURL(myFile);
     };
 
   useEffect(() => {
@@ -600,7 +610,7 @@ function Settings() {
                     <div className='settings-input-cont-plus-extra'>
                         <div style={{flex: 1}}>
                             <Input 
-                                maxLength={9}
+                                // maxLength={9}
                                 label={'BN / RC Number'}
                                 placeholder={'eg BN1234567 or RC1081237'}
                                 type={'text'}
@@ -675,6 +685,7 @@ function Settings() {
                         </div>
                     </div>
 
+                    <p className='cac-input-label'>Upload your CAC document</p>
                     <form onSubmit={uploadCac} className='upload-cont' style={{backgroundColor: !editForm ? '#F0F0F0' : 'transparent'}}>
                         <label type={"submit"} htmlFor='cac-upload' style={{cursor: 'pointer'}} className='upload-label'>
                            <MdOutlineCloudUpload style={{color: '#333', fontSize: 22}} /> 
@@ -683,7 +694,7 @@ function Settings() {
                         <input id='cac-upload' onChange={uploadCac} className='cac-upload-input' type={'file'} disabled={!editForm} />
 
                         <div className='cac-upload-file-name-cont'>
-                            <p className='cac-upload-file-name'>{cac?.name || ''}</p>
+                            <p className='cac-upload-file-name'>{cac?.name || 'Upload either a PDF, JPEG or PNG file'}</p>
 
                             {cac?.name && (<AiTwotoneDelete onClick={() => setCac('')} style={{fontSize: 20, color: 'red', cursor: 'pointer'}} />)}
                         </div>
