@@ -371,15 +371,28 @@ function Settings() {
 
     const send = async(file) => {
         setLoading(true);
+        const formData = new FormData();
+        formData.append('file', file);
         try {
-            const res = await axiosInstance({
-                url: '/business/upload-files?dir=doc',
-                method: 'POST',
-                "Content-Type": "",
-                data: file,
+            // const res = await axiosInstance({
+            //     url: '/business/upload-files?dir=doc',
+            //     method: 'POST',
+            //     Accept: 'application/json',
+            //     'Content-Type': 'application/json',
+            //     data: formData,
                 
-            });
-            console.log('cac res ',res);
+            // });
+            
+            let response = await fetch('https://api.luka.finance/business/upload-files?dir=doc', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'multipart/form-data', 
+                }
+            }, {body: formData});
+            console.log(response);
+            
+            // console.log('cac res ',res);
             setLoading(false);
         } catch(error) {
             setLoading(false);
@@ -395,7 +408,10 @@ function Settings() {
         let myFile = e.target.files[0];
         if(!myFile) {return};
         setCac(myFile);
-        console.log(myFile)
+        console.log(myFile.size)
+        // const formData = new FormData();
+        // formData.append('file', myFile);
+        send(myFile)
      
         // const reader = new FileReader();
         // reader.onloadend = () => {
