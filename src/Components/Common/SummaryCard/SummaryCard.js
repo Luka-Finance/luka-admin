@@ -7,22 +7,29 @@ import getSymbolFromCurrency from 'currency-symbol-map'
 import './Styles.css'
 
 function SummaryCard({ data }) {
+
+	const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+    });
+
 	return (
 		<div className='dashboard-card-cont'>
 			<div className='dashboard-card' style={{ margin: '0px 20px 20px 0px' }}>
 				<div className='dashboard-card-head'>
 					<p className='dashboard-card-text' style={{ color: '#000' }}>
-						<span
+						{/* <span
 							style={{
 								marginRight: 5,
 								fontFamily: 'DM Sans',
 							}}>
 							{getSymbolFromCurrency('NGN')}
-						</span>
+						</span> */}
 						<span>
-							{data.totalEarnedThisMonth
+							{formatter.format(data.totalEarnedThisMonth)}
+							{/* {data.totalEarnedThisMonth
 								.toString()
-								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} */}
 						</span>
 					</p>
 
@@ -39,13 +46,14 @@ function SummaryCard({ data }) {
 			<div className='dashboard-card' style={{ margin: '0px 20px 20px 0px' }}>
 				<div className='dashboard-card-head'>
 					<p className='dashboard-card-text' style={{ color: '#000' }}>
-						<span style={{ marginRight: 5 }}>
+						{/* <span style={{ marginRight: 5 }}>
 							{getSymbolFromCurrency('NGN')}
-						</span>
+						</span> */}
 						<span>
-							{data.totalWithdrawn
+							{formatter.format(data.totalWithdrawn)}
+							{/* {data.totalWithdrawn
 								.toString()
-								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} */}
 						</span>
 					</p>
 
@@ -62,13 +70,14 @@ function SummaryCard({ data }) {
 			<div className='dashboard-card'>
 				<div className='dashboard-card-head'>
 					<p className='dashboard-card-text' style={{ color: '#C30000' }}>
-						<span style={{ marginRight: 5 }}>
+						{/* <span style={{ marginRight: 5 }}>
 							{getSymbolFromCurrency('NGN')}
-						</span>
+						</span> */}
 						<span>
-							{data.pendingBalance
+							{formatter.format(data.pendingBalance)}
+							{/* {data.pendingBalance
 								.toString()
-								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+								.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} */}
 						</span>
 					</p>
 

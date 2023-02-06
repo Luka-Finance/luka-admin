@@ -123,20 +123,20 @@ function Payments() {
         responseType: 'blob',
       });
       console.log(res)
-      if(res.data.length > 0) {
-        const url = window.URL.createObjectURL(new Blob([res.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        let stamp = new Date().now();
-        link.setAttribute('download', `invoice-${stamp}.pdf`); //or any other extension
-        document.body.appendChild(link);
-        link.click();
-      } else {
-        toast.warning('No invoice data available.', {
-          position: toast.POSITION.TOP_RIGHT
-        })
-        return(<ToastContainer />)
-      }
+      // if(res.data.length > 0) {
+      //   const url = window.URL.createObjectURL(new Blob([res.data]));
+      //   const link = document.createElement('a');
+      //   link.href = url;
+      //   let stamp = new Date().now();
+      //   link.setAttribute('download', `invoice-${stamp}.pdf`); //or any other extension
+      //   document.body.appendChild(link);
+      //   link.click();
+      // } else {
+      //   toast.warning('No invoice data available.', {
+      //     position: toast.POSITION.TOP_RIGHT
+      //   })
+      //   return(<ToastContainer />)
+      // }
       
       setLoading(false);
     } catch {
