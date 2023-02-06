@@ -176,6 +176,11 @@ function Payments() {
     setPaymentStat(1);
   };
 
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'NGN',
+  });
+
   useEffect(() => {
     getBusinessStats();
     getPaymentHistory();
@@ -209,9 +214,11 @@ function Payments() {
             <p className='dashboard-card-text' style={{color: '#C30000'}} >
               <span style={{marginRight: 5}}>{(getSymbolFromCurrency('NGN'))}</span>
               <span>
-                {
+              {formatter.format(stats.pendingBalance)}
+                {/* {
                   stats.pendingBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
+                 
+                } */}
               </span>
             </p>
 
