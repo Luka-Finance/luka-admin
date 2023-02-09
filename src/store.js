@@ -15,6 +15,7 @@ const reducer = combineReducers({
 
 const userTokenLS = localStorage.getItem('token') ? 
 JSON.parse(localStorage.getItem('token')) : '';
+console.log({userTokenLS})
 
 const initialState = {
     userData: {token: userTokenLS} 
