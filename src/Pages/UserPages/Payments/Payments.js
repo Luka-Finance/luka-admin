@@ -213,7 +213,7 @@ function Payments() {
           auxHeadTitle={'Payments'}
           auxHeadBtnClick={downloadInvoice}
           auxBtnTitle={'Download Invoice'}
-          auxBtnAppear={true}
+          auxBtnAppear={false}
         />
 
         <div 
