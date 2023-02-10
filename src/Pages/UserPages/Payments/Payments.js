@@ -120,23 +120,22 @@ function Payments() {
       const res = await axiosInstance({
         url: '/business/get-invoices',
         method: 'GET',
-        responseType: 'blob',
       });
-      console.log(res)
-      // if(res.data.length > 0) {
-      //   const url = window.URL.createObjectURL(new Blob([res.data]));
-      //   const link = document.createElement('a');
-      //   link.href = url;
-      //   let stamp = new Date().now();
-      //   link.setAttribute('download', `invoice-${stamp}.pdf`); //or any other extension
-      //   document.body.appendChild(link);
-      //   link.click();
-      // } else {
-      //   toast.warning('No invoice data available.', {
-      //     position: toast.POSITION.TOP_RIGHT
-      //   })
-      //   return(<ToastContainer />)
-      // }
+      if(res.data.data.length > 0) {
+        console.log(res)
+        const url = window.URL.createObjectURL(new Blob([res.data.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        let stamp = new Date().now();
+        link.setAttribute('download', `invoice-${stamp}.pdf`); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      } else {
+        toast.warning('No invoice data available.', {
+          position: toast.POSITION.TOP_RIGHT
+        })
+        return(<ToastContainer />)
+      }
       
       setLoading(false);
     } catch {
@@ -168,6 +167,21 @@ function Payments() {
         position: toast.POSITION.TOP_RIGHT
       })
       return(<ToastContainer />)
+    }
+  };
+
+  const getInvoiceDetails = async(id) => {
+    setLoading(true);
+    try {
+      const res = await axiosInstance({
+        url: `/business/invoice/get-details/${id}`,
+        method: 'GET'
+      });
+      console.log(res);
+      setLoading(false);
+    } catch(err) {
+      setLoading(false);
+      console.log(err);
     }
   };
 
@@ -237,7 +251,10 @@ function Payments() {
 				{payments.length < 1 ? (
 					<p className='empty-state-text'>No Payments made yet</p>
 				) : (
-					<CustomTableTwo data={payments} setShow={setShow} />
+					<CustomTableTwo 
+            data={payments} 
+            // setShow={() => getInvoiceDetails(id)} 
+          />
 				)}
 			</div>
 

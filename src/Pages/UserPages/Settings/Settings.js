@@ -265,30 +265,10 @@ function Settings() {
 
 };
 
-    const func = () => {
-        const formData = new FormData();
-        formData.append('name', 'Shubham Singh Kshatriya');
-        formData.append('age', 21);
-
-        console.log("Form Data");
-        for (let obj of formData) {
-        console.log('func ', obj);
-        }
-        console.log('checking ', formData.get('name'))
-    };
-
     
-  const updateProfile = async() => {
+const updateProfile = async() => {
     setLoaderText('Updating profile');
     setLoading(true);
-
-    let fileData = new FormData();
-    const file = cac ? cac : '';
-    console.log('my cac  ', cac)
-	fileData.append('file', file);
-    func()
-    console.log('selected cac file ', file)
-    console.log('appended cac object ', fileData.get('file'))
 
     try {
       const res = await axiosInstance({
@@ -309,7 +289,7 @@ function Settings() {
             contactPersonEmail: form.contactEmail,
             contactPersonRole: form.contactRole,
             contactPersonPhone: form.contactPhone,
-            cacDoc: fileData.get('file'),
+            cacDoc: cac,
             staffStrength: form.staffStrength,
             tin: form.tinNumber,
         }
@@ -332,9 +312,9 @@ function Settings() {
         })
         return(<ToastContainer />)   
     }
-  };
+};
 
-  const initializeForm = () => {
+const initializeForm = () => {
     setForm({
         ...form, 
         companyName: business?.name,
@@ -349,7 +329,7 @@ function Settings() {
         paymentDate: business?.payday === null ? '' : business?.payday,
         staffStrength: business?.staffStrength === null ? '' : business?.staffStrength,
     });
-  };
+};
 
   const allowEdit = (paramA, paramB) => {
     if(paramA === true && paramB) {
@@ -369,44 +349,12 @@ function Settings() {
         }
     };
 
-    const send = async(file) => {
-        setLoading(true);
-        console.log(file)
-        // const formData = new FormData();
-        // formData.append('file', file);
-        try {
-            // const res = await axiosInstance({
-            //     url: '/business/upload-files?dir=doc',
-            //     method: 'POST',
-            //     Accept: 'application/json',
-            //     'Content-Type': 'application/json',
-            //     data: formData,
-                
-            // });
-            
-            let response = await fetch('http://localhost:8000/business/upload-files?dir=doc', {
-                method: 'POST',
-            }, {body: file});
-            console.log(response);
-            
-            // console.log('cac res ',res);
-            setLoading(false);
-        } catch(error) {
-            setLoading(false);
-            console.log('cac error ', error);
-            toast.warning('Error', {
-                position: toast.POSITION.TOP_RIGHT
-            }); 
-            return(<ToastContainer />);
-        }
-    }
-
     const uploadCac = async(e) => {
         e?.preventDefault()
         setLoading(true);
         let myFile = e.target.files[0];
         if(!myFile) {return};
-        setCac(myFile);
+        // setCac(myFile);
         console.log(myFile.size)
         const formData = new FormData();
         formData.append('file', e.target.files[0]);
@@ -414,20 +362,23 @@ function Settings() {
             method: 'POST',
             body: formData
         });
-        console.log({response})
-        setLoading(false);
-        // send(formData)
-     
-        // const reader = new FileReader();
-        // reader.onloadend = () => {
-        //     const base64String = reader.result
-        //         .replace('data:', '')
-        //         .replace(/^.+,/, '');
-        //     console.log(reader.result);
-        //     send(base64String)
-        //     // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
-        // };
-        // reader.readAsDataURL(myFile);
+        console.log(response)
+        console.log(response.url)
+        if(response.status === 200) {
+            setLoading(false);
+            setCac(response.url);
+            toast.success('Great! please save your upload.', {
+                position: toast.POSITION.TOP_RIGHT
+            }); 
+            return(<ToastContainer />);
+        } else {
+            setLoading(false);
+            toast.warning('Error, please try again.', {
+                position: toast.POSITION.TOP_RIGHT
+            }); 
+            return(<ToastContainer />);
+        }
+    
     };
 
   useEffect(() => {
@@ -707,7 +658,7 @@ function Settings() {
                     </div>
 
                     <p className='cac-input-label'>Upload your CAC document</p>
-                    <form onSubmit={uploadCac} className='upload-cont' style={{backgroundColor: !editForm ? '#F0F0F0' : 'transparent'}}>
+                    <form onSubmit={uploadCac} className='upload-cont' style={{backgroundColor: !editForm ? '#EBEBE4' : 'transparent' }}>
                         <label type={"submit"} htmlFor='cac-upload' style={{cursor: 'pointer'}} className='upload-label'>
                            <MdOutlineCloudUpload style={{color: '#333', fontSize: 22}} /> 
                         </label>
@@ -715,9 +666,11 @@ function Settings() {
                         <input id='cac-upload' onChange={uploadCac} className='cac-upload-input' type={'file'} disabled={!editForm} />
 
                         <div className='cac-upload-file-name-cont'>
-                            <p className='cac-upload-file-name'>{cac?.name || 'Upload either a PDF, JPEG or PNG file'}</p>
+                            <p className='cac-upload-file-name'>
+                                {cac || 'Upload either a PDF, JPEG or PNG file'}
+                            </p>
 
-                            {cac?.name && (<AiTwotoneDelete onClick={() => setCac('')} style={{fontSize: 20, color: 'red', cursor: 'pointer'}} />)}
+                            {cac && (<AiTwotoneDelete onClick={() => setCac('')} style={{fontSize: 20, color: 'red', cursor: 'pointer'}} />)}
                         </div>
                     </form>
                </div>

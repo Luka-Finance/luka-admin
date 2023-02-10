@@ -1,6 +1,8 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import getSymbolFromCurrency from 'currency-symbol-map';
+import { BsFillCloudDownloadFill } from 'react-icons/bs';
+import { FiDownload } from 'react-icons/fi';
 
 function CustomTableTwo({
     data,
@@ -8,7 +10,7 @@ function CustomTableTwo({
 }) {
   return (
     <Table
-        hover
+        // hover
         borderless={true} 
         responsive
     >
@@ -25,9 +27,8 @@ function CustomTableTwo({
                     <tr 
                         key={cur.id}
                         onClick={() => {
-                            setShow(true);
+                            setShow(cur.id);
                         }}
-                        style={{cursor: 'pointer'}}
                     >
                         <td> {cur.title} </td>
                         <td> 
@@ -46,6 +47,16 @@ function CustomTableTwo({
                           >
                             {cur.status}  
                           </p>  
+                        </td>
+                        <td>
+                            <p>
+                                <FiDownload 
+                                    style={{
+                                        color: 'rgba(3, 166, 60, 1)',
+                                        cursor: 'pointer'
+                                    }}
+                                />
+                            </p>
                         </td>   
                     </tr>
                 ))
