@@ -38,7 +38,7 @@ function SignIn() {
 					})
 				}
 			} else if (name === 'companyEmail') {
-				const regex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
+				const regex = new RegExp(/\S+@\S+\.\S+/)
 				const isEmailValid = regex.test(value)
 
 				if (value.length < 12 || !isEmailValid) {
@@ -65,7 +65,7 @@ function SignIn() {
 		setLoading(true)
 		try {
 			const res = await axiosInstance({
-				url: '/business/login',
+				url: '/login',
 				method: 'POST',
 				data: {
 					email: form.companyEmail,
@@ -133,12 +133,12 @@ function SignIn() {
 				className='banner'
 				style={{
 					position: 'absolute',
-				}}
-				>
+				}}>
 				<Image src='assets/Logo.svg' alt='logo' width={200} />
 			</div>
 
 			<div className='body'>
+				<div className='form-title-1'>Administrative Portal</div>
 				<div className='form-title'>Sign In</div>
 
 				<div className='form-cont'>
@@ -196,14 +196,14 @@ function SignIn() {
 						/>
 					</div>
 
-					<Link style={{ textDecoration: 'none' }} to={'/register'}>
+					{/* <Link style={{ textDecoration: 'none' }} to={'/register'}>
 						<p className='otp-aux-link-2'>
 							Not registered? Click here to
 							<span style={{ marginLeft: 5 }} className='otp-aux-link'>
 								Register
 							</span>
 						</p>
-					</Link>
+					</Link> */}
 
 					<Link
 						style={{ textDecoration: 'none', marginTop: 5 }}

@@ -1,32 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {
-	AiOutlineAppstore,
-	AiOutlineCreditCard,
-	AiOutlineClose,
-} from 'react-icons/ai'
-import { IoIosPeople } from 'react-icons/io'
-import { RiHandCoinLine, RiNotification2Fill } from 'react-icons/ri'
-import { FiSettings } from 'react-icons/fi'
+import { AiOutlineAppstore, AiOutlineClose } from 'react-icons/ai'
+import { RiNotification2Fill } from 'react-icons/ri'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
-import { BiMenuAltRight } from 'react-icons/bi'
+import { BiMenuAltRight, BiUserCircle } from 'react-icons/bi'
 import { Image, Dropdown } from 'react-bootstrap'
 import LoaderScreen from '../Common/LoaderScreen/LoaderScreen'
 import axiosInstance from '../../Utils/axiosInstance'
 import './Styles.css'
-import {
-	saveBusiness,
-	logoutBusiness,
-} from '../../Redux/Actions/businessActions'
+import { saveAdmin, logoutAdmin } from '../../Redux/Actions/adminActions'
 import { logoutUser } from '../../Redux/Actions/userActions'
 import { toast, ToastContainer } from 'react-toastify'
 import accessLocalStorage from '../../Utils/accessLocalStorage'
 
 function Layout({ children, currentPage }) {
 	const dispatch = useDispatch()
-	const businessData = useSelector((state) => state.businessData)
-	const { business } = businessData
+	const { admin } = useSelector((state) => state.adminData)
 
 	const [mobileNav, setMobileNav] = useState(false)
 	const [show, setShow] = useState(false)
@@ -35,10 +25,11 @@ function Layout({ children, currentPage }) {
 
 	const navList = [
 		'Dashboard',
+		'Kyc',
 		// 'Transactions',
-		'Employees',
-		'Payments',
-		'Settings',
+		// 'Employees',
+		// 'Payments',
+		// 'Settings',
 	]
 
 	const getUserData = async () => {
@@ -47,11 +38,11 @@ function Layout({ children, currentPage }) {
 		try {
 			const res = await axiosInstance({
 				method: 'GET',
-				url: '/business/me',
+				url: '/me',
 			})
 			const { data, message } = res.data
 			//   console.log('user data ', data)
-			dispatch(saveBusiness(data))
+			dispatch(saveAdmin(data))
 			setLoading(false)
 
 			//   toast.success(message, {
@@ -94,14 +85,14 @@ function Layout({ children, currentPage }) {
 	}
 
 	const userLogout = () => {
-		dispatch(logoutBusiness())
+		dispatch(logoutAdmin())
 		dispatch(logoutUser())
 		accessLocalStorage.clearLs()
 		window.location.replace('/sign-in')
 	}
 
 	const scrubToken = () => {
-		dispatch(logoutBusiness())
+		dispatch(logoutAdmin())
 		dispatch(logoutUser())
 		accessLocalStorage.clearLs()
 	}
@@ -113,23 +104,13 @@ function Layout({ children, currentPage }) {
 		}
 	}
 
-	const checkForKyc = () => {
-		// console.log('hello')
-		const rcNumber = business?.rcNumber;
-		const currentPage = window.location.pathname;
-		if((rcNumber === null || rcNumber === '') && !currentPage.includes('settings')) {
-		    window.location.assign('/settings');
-		}
-	}
-
 	useEffect(() => {
 		checkScreenSize()
 		checkForAccessToken()
-		checkForKyc()
 
-		if (Object.keys(business).length === 0) {
-			getUserData()
-		}
+		// if (Object.keys(admin).length === 0) {
+		getUserData()
+		// }
 
 		window.addEventListener('beforeunload', scrubToken)
 
@@ -174,16 +155,8 @@ function Layout({ children, currentPage }) {
 							to={`/${link.toLowerCase()}`}>
 							{link.toLowerCase() === 'dashboard' ? (
 								<AiOutlineAppstore style={{ marginRight: 10, fontSize: 20 }} />
-							) : link.toLowerCase() === 'transactions' ? (
-								<AiOutlineCreditCard
-									style={{ marginRight: 10, fontSize: 20 }}
-								/>
-							) : link.toLowerCase() === 'employees' ? (
-								<IoIosPeople style={{ marginRight: 10, fontSize: 20 }} />
-							) : link.toLowerCase() === 'payments' ? (
-								<RiHandCoinLine style={{ marginRight: 10, fontSize: 20 }} />
-							) : link.toLowerCase() === 'settings' ? (
-								<FiSettings style={{ marginRight: 10, fontSize: 20 }} />
+							) : link.toLowerCase() === 'kyc' ? (
+								<BiUserCircle style={{ marginRight: 10, fontSize: 20 }} />
 							) : (
 								<div></div>
 							)}
@@ -199,10 +172,10 @@ function Layout({ children, currentPage }) {
 					</div>
 
 					<div className='menu-box'>
-						<div className='bell-cont'>
+						{/* <div className='bell-cont'>
 							<div className='bell-badge'></div>
 							<RiNotification2Fill style={{ fontSize: 28, color: '#C5C7CD' }} />
-						</div>
+						</div> */}
 
 						<div className='nav-profile'>
 							<Image
@@ -211,7 +184,7 @@ function Layout({ children, currentPage }) {
 								width={30}
 							/>
 
-							<p className='profile-name'>{business?.name?.substring(0, 10)}</p>
+							<p className='profile-name'>{admin?.name?.substring(0, 10)}</p>
 
 							<Dropdown>
 								<Dropdown.Toggle

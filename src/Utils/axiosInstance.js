@@ -20,7 +20,7 @@ const getAccessToken = () => {
 // });
 
 const axiosInstance = axios.create({
-	baseURL: 'https://api.luka.finance',
+	baseURL: 'https://api.luka.finance/admin',
 })
 
 axiosInstance.interceptors.request.use(
@@ -36,7 +36,7 @@ axiosInstance.interceptors.request.use(
 	(error) => {
 		// Do something with request error
 		return Promise.reject(error)
-	}
+	},
 )
 
 axiosInstance.interceptors.response.use(
@@ -56,7 +56,7 @@ axiosInstance.interceptors.response.use(
 			console.log('we good')
 		}
 		return Promise.reject(error)
-	}
+	},
 )
 
 export default axiosInstance
