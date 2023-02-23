@@ -1,5 +1,4 @@
 import React from 'react'
-import CustomButton from '../Common/CustomButton/Index'
 
 import './Styles.css'
 

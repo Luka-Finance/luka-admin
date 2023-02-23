@@ -48,8 +48,8 @@
 }
 
 .filter-btn-aux-cont {
-	border-left: 1px solid grey;
-	height: 80%;
+	border-left: 1px solid rgba(128, 128, 128, 0.409);
+	height: 100%;
 	flex: 1;
 }
 
@@ -64,7 +64,7 @@
 	font-weight: 400;
 	font-size: 13px;
 	line-height: 17px;
-	color: #bbbbbb;
+	/* color: #bbbbbb; */
 }
 
 .aux-head-btn-cont {

@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
-import { Badge, Dropdown, Overlay, Table } from 'react-bootstrap'
+import { Dropdown, Table } from 'react-bootstrap'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 // import getSymbolFromCurrency from 'currency-symbol-map';
 import axiosInstance from '../../../Utils/axiosInstance'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Popover from 'react-bootstrap/Popover'
-import ListGroup from 'react-bootstrap/ListGroup'
+import './Styles.css'
 
-function CustomTable({ data, refresh, setStaff, openModal }) {
+function CustomTable({ data, refresh }) {
 	const [loading, setLoading] = useState(false)
-	const [show, setShow] = useState(true)
 
 	const businessToggle = async (id, action) => {
 		setLoading(true)
@@ -51,50 +48,6 @@ function CustomTable({ data, refresh, setStaff, openModal }) {
 		</p>
 	))
 
-	const formatter = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'NGN',
-	})
-
-	const editStaff = (obj) => {
-		setStaff({
-			staffId: obj.id,
-			firstName: obj.firstName,
-			lastName: obj.lastName,
-			phone: obj.phone,
-			email: obj.email,
-			salary: obj.salary,
-			startDate: obj.startDate,
-		})
-		console.log({
-			staffId: obj.id,
-			firstName: obj.firstName,
-			lastName: obj.lastName,
-			phone: obj.phone,
-			email: obj.email,
-			salary: obj.salary,
-			startDate: obj.startDate,
-		})
-		openModal()
-	}
-
-	// const popover = (
-	// 	<Popover id='popover-basic'>
-	// 		{/* <Popover.Header as='h3'>Popover right</Popover.Header> */}
-	// 		{/* <Popover.Body> */}
-	// 		<ListGroup as='ul'>
-	// 			<ListGroup.Item as='li' active>
-	// 				Pending
-	// 			</ListGroup.Item>
-	// 			<ListGroup.Item as='li'>Approved</ListGroup.Item>
-	// 			<ListGroup.Item as='li' disabled>
-	// 				Rejected
-	// 			</ListGroup.Item>
-	// 		</ListGroup>
-	// 		{/* </Popover.Body> */}
-	// 	</Popover>
-	// )
-
 	return (
 		<>
 			{loading && (
@@ -115,6 +68,7 @@ function CustomTable({ data, refresh, setStaff, openModal }) {
 						<th>Employee ID</th>
 						<th>Company name</th>
 						<th>RC/ BN Number</th>
+						<th>CAC Doc</th>
 						<th>TIN Number</th>
 						<th>Email</th>
 						<th>Status</th>
@@ -129,7 +83,16 @@ function CustomTable({ data, refresh, setStaff, openModal }) {
                                 {cur.id}
                             </td> */}
 							<td>{cur.rcNumber || 'Null'}</td>
-							<td>{cur.tin || 'Null'}</td>
+							<td>{cur.cacDoc || 'Null'}</td>
+							<td>
+								<a
+									href={cur.cacDoc || 'Null'}
+									target='_blank'
+									rel='noreferrer'
+									className={cur.cacDoc || 'disable-link'}>
+									view
+								</a>
+							</td>
 							<td>
 								{/* <p style={{width: 100, display: 'flex', flexWrap: 'wrap',border: '1px solid black', borderColor: 'black', borderWidth: 1, height: 60}}>
                                 {cur.email}    
