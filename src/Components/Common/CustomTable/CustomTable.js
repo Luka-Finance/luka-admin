@@ -86,7 +86,6 @@ function CustomTable({ data, refresh }) {
                             </td> */}
 							<td>{cur.rcNumber || 'Null'}</td>
 							<td>{cur.tin || 'Null'}</td>
-							<td>{cur.cacDoc || 'Null'}</td>
 							<td>
 								<a
 									href={cur.cacDoc || 'Null'}
