@@ -65,11 +65,12 @@ function CustomTable({ data, refresh }) {
 				<thead>
 					<tr>
 						{/* <th>Name</th> */}
+						<th>Registered Date</th>
 						<th>Employee ID</th>
 						<th>Company name</th>
 						<th>RC/ BN Number</th>
-						<th>CAC Doc</th>
 						<th>TIN Number</th>
+						<th>CAC Doc</th>
 						<th>Email</th>
 						<th>Status</th>
 					</tr>
@@ -77,12 +78,14 @@ function CustomTable({ data, refresh }) {
 				<tbody>
 					{data.map((cur) => (
 						<tr key={cur.id}>
+							<td> {new Date(cur.createdAt).toLocaleString()} </td>
 							<td> {cur.lukaId} </td>
 							<td> {cur.name} </td>
 							{/* <td>
                                 {cur.id}
                             </td> */}
 							<td>{cur.rcNumber || 'Null'}</td>
+							<td>{cur.tin || 'Null'}</td>
 							<td>{cur.cacDoc || 'Null'}</td>
 							<td>
 								<a
